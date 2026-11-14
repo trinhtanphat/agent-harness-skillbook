@@ -98,3 +98,14 @@ Bằng chứng: [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · 
 **Cổng chưa hoàn tất tại thời điểm ghi ghi chú này:** ba browser checks bổ sung (`directory-pages`, `skills-index-mobile`, `installer-guide`) chưa có bằng chứng thực chạy vì DESKTOP-PHA1S90 đang offline và Chrome headless trên 181 không đủ tài nguyên. Những trường hợp này phải mang trạng thái NOT_RUN cho đến khi có xác minh riêng; 16/16 browser PASS trước đây không tự mở rộng thành 19/19.
 
 **Sau khi deploy:** chạy `scripts/verify-pages.ps1 -Full` để đối chiếu byte các trang chỉ mục, trình cài, 60 skills và tài nguyên site với HEAD. Không sử dụng GitHub Actions.
+
+## Release verification — Skill installer & directories
+
+- **GitHub main commit:** `bfac597b814822356d9f65de1608c37bea73364a`.
+- **Môi trường kiểm thử:** WIN11-181, Node v24; `node scripts/validate.mjs`, `node scripts/test-install-skills.mjs`, `node scripts/test-preview.mjs`, `node examples/mcp-stdio-demo/client-smoke.mjs`, `git fsck --full --no-reflogs`: **PASS** (exit code 0).
+- **Triển khai:** GitHub Pages trạng thái `built`, HTTPS enforced, branch `main`.
+- **Đối chiếu runtime:** `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-pages.ps1 -Full` đã trả **114/114 matching blobs**, `DEPLOY_INTEGRITY_PASS` và exit code 0. Kiểm tra bao gồm `docs/index.html`, `skills/index.html`, `install.html`, CSS và hai script cài đặt.
+- **Giới hạn:** ba assertions bổ sung cho hai trang chỉ mục mobile và trang cài đặt trong `scripts/browser-qa.mjs` vẫn **NOT_RUN** khi ghi biên bản, do PHA offline và Chrome headless trên WIN11-181 không khởi động được. Đây không phải lỗi thất bại của web, nhưng cũng không phải bằng chứng PASS responsive. Bộ **16/16 browser QA trước đó** vẫn đúng cho những chức năng đã kiểm chứng trên phiên bản giao diện trước.
+- **Kiểm tra lại:** khi có Chromium cô lập, chạy `node scripts/browser-qa.mjs https://trinhtanphat.github.io/agent-harness-skillbook/` và cập nhật lại kết luận theo kết quả thực tế. Không cần dùng GitHub Actions.
+
+Ghi chú: cập nhật báo cáo này làm đổi HEAD; cần chạy lại verifier để xác nhận **commit chứa chính ghi chú** cũng đã phát hành.
