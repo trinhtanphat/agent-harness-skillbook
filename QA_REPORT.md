@@ -54,3 +54,21 @@ Chạy scripts/verify-pages.ps1 -Full trên WIN11-181, chỉ tải tài nguyên 
 Kết quả thực tế: 102 tệp trong scope đều có nội dung byte-for-byte trùng Git HEAD, gồm 60 SKILL.md, 14 playbook Markdown, 14 trang HTML, 4 ảnh bằng chứng và các file website/metadata/mẫu MCP. Kết thúc lệnh: DEPLOY_INTEGRITY_PASS, exit code 0.
 
 Kết quả này **không** chứng minh mọi nội dung học thuật hoặc mọi ứng dụng của skill đều được nghiệm thu; nó chứng minh triển khai tĩnh và các chức năng web đã kiểm tra. Việc sửa riêng báo cáo sau khi đo sẽ làm thay đổi HEAD, vì vậy phải chạy verifier lại với commit chứa ghi chú này trước khi công bố trạng thái cuối.
+
+## Đợt nâng cấp UI, keyboard và local preview (14/11/2026)
+
+Phạm vi thay đổi: chia sẻ skill bằng hash URL `#skill/<id>`, mở lại đúng skill sau reload, giữ focus trên category filters, popup `inert` khi đóng, kiểm tra focus/Back/Escape và local preview trên loopback.
+
+### Bằng chứng đã chạy
+
+- **Chrome headless trên DESKTOP-PHA1S90, nhánh thử nghiệm commit `cb1cb0d`: 13/13 smoke checks PASS.** Nội dung mã `assets/app.js`, `index.html` và `assets/styles.css` của bộ thay đổi đã được thử trên phiên bản này; các commit sau đó chỉ thay đổi tài liệu, tests và công cụ preview.
+- **WIN11-181, commit `be549e9`:** 12/12 local server smoke tests PASS; validate cấu trúc 60 skills, 10 category, 14 playbooks/HTML PASS; MCP 2026-07-28 smoke PASS; Node syntax checks và git fsck PASS.
+- Server preview chỉ nghe trên 127.0.0.1, từ chối thư mục `.git`, `.env`, `node_modules` và output QA. Không mở browser profile người dùng hoặc đụng production.
+
+### Các phép thử bổ sung chưa chạy được
+
+Có thêm 3 browser assertions mới trong `scripts/browser-qa.mjs` cần chạy lại đầy đủ: **focus trap Tab**, **Escape close**, và **browser Back close**. DESKTOP-PHA1S90 bị offline trong lần kiểm tra kế tiếp, còn Chrome headless ở WIN11-181 báo không đủ tài nguyên khởi động; vì vậy trạng thái của **ba assertions là NOT_RUN**, không tự đổi thành PASS.
+
+### Điều kiện kết luận
+
+Cần sau deploy chạy `scripts/verify-pages.ps1 -Full` so khớp toàn bộ Git HEAD. Kết quả này tách biệt với nghiệm thu nội dung học thuật và các ứng dụng kỹ năng thực tế. Cổng browser 16/16 chỉ được xác nhận nếu thực chạy thành công, không suy từ 13/13 trước đó.
