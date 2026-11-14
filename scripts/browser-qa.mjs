@@ -122,6 +122,9 @@ try{
  const drawerAccess=await evalJs("({hash:location.hash,inert:document.getElementById('skillDrawer').inert,shareButton:!!document.getElementById('copySkillLink'),ariaExpanded:document.getElementById('skillDrawer').getAttribute('aria-hidden')})");
  assert.ok(drawerAccess.hash.startsWith('#skill/') && !drawerAccess.inert && drawerAccess.shareButton && drawerAccess.ariaExpanded==='false','Accessible deep-link drawer');
  observations.push({name:'drawer-share-link',result:'PASS',details:drawerAccess});
+ const focusTrap=await evalJs("(()=>{const d=document.getElementById('skillDrawer');const buttons=[...d.querySelectorAll('button,a[href]')];buttons.at(-1).focus();const event=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true});document.dispatchEvent(event);return {firstFocused:document.activeElement===buttons[0],prevented:event.defaultPrevented}})()");
+ assert.ok(focusTrap.firstFocused && focusTrap.prevented,'Dialog Tab focus wraps inside dialog');
+ observations.push({name:'drawer-focus-trap',result:'PASS',details:focusTrap});
  await capture('skill-detail-desktop.png');
  const closed=await evalJs("(()=>{document.getElementById('closeDrawer').click();return {hidden:document.querySelector('#skillDrawer').getAttribute('aria-hidden')==='true',inert:document.getElementById('skillDrawer').inert,hash:location.hash}})()");
  assert.ok(closed.hidden && closed.inert && !closed.hash.startsWith('#skill/'),'Drawer close should restore hash and inert state');
@@ -136,6 +139,18 @@ try{
  observations.push({name:'direct-link-reload',result:'PASS',details:direct});
  requestError(await send('Page.navigate',{url:appRoot.href}));
  await ready();
+ const escape=await evalJs("(()=>{document.querySelector('.skill-card').click();document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));return {closed:!document.body.classList.contains('drawer-open'),inert:document.getElementById('skillDrawer').inert}})()");
+ assert.ok(escape.closed&&escape.inert,'Escape closes modal');
+ observations.push({name:'escape-close',result:'PASS',details:escape});
+ await evalJs("(()=>{document.querySelector('.skill-card').click();history.back();return true})()");
+ let browserBack=false;
+ for(let i=0;i<30;i++){
+  const state=await evalJs("({closed:!document.body.classList.contains('drawer-open'),hash:location.hash})");
+  if(state.closed && !state.hash.startsWith('#skill/')){browserBack=true;break;}
+  await timeout(100);
+ }
+ assert.ok(browserBack,'Browser Back closes deep-link dialog');
+ observations.push({name:'browser-back-close',result:'PASS',details:{closed:browserBack}});
 
  requestError(await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true}));
  requestError(await send('Page.reload',{ignoreCache:true}));
