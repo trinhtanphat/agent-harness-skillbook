@@ -52,5 +52,5 @@ const app=read('assets/app.js');
 assert.ok(app.includes('hashPrefix')&&app.includes('window.addEventListener(\'popstate\'')&&app.includes('window.addEventListener(\'hashchange\''),'Deep-link history routing');
 assert.ok(app.includes('updateCategories()')&&app.includes('renderCategories();'),'Stable category filters');
 const local=read('scripts/local-preview.mjs');
-assert.ok(local.includes(\"'127.0.0.1'\")&&local.includes(\"'.git'\"),'Local preview security invariants');
+assert.ok(local.includes("'127.0.0.1'")&&local.includes("'.git'"),'Local preview security invariants');
 console.log('PASS: deep-link/a11y invariants and private loopback preview');
