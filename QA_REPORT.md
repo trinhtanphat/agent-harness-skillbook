@@ -123,3 +123,11 @@ Ghi chú: cập nhật báo cáo này làm đổi HEAD; cần chạy lại verif
 - [JSON 19 kết quả](evidence/2026-11-14-19qa/browser-qa.json) · [Ảnh danh mục skill trên mobile](evidence/2026-11-14-19qa/skills-index-mobile-390.png).
 
 Giới hạn: PASS có nghĩa cả 19 smoke assertions định nghĩa trước đã đạt. Chưa khẳng định WCAG toàn diện, mọi nội dung học thuật, hoặc mọi loại trình duyệt. Sau khi commit bằng chứng, đối chiếu GitHub Pages với Git HEAD mới bằng verifier SHA.
+
+## Đối chiếu website 116/116 — 14/11/2026
+
+- Chạy `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-pages.ps1 -Full` trên WIN11-181 đối với commit `c8d0a0ffd907b44fbfabb6625d4e91178ed15b5f`.
+- **Đối chiếu thực tế: 116/116 Git blob SHA khớp byte-for-byte, `DEPLOY_INTEGRITY_PASS`, exit code 0.**
+- Bao gồm bằng chứng 19/19: `evidence/2026-11-14-19qa/browser-qa.json` và `skills-index-mobile-390.png`.
+- Lượt kiểm tra SHA đầu tiên đạt 115/116; kiểm tra riêng cả hai bằng chứng mới đều PASS và khi chạy lại toàn bộ đạt 116/116. Không bỏ qua tệp nào trong lần nghiệm thu thành công. Lượt không đạt được giữ trong lịch sử, không xem là PASS.
+- Việc cập nhật dòng báo cáo này làm thay đổi commit; phải chạy lại verifier trên HEAD mới để đóng kiểm toán.
