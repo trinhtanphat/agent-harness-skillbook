@@ -12,7 +12,11 @@ const root=resolve(fileURLToPath(new URL('../',import.meta.url)));
 const canonicalRoot=await realpath(root);
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.csv':'text/csv; charset=utf-8','.xml':'application/xml; charset=utf-8'};
 const secretSegments=new Set(['.git','node_modules','qa-evidence','qa-evidence-local','.env','.github','.npmrc','.pypirc','.ssh','.aws']);
-const isSensitiveSegment = s => secretSegments.has(s) || s.startsWith('.env.');
+const isSensitiveSegment = segment => {
+  // NTFS is normally case-insensitive; use one consistent deny rule on all OSes.
+  const name=segment.toLowerCase();
+  return secretSegments.has(name) || name.startsWith('.env.');
+};
 const deny=res=>{res.writeHead(403,{'Content-Type':'text/plain; charset=utf-8'});res.end('Forbidden');};
 export function createPreviewServer(){
  return createServer(async (req,res)=>{
@@ -36,6 +40,10 @@ export function createPreviewServer(){
   }catch{res.writeHead(404);res.end('Not found');return;}
   // A symlink may escape the repository even when its lexical path is safe.
   if(canonical!==canonicalRoot&&!canonical.startsWith(canonicalRoot+sep)){deny(res);return;}
+  // Lexical path checks alone are insufficient: an in-tree symlink could alias
+  // .git, .env.*, .ssh, etc. Deny sensitive segments in the resolved path too.
+  const resolvedParts=canonical.slice(canonicalRoot.length).split(sep).filter(Boolean);
+  if(resolvedParts.some(isSensitiveSegment)){deny(res);return;}
   if(st.isDirectory()){
    const location=name.endsWith('/')?name+'index.html':name+'/index.html';
    res.writeHead(302,{Location:location});res.end();return;
@@ -47,7 +55,7 @@ export function createPreviewServer(){
    'Content-Length':st.size
   });
   if(req.method==='HEAD'){res.end();return;}
-  createReadStream(candidate).on('error',()=>res.destroy()).pipe(res);
+  createReadStream(canonical).on('error',()=>res.destroy()).pipe(res);
  });
 }
 export async function startPreview(port=0){

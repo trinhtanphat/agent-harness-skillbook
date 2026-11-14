@@ -118,6 +118,11 @@ const previewCode=read('scripts/local-preview.mjs');
 assert.ok(previewCode.includes('canonicalRoot+sep')&&previewCode.includes('realpath(candidate)'),'Local preview must enforce canonical path containment');
 assert.ok(previewCode.includes("s.startsWith('.env.')"),'Preview must block environment files');
 console.log('PASS: canonical path containment and sensitive-file exclusions');
+assert.ok(previewCode.includes('resolvedParts.some(isSensitiveSegment)'),'Canonical path segments must be security checked');
+assert.ok(previewCode.includes('segment.toLowerCase()'),'Case-insensitive sensitive segment validation');
+assert.ok(previewCode.includes('createReadStream(canonical)'),'Serve validated canonical target');
+assert.ok(read('scripts/test-preview.mjs').includes('in-root symlink alias to forbidden'),'Missing internal sensitive symlink regression');
+console.log('PASS: canonical sensitive-segment policy and symlink alias regression');
 
 const seoDescription=html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1]||'';
 assert.ok(seoDescription.includes('60 Agent Skills')&&seoDescription.includes('14 playbook')&&!seoDescription.includes('36 kỹ năng'),'Index SEO catalog statistics');

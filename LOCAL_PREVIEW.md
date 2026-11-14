@@ -28,3 +28,7 @@ Before a release, additionally run `node scripts/validate.mjs`, `node examples/m
 For fast headless-server checks with **no Chromium installed**: `node scripts/test-preview.mjs` (12 cases). These verify only file serving and local scope, not UI interactivity.
 
 Security hardening: the preview refuses `.env.*`, `.npmrc`, `.pypirc`, `.ssh`, `.aws`, `.git`, `.github` and QA/cache directories. Every served file must resolve canonically under the repository root, including after following symbolic links. `node scripts/test-preview.mjs` tests this dynamically when the operating system permits symlink creation. It does not expose LAN interfaces.
+
+### Canonical sensitive-path policy (15/11/2026)
+
+The loopback server denies configured sensitive segments in **both** the requested URL and the resolved filesystem path. This prevents an in-repository symbolic link from exposing `.git`, `.env.*`, `.ssh` or similar files by using a harmless alias; the check is case-insensitive for Windows compatibility. Responses stream from the already validated canonical path. `node scripts/test-preview.mjs` now tests uppercase sensitive paths, outside-root symlinks and in-root aliases to dummy `.env.*` data when the OS permits symlinks. These tests create no real credentials or persistent artifacts.

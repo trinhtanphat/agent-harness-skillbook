@@ -30,6 +30,8 @@ try {
  await check('/qa-evidence-local/file.png',403);
  await check('/.env',403);
  await check('/.env.production',403);
+ await check('/.ENV',403);
+ await check('/.ENV.production',403);
  await check('/.npmrc',403);
  await check('/.ssh/id_rsa',403);
  await check('/not-a-real-page',404);
@@ -59,7 +61,30 @@ try {
   if(externalLinkCreated)await rm(link,{force:true});
   await rm(secret,{force:true});
  }
- console.log('PASS: 15 static preview cases / only loopback / internal files protected');
+ // A symlink that stays inside root can still expose a denied dotfile.
+ // This was not covered by the earlier outside-root-only symlink test.
+ const probeName='.env.skillbook-probe-'+token;
+ const aliasName='preview-public-alias-'+token+'.txt';
+ const probe=join(projectRoot,probeName);
+ const alias=join(projectRoot,aliasName);
+ let aliasCreated=false;
+ try {
+  await writeFile(probe,'TEST DUMMY VALUE; NOT A REAL SECRET',{flag:'wx'});
+  try { await symlink(probe,alias,'file'); aliasCreated=true; }
+  catch(error){
+   if(!['EPERM','EACCES','ENOTSUP','EOPNOTSUPP'].includes(error.code))throw error;
+   console.log('SKIP: OS does not permit in-root symlink test');
+  }
+  await check('/'+probeName,403);
+  if(aliasCreated){
+   await check('/'+aliasName,403);
+   console.log('PASS: in-root symlink alias to forbidden .env.* is denied');
+  }
+ } finally {
+  if(aliasCreated)await rm(alias,{force:true});
+  await rm(probe,{force:true});
+ }
+ console.log('PASS: 17 static preview cases / only loopback / sensitive paths protected');
 }finally {
  await new Promise(resolve=>server.close(resolve));
 }

@@ -20,3 +20,5 @@ Mở issue cho lỗi công khai không chứa secret. Với vấn đề nhạy c
 ### Extra local-preview protections
 
 The local server validates the canonical target of every file before serving it, preventing symlink escapes from the repository root. It refuses `.env.*`, `.npmrc`, `.pypirc`, `.ssh` and `.aws` paths as well as the previously blocked directories. These protections apply only to the local preview server, not GitHub Pages hosting policy.
+
+- Local preview rejects symlink aliases to sensitive paths *inside* the repository as well as symlinks escaping the repository; it lowercases path segments for Windows-safe matching. The test fixture creates a temporary dummy `.env.*` file and deletes it after testing. Only the loopback preview is affected; this is not a claim of production-server sandboxing.
