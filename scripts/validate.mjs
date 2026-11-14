@@ -1,5 +1,6 @@
 import {readFileSync,existsSync} from 'node:fs';
 import {join,dirname} from 'node:path';
+import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
 const root=join(dirname(fileURLToPath(import.meta.url)),'..');
@@ -127,3 +128,22 @@ console.log('PASS: SEO accuracy, modal a11y and responsive code blocks');
 
 assert.ok(existsSync(join(root,'evidence/2026-11-14-a11y-24qa/live-browser-run.md')),'Missing public 24-check browser QA transcript');
 console.log('PASS: public Chrome 24-check transcript included');
+
+const qa24Path='evidence/2026-11-14-a11y-24qa/browser-qa.json';
+const qa24=JSON.parse(read(qa24Path));
+assert.equal(qa24.observations.length,24,'24 browser checks expected');
+assert.equal(qa24.url,'https://trinhtanphat.github.io/agent-harness-skillbook/','QA URL should be public site');
+assert.equal(qa24.isolatedProfile,true,'Browser QA must use isolated profile');
+assert.ok(typeof qa24.at==='string' && !Number.isNaN(Date.parse(qa24.at)),'QA capture timestamp');
+const qa24Names=["desktop-catalog","metadata-counts","theme-toggle","search-MCP","category-filter","expanded-category-filter","category-keyboard-focus","drawer-share-link","modal-background-inert","drawer-focus-trap","skill-drawer","modal-background-restore","direct-link-reload","escape-close","browser-back-close","mobile-390","docs-mobile","14-guide-link-smoke","directory-pages","skills-index-mobile","installer-guide","mobile-320-four-routes","reduced-motion","runtime-exceptions"];
+assert.deepEqual(qa24.observations.map(x=>x.name),qa24Names,'Expected original 24 browser test names');
+assert.ok(qa24.observations.every(x=>x.result==='PASS'),'No failed browser test allowed');
+const originalEvidence=[{"file":"browser-qa.json","bytes":8862,"sha256":"fea5e78e1266689a514e92bcf4f506e246f17c0f89bd911bee6731ebffa55fe4"},{"file":"home-mobile-320.png","bytes":136772,"sha256":"1600f659d508cc6fa071450d982d9d047bd6946f2feede0b9acbfe66f06adec3"},{"file":"install-mobile-320.png","bytes":35081,"sha256":"1cfacb46faba6a8b4612591fa5833a772a2ccfc7dfa1487b995c688328b7e992"}];
+for(const item of originalEvidence){
+ const file=readFileSync(join(root,'evidence/2026-11-14-a11y-24qa',item.file));
+ assert.equal(file.length,item.bytes,'Original evidence byte count: '+item.file);
+ assert.equal(createHash('sha256').update(file).digest('hex'),item.sha256,'Original PHA SHA256: '+item.file);
+ if(item.file.endsWith('.png'))assert.ok(file.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),'PNG file signature: '+item.file);
+}
+assert.ok(existsSync(join(root,'evidence/2026-11-14-a11y-24qa/PROVENANCE.md')),'Evidence provenance manifest present');
+console.log('PASS: original PHA 24/24 browser QA, exact SHA256 of 3 files and PNG signatures');

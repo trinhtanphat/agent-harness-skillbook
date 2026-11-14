@@ -1,0 +1,369 @@
+{
+  "url": "https://trinhtanphat.github.io/agent-harness-skillbook/",
+  "observations": [
+    {
+      "name": "desktop-catalog",
+      "result": "PASS",
+      "details": {
+        "cards": 60,
+        "categories": 11,
+        "title": "Agent Harness Skillbook • Learn, Build, Verify",
+        "overflow": false
+      }
+    },
+    {
+      "name": "metadata-counts",
+      "result": "PASS",
+      "details": {
+        "description": "Agent Harness Skillbook: 60 Agent Skills thuộc 10 chủ đề cùng 14 playbook thực hành AI agents, MCP, nghiên cứu luận án, RAG, Git, QA và tự động hóa.",
+        "lang": "vi"
+      }
+    },
+    {
+      "name": "theme-toggle",
+      "result": "PASS",
+      "details": {
+        "before": false,
+        "after": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "search-MCP",
+      "result": "PASS",
+      "details": {
+        "count": 7,
+        "title": "7"
+      }
+    },
+    {
+      "name": "category-filter",
+      "result": "PASS",
+      "details": {
+        "count": 6,
+        "selected": "true"
+      }
+    },
+    {
+      "name": "expanded-category-filter",
+      "result": "PASS",
+      "details": {
+        "count": 6,
+        "selected": "true"
+      }
+    },
+    {
+      "name": "category-keyboard-focus",
+      "result": "PASS",
+      "details": {
+        "focused": true,
+        "pressed": "true",
+        "stillConnected": true
+      }
+    },
+    {
+      "name": "drawer-share-link",
+      "result": "PASS",
+      "details": {
+        "hash": "#skill/complete-repository-mirror",
+        "inert": false,
+        "shareButton": true,
+        "ariaExpanded": "false"
+      }
+    },
+    {
+      "name": "modal-background-inert",
+      "result": "PASS",
+      "details": {
+        "mainInert": true,
+        "headerInert": true,
+        "footerInert": true,
+        "drawerInert": false
+      }
+    },
+    {
+      "name": "drawer-focus-trap",
+      "result": "PASS",
+      "details": {
+        "firstFocused": true,
+        "prevented": true
+      }
+    },
+    {
+      "name": "skill-drawer",
+      "result": "PASS",
+      "details": {
+        "open": true,
+        "heading": "Mirror toàn bộ nhánh và refs có quyền",
+        "close": {
+          "hidden": true,
+          "inert": true,
+          "hash": "#explorer"
+        }
+      }
+    },
+    {
+      "name": "modal-background-restore",
+      "result": "PASS",
+      "details": {
+        "main": false,
+        "header": false,
+        "footer": false
+      }
+    },
+    {
+      "name": "direct-link-reload",
+      "result": "PASS",
+      "details": {
+        "open": true,
+        "title": "Mirror toàn bộ nhánh và refs có quyền",
+        "hash": "#skill/complete-repository-mirror",
+        "closeFocus": "closeDrawer"
+      }
+    },
+    {
+      "name": "escape-close",
+      "result": "PASS",
+      "details": {
+        "closed": true,
+        "inert": true
+      }
+    },
+    {
+      "name": "browser-back-close",
+      "result": "PASS",
+      "details": {
+        "closed": true
+      }
+    },
+    {
+      "name": "mobile-390",
+      "result": "PASS",
+      "details": {
+        "width": 390,
+        "scrollWidth": 390,
+        "cards": 60,
+        "brand": true
+      }
+    },
+    {
+      "name": "docs-mobile",
+      "result": "PASS",
+      "details": {
+        "h1": "Playbook — Crawl / Clone ứng dụng có quyền",
+        "items": 14,
+        "overflow": false
+      }
+    },
+    {
+      "name": "14-guide-link-smoke",
+      "result": "PASS",
+      "details": {
+        "total": 14,
+        "verified": 14
+      }
+    },
+    {
+      "name": "directory-pages",
+      "result": "PASS",
+      "details": {
+        "docsStatus": 200,
+        "skillsStatus": 200,
+        "docsCards": 14,
+        "skillsCards": 60,
+        "guideStale": false
+      }
+    },
+    {
+      "name": "skills-index-mobile",
+      "result": "PASS",
+      "details": {
+        "cards": 60,
+        "sections": 10,
+        "overflow": false
+      }
+    },
+    {
+      "name": "installer-guide",
+      "result": "PASS",
+      "details": {
+        "status": 200,
+        "hasCommands": true,
+        "hasDryRun": true
+      }
+    },
+    {
+      "name": "mobile-320-four-routes",
+      "result": "PASS",
+      "details": [
+        {
+          "url": "/agent-harness-skillbook/",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320,
+          "heading": true,
+          "overflowing": [
+            {
+              "tag": "DIV",
+              "cls": "orbit orbit-two",
+              "text": "",
+              "left": -32,
+              "right": 352,
+              "scroll": 418,
+              "client": 418
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "▦ Crawl & App Reconstruction",
+              "left": 297,
+              "right": 500,
+              "scroll": 200,
+              "client": 200
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "✳ Research & PhD",
+              "left": 509,
+              "right": 641,
+              "scroll": 130,
+              "client": 130
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "◇ MCP & Integrations",
+              "left": 650,
+              "right": 804,
+              "scroll": 152,
+              "client": 152
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "⌁ Problem Solving",
+              "left": 813,
+              "right": 945,
+              "scroll": 130,
+              "client": 130
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "⛨ QA, Security & Delivery",
+              "left": 954,
+              "right": 1131,
+              "scroll": 175,
+              "client": 175
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "⌕ Reverse Engineering & Forensics",
+              "left": 1140,
+              "right": 1363,
+              "scroll": 220,
+              "client": 220
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "◈ Knowledge & RAG",
+              "left": 1372,
+              "right": 1519,
+              "scroll": 145,
+              "client": 145
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "⎇ Git & Release Engineering",
+              "left": 1528,
+              "right": 1717,
+              "scroll": 187,
+              "client": 187
+            },
+            {
+              "tag": "BUTTON",
+              "cls": "category-btn",
+              "text": "⟲ Data & Automation",
+              "left": 1726,
+              "right": 1880,
+              "scroll": 152,
+              "client": 152
+            }
+          ]
+        },
+        {
+          "url": "/agent-harness-skillbook/docs/index.html",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320,
+          "heading": true,
+          "overflowing": []
+        },
+        {
+          "url": "/agent-harness-skillbook/skills/index.html",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320,
+          "heading": true,
+          "overflowing": []
+        },
+        {
+          "url": "/agent-harness-skillbook/install.html",
+          "width": 320,
+          "scrollWidth": 320,
+          "bodyWidth": 320,
+          "heading": true,
+          "overflowing": [
+            {
+              "tag": "CODE",
+              "cls": "",
+              "text": "git clone https://github.com/trinht",
+              "left": 56,
+              "right": 511,
+              "scroll": 455,
+              "client": 455
+            },
+            {
+              "tag": "CODE",
+              "cls": "",
+              "text": "node scripts/install-skills.mjs --s",
+              "left": 56,
+              "right": 696,
+              "scroll": 640,
+              "client": 640
+            },
+            {
+              "tag": "CODE",
+              "cls": "",
+              "text": "# Cài một skill vào .agents/skills\n",
+              "left": 56,
+              "right": 854,
+              "scroll": 798,
+              "client": 798
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reduced-motion",
+      "result": "PASS",
+      "details": {
+        "prefers": true,
+        "transition": "0s",
+        "scroll": "auto"
+      }
+    },
+    {
+      "name": "runtime-exceptions",
+      "result": "PASS",
+      "details": "No JavaScript exceptions"
+    }
+  ],
+  "at": "2026-11-14T13:39:43.122Z",
+  "isolatedProfile": true
+}

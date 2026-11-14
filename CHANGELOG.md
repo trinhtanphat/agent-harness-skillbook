@@ -1,3 +1,10 @@
+## 2026-11-15 — Recover and publish original 24/24 Chrome QA artifacts
+
+- Reconnected to the original PHA QA host; archived untouched `browser-qa.json`, `home-mobile-320.png`, and `install-mobile-320.png`.
+- Confirmed source SHA-256, byte lengths, and equality of source Git blob SHA to uploaded GitHub blob SHA.
+- Added PROVENANCE.md and validator checks to detect corruption or accidental changes to original evidence.
+- QA scope and production deploy integrity remain independently verified; closing Issue #1 requires final HEAD/Pages integrity pass.
+
 ## 2026-11-14 — Compact mobile, modal accessibility and preview security
 
 - Sửa overflow tại viewport 320px: thanh điều hướng và các câu lệnh installer dài.

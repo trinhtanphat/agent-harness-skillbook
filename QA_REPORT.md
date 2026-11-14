@@ -145,3 +145,11 @@ Giới hạn: PASS có nghĩa cả 19 smoke assertions định nghĩa trước �
 **Bằng chứng:** [Console QA công khai được ghi lại](evidence/2026-11-14-a11y-24qa/live-browser-run.md). JSON và ảnh 320px được runner lưu trên PHA, nhưng lúc biên tập báo cáo máy PHA mất kết nối nên chưa sao chép lên GitHub. Không suy diễn thêm kết quả chưa đo. Kết quả này không phải chứng nhận accessibility/WCAG đầy đủ hoặc kiểm định toàn bộ nội dung học thuật.
 
 **Yêu cầu cuối:** vì cập nhật báo cáo thay đổi HEAD, chạy lại `scripts/verify-pages.ps1 -Full` trên commit mới.
+
+## Đã hoàn tất lưu trữ bằng chứng PHA 24/24 — 15/11/2026
+
+**Trạng thái mới nhất:** ba tệp gốc của đợt Chrome QA 24/24 đã được phục hồi trực tiếp từ `DESKTOP-PHA1S90` và đưa vào GitHub dưới `evidence/2026-11-14-a11y-24qa/`: [browser-qa.json](evidence/2026-11-14-a11y-24qa/browser-qa.json), [ảnh trang chủ 320px](evidence/2026-11-14-a11y-24qa/home-mobile-320.png), [ảnh hướng dẫn cài 320px](evidence/2026-11-14-a11y-24qa/install-mobile-320.png).
+
+JSON chứa **24/24 PASS**, URL GitHub Pages chính thức, thông tin profile trình duyệt cô lập và dấu thời gian `2026-11-14T13:39:43.122Z`. Tệp gốc đã được kiểm tra tại PHA; Git blob SHA của cả ba file khi upload lên GitHub trùng với kết quả `git hash-object` từ máy nguồn. Bảng SHA-256 và quy trình chuyển: [PROVENANCE.md](evidence/2026-11-14-a11y-24qa/PROVENANCE.md).
+
+Đây là cập nhật trạng thái **thay thế kết luận 'chưa tải được'** ở đoạn ghi nhận lịch sử phía trên. Những đoạn lịch sử được giữ để truy vết. Sau khi commit, phải chạy lại validator và deployed SHA verifier trên HEAD mới trước khi đóng Issue #1.
