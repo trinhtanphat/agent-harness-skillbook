@@ -1,3 +1,7 @@
+## 2026-11-14 — Browser blockers closed
+
+**16/16 Browser QA PASS — live GitHub Pages.** Ba ca focus trap, Escape và Back đã được chạy trực tiếp trên bản public; JSON và 4 ảnh bằng chứng đã được đưa vào `evidence/2026-11-14-final`. Script verify-pages kiểm tra cả bộ bằng chứng này.
+
 ## 2026-11-14 — UI usability & branch QA
 
 - Thêm deep link cho từng SKILL.md qua `#skill/<id>` và nút sao chép URL.
