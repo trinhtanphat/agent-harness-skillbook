@@ -24,7 +24,7 @@ for(const s of skills){
 assert.equal(categories.size,10,'categories');
 const names=['app-reconstruction','phd-research','mcp-integration','problem-solving','agent-harness','qa-release','evidence-reporting','security-ethics','evaluation-cost','learning-roadmap','reverse-forensics','knowledge-rag','full-github-mirror','data-automation'];
 for(let i=0;i<names.length;i++){const p='playbooks/'+String(i+1).padStart(2,'0')+'-'+names[i]+'.md';assert.ok(existsSync(join(root,p)),'playbook exists: '+p);assert.ok(read(p).length>1500,'playbook length: '+p);}
-for(const p of ['index.html','assets/styles.css','assets/app.js','assets/favicon.svg','REFERENCES.md','AGENTS.md','.nojekyll'])assert.ok(existsSync(join(root,p)),'site file '+p);
+for(const p of ['index.html','assets/styles.css','assets/app.js','assets/favicon.svg','REFERENCES.md','AGENTS.md','.nojekyll','scripts/local-preview.mjs','scripts/test-local.mjs','LOCAL_PREVIEW.md'])assert.ok(existsSync(join(root,p)),'site file '+p);
 const html=read('index.html');
 for(const m of html.matchAll(/\b(?:href|src)="([^"]+)"/g)){const u=m[1];if(/^(https?:\/\/|#|mailto:)/.test(u))continue;const p=u.split('#')[0].split('?')[0].replace(/^\.\//,'');if(p)assert.ok(existsSync(join(root,p)),'local link '+u);}
 assert.ok(html.includes('Content-Security-Policy'),'CSP');
@@ -45,3 +45,12 @@ for(const page of docNames){
  }
 }
 console.log('PASS: 14 HTML guides and relative-link checks');
+
+// Structural regression gates for the shareable drawer and isolated QA harness.
+assert.ok(html.includes('aria-describedby="drawerSummary"')&&html.includes('aria-hidden="true" inert'),'Closed drawer must be inert and have a description');
+const app=read('assets/app.js');
+assert.ok(app.includes('hashPrefix')&&app.includes('window.addEventListener(\'popstate\'')&&app.includes('window.addEventListener(\'hashchange\''),'Deep-link history routing');
+assert.ok(app.includes('updateCategories()')&&app.includes('renderCategories();'),'Stable category filters');
+const local=read('scripts/local-preview.mjs');
+assert.ok(local.includes(\"'127.0.0.1'\")&&local.includes(\"'.git'\"),'Local preview security invariants');
+console.log('PASS: deep-link/a11y invariants and private loopback preview');

@@ -79,3 +79,21 @@ Nguồn: [Agent Skills](https://agentskills.io/specification) · [MCP 2026-07-28
 ## Báo cáo QA có bằng chứng
 
 Xem [QA_REPORT.md](QA_REPORT.md) và [ảnh mobile 390px](evidence/2026-11-14/home-mobile-390.png). Các ảnh được chụp trên Chrome headless profile riêng, không có tài khoản đăng nhập hoặc dữ liệu người dùng. Kết quả chỉ đại diện phạm vi test ghi trong báo cáo.
+
+## Chia sẻ trực tiếp từng skill
+
+Mở thư viện, chọn một skill, nhấn **Sao chép liên kết**. Ví dụ: [Complete Repository Mirror](https://trinhtanphat.github.io/agent-harness-skillbook/#skill/complete-repository-mirror). URL `#skill/<id>` có thể tải lại và mở đúng skill ngay, không cần tài khoản, backend hay API.
+
+Website hỗ trợ tìm kiếm từ khóa, lọc 10 chuyên mục/độ khó, bật sáng/tối, `Ctrl+K` để tìm nhanh và `Esc` để đóng chi tiết. Bộ lọc giữ focus bàn phím và popup có focus trap.
+
+## Xem trước và kiểm thử trước merge
+
+Đọc [LOCAL_PREVIEW.md](LOCAL_PREVIEW.md) để khởi chạy server loopback không dependency, kiểm tra an toàn đường dẫn và chạy QA browser trên **nhánh riêng**:
+
+```bash
+node scripts/local-preview.mjs 8765
+# hoặc chạy một lệnh mở server, test và tự đóng:
+node scripts/test-local.mjs
+```
+
+Các file QA local được lưu trong `qa-evidence-local/` (đã gitignore). Không được coi test cục bộ là xác minh GitHub Pages; sau merge/deploy phải kiểm tra riêng.

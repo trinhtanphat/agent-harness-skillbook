@@ -1,3 +1,13 @@
+## 2026-11-14 — UI usability & branch QA
+
+- Thêm deep link cho từng SKILL.md qua `#skill/<id>` và nút sao chép URL.
+- Sửa category filter để giữ focus bàn phím; đánh dấu drawer `inert` khi đóng.
+- Bổ sung biểu tượng cho bốn chuyên mục mở rộng.
+- Thêm server xem trước chỉ trên loopback và bộ kiểm thử branch QA không GitHub Actions.
+- Bổ sung test deep-link/reload, focus trap, Escape, Back, liên kết và bảo vệ thư mục nội bộ.
+
+**Trạng thái:** Xem QA_REPORT.md theo commit đã kiểm thử; phần này chỉ ghi thay đổi, không tự tuyên bố production verified.
+
 # Changelog
 
 ## 2026-11-14 — Knowledge base expansion

@@ -24,3 +24,11 @@ node scripts/validate.mjs
 ## Hợp nhất
 
 Chỉ merge thay đổi sau khi kiểm tra cấu trúc, liên kết nội bộ, khả năng tìm kiếm/filter và responsive. Cấm commit `.env`, khóa và dữ liệu người dùng.
+
+## Chia sẻ skill và kiểm thử UI
+
+- Hash route `#skill/<id>` phải mở đúng skill khi tải mới và vẫn cho phép đóng bằng Escape, click overlay, close button, browser Back.
+- Category chip cần giữ DOM node/focus khi lọc; drawer phải `inert` và `aria-hidden` khi đóng.
+- Ưu tiên kiểm tra bằng `node scripts/test-local.mjs` trên nhánh thử nghiệm để không thay đổi GitHub Pages production.
+- Dữ liệu kiểm thử và screenshot nằm trong `qa-evidence-local/`; không đẩy vào GitHub trừ khi đã soát PII và có mục đích báo cáo rõ.
+- Không dùng Chrome/Edge profile hiện có; browser QA phải dùng profile tạm riêng, không đóng Session 2.

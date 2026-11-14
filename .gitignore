@@ -6,3 +6,7 @@ node_modules/
 *.log
 *.bak
 coverage/
+
+# Browser QA is isolated; committed evidence is curated under evidence/.
+qa-evidence/
+qa-evidence-local/
