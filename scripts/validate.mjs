@@ -141,9 +141,15 @@ assert.ok(qa24.observations.every(x=>x.result==='PASS'),'No failed browser test 
 const originalEvidence=[{"file":"browser-qa.json","bytes":8862,"sha256":"fea5e78e1266689a514e92bcf4f506e246f17c0f89bd911bee6731ebffa55fe4"},{"file":"home-mobile-320.png","bytes":136772,"sha256":"1600f659d508cc6fa071450d982d9d047bd6946f2feede0b9acbfe66f06adec3"},{"file":"install-mobile-320.png","bytes":35081,"sha256":"1cfacb46faba6a8b4612591fa5833a772a2ccfc7dfa1487b995c688328b7e992"}];
 for(const item of originalEvidence){
  const file=readFileSync(join(root,'evidence/2026-11-14-a11y-24qa',item.file));
- assert.equal(file.length,item.bytes,'Original evidence byte count: '+item.file);
- assert.equal(createHash('sha256').update(file).digest('hex'),item.sha256,'Original PHA SHA256: '+item.file);
- if(item.file.endsWith('.png'))assert.ok(file.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),'PNG file signature: '+item.file);
+ // Git on Windows may checkout tracked text with CRLF (core.autocrlf=true).
+ // Normalize only JSON line endings in memory: the committed Git blob still
+ // matches the exact original PHA bytes; PNGs always remain byte-identical.
+ const canonical=item.file.endsWith('.json')
+   ? Buffer.from(file.toString('utf8').replace(/\r\n/g,'\n'),'utf8')
+   : file;
+ assert.equal(canonical.length,item.bytes,'Original Git evidence byte count: '+item.file);
+ assert.equal(createHash('sha256').update(canonical).digest('hex'),item.sha256,'Original PHA SHA256: '+item.file);
+ if(item.file.endsWith('.png'))assert.ok(canonical.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])),'PNG file signature: '+item.file);
 }
 assert.ok(existsSync(join(root,'evidence/2026-11-14-a11y-24qa/PROVENANCE.md')),'Evidence provenance manifest present');
 console.log('PASS: original PHA 24/24 browser QA, exact SHA256 of 3 files and PNG signatures');
