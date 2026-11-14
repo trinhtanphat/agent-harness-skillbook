@@ -113,13 +113,29 @@ try{
  assert.equal(gitCategory.count,6,'Git category must have six skills');
  assert.equal(gitCategory.selected,'true');
  observations.push({name:'expanded-category-filter',result:'PASS',details:gitCategory});
+ const categoryKeyboard=await evalJs("(()=>{const b=Array.from(document.querySelectorAll('.category-btn')).find(x=>x.textContent.includes('Git & Release'));b.focus();b.click();return {focused:document.activeElement===b,pressed:b.getAttribute('aria-pressed'),stillConnected:b.isConnected}})()");
+ assert.ok(categoryKeyboard.focused && categoryKeyboard.stillConnected && categoryKeyboard.pressed==='true','Category focus must be preserved after filtering');
+ observations.push({name:'category-keyboard-focus',result:'PASS',details:categoryKeyboard});
 
  const drawer=await evalJs("(()=>{document.querySelector('.skill-card').click();return {open:document.querySelector('#skillDrawer').classList.contains('open'),heading:document.querySelector('#drawerTitle').textContent}})()");
  assert.ok(drawer.open&&drawer.heading,'Drawer opened');
+ const drawerAccess=await evalJs("({hash:location.hash,inert:document.getElementById('skillDrawer').inert,shareButton:!!document.getElementById('copySkillLink'),ariaExpanded:document.getElementById('skillDrawer').getAttribute('aria-hidden')})");
+ assert.ok(drawerAccess.hash.startsWith('#skill/') && !drawerAccess.inert && drawerAccess.shareButton && drawerAccess.ariaExpanded==='false','Accessible deep-link drawer');
+ observations.push({name:'drawer-share-link',result:'PASS',details:drawerAccess});
  await capture('skill-detail-desktop.png');
- const closed=await evalJs("(()=>{document.getElementById('closeDrawer').click();return document.querySelector('#skillDrawer').getAttribute('aria-hidden')==='true'})()");
- assert.ok(closed,'Drawer close works');
- observations.push({name:'skill-drawer',result:'PASS',details:drawer});
+ const closed=await evalJs("(()=>{document.getElementById('closeDrawer').click();return {hidden:document.querySelector('#skillDrawer').getAttribute('aria-hidden')==='true',inert:document.getElementById('skillDrawer').inert,hash:location.hash}})()");
+ assert.ok(closed.hidden && closed.inert && !closed.hash.startsWith('#skill/'),'Drawer close should restore hash and inert state');
+ observations.push({name:'skill-drawer',result:'PASS',details:{...drawer,close:closed}});
+ const directUrl=new URL('#skill/complete-repository-mirror',appRoot);
+ requestError(await send('Page.navigate',{url:directUrl.href}));
+ await ready();
+ const direct=await evalJs("({open:document.getElementById('skillDrawer').classList.contains('open'),title:document.getElementById('drawerTitle').textContent,hash:location.hash,closeFocus:document.activeElement.id})");
+ assert.ok(direct.open && direct.hash==='#skill/complete-repository-mirror' && direct.title.includes('Mirror'),'Deep-link loads correct skill from fresh navigation');
+ const directClosed=await evalJs("(()=>{document.getElementById('closeDrawer').click();return {inert:document.getElementById('skillDrawer').inert,hash:location.hash}})()");
+ assert.ok(directClosed.inert && !directClosed.hash.startsWith('#skill/'),'Direct linked drawer dismisses safely');
+ observations.push({name:'direct-link-reload',result:'PASS',details:direct});
+ requestError(await send('Page.navigate',{url:appRoot.href}));
+ await ready();
 
  requestError(await send('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true}));
  requestError(await send('Page.reload',{ignoreCache:true}));
