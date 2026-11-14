@@ -62,3 +62,38 @@ assert.equal(finalQA.observations.length,16,'final QA count');
 for(const name of ["desktop-catalog","theme-toggle","search-MCP","category-filter","expanded-category-filter","category-keyboard-focus","drawer-share-link","drawer-focus-trap","skill-drawer","direct-link-reload","escape-close","browser-back-close","mobile-390","docs-mobile","14-guide-link-smoke","runtime-exceptions"])assert.ok(finalQA.observations.some(r=>r.name===name&&r.result==='PASS'),'final QA: '+name);
 for(const p of ['home-desktop-1440.png','home-mobile-390.png','skill-detail-desktop.png','docs-mobile-390.png'])assert.ok(existsSync(join(root,'evidence/2026-11-14-final',p)),'final screenshot: '+p);
 console.log('PASS: latest 16/16 public browser QA evidence and 4 screenshots');
+
+const guidesIndex=read('docs/index.html');
+const skillsIndex=read('skills/index.html');
+assert.equal((guidesIndex.match(/class="directory-card"/g)||[]).length,14,'14 guide index cards');
+assert.equal((skillsIndex.match(/class="directory-card"/g)||[]).length,60,'60 skill index cards');
+assert.equal((skillsIndex.match(/class="directory-heading"/g)||[]).length,10,'10 category sections');
+for(let i=0;i<names.length;i++){
+ const guideUrl='docs/'+String(i+1).padStart(2,'0')+'-'+names[i]+'.html';
+ assert.ok(guidesIndex.includes('href="'+guideUrl.slice(5)+'"'),'Guide missing from docs index: '+guideUrl);
+}
+for(const skill of skills){
+ assert.ok(skillsIndex.includes('href="../#skill/'+encodeURIComponent(skill.id)+'"'),'Skill missing from directory: '+skill.id);
+ assert.ok(skillsIndex.includes('href="../'+skill.path+'"'),'Raw SKILL.md link missing: '+skill.id);
+}
+for(let i=10;i<14;i++){
+ const p='docs/'+String(i+1).padStart(2,'0')+'-'+names[i]+'.html';
+ const page=read(p);
+ assert.ok(page.includes('FIELD GUIDES / '+(i+1)+'</div>'),'Incorrect guide counter: '+p);
+ assert.ok(!page.includes('content="Lộ trình 30 ngày — Playbook'),'Stale guide description: '+p);
+}
+for(const link of ['assets/directory.css','INSTALL_SKILLS.md','scripts/install-skills.mjs','scripts/test-install-skills.mjs','docs/index.html','skills/index.html'])assert.ok(existsSync(join(root,link)),'Missing new artifact '+link);
+for(const p of ['docs/index.html','skills/index.html']){
+ const body=read(p);
+ assert.ok(body.includes('Content-Security-Policy'),'Missing CSP: '+p);
+ assert.ok(body.includes('lang="vi"'),'Missing language: '+p);
+ for(const link of body.matchAll(/\b(?:href|src)="([^"]+)"/g)){
+  const url=link[1];
+  if(/^(?:https?:\/\/|#|mailto:)/.test(url))continue;
+  const pathname=url.split('#')[0].split('?')[0];
+  if(pathname)assert.ok(existsSync(join(root,p.slice(0,p.lastIndexOf('/')),pathname)),'Broken index link '+p+' -> '+url);
+ }
+}
+const siteMap=read('sitemap.xml');
+for(const target of ['docs/index.html','skills/index.html'])assert.ok(siteMap.includes('https://trinhtanphat.github.io/agent-harness-skillbook/'+target),'Sitemap missing '+target);
+console.log('PASS: 14/60 static directories, metadata, CSP, links and sitemap');

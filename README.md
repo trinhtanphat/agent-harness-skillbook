@@ -110,3 +110,5 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 - [Danh mục 60 skills trực tuyến](skills/index.html).
 - [Hướng dẫn cài an toàn vào dự án khác](INSTALL_SKILLS.md): dry-run mặc định, --write để cài, không ghi đè.
 - Kiểm thử cài đặt: node scripts/test-install-skills.mjs (không phụ thuộc npm packages).
+
+**Phát triển / QA:** thêm kiểm tra tự động hai trang chỉ mục, 60 deep links và bốn meta descriptions. Chạy `node scripts/validate.mjs`, `node scripts/test-install-skills.mjs` và `node scripts/browser-qa.mjs <site-url>` trên trình duyệt cô lập để nghiệm thu giao diện.

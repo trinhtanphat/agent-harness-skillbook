@@ -172,6 +172,22 @@ try{
  assert.equal(guideLinks.total,14,'14 guide links');
  assert.equal(guideLinks.verified,14,'All 14 guide URLs load over HTTP');
  observations.push({name:'14-guide-link-smoke',result:'PASS',details:{total:guideLinks.total,verified:guideLinks.verified}});
+
+ const indexes=await evalJs("(async()=>{const d=await fetch('../docs/index.html');const s=await fetch('../skills/index.html');const dt=await d.text(),st=await s.text();return {docsStatus:d.status,skillsStatus:s.status,docsCards:(dt.match(/class=\"directory-card\"/g)||[]).length,skillsCards:(st.match(/class=\"directory-card\"/g)||[]).length,guideStale:dt.includes('FIELD GUIDES / 10')}})()");
+ assert.equal(indexes.docsStatus,200,'14 guide directory page reachable');
+ assert.equal(indexes.skillsStatus,200,'60 skill directory page reachable');
+ assert.equal(indexes.docsCards,14,'14 guide entries in directory');
+ assert.equal(indexes.skillsCards,60,'60 skill entries in directory');
+ observations.push({name:'directory-pages',result:'PASS',details:indexes});
+ requestError(await send('Page.navigate',{url:new URL('skills/index.html',appRoot).href}));
+ for(let n=0;n<40;n++){if(await evalJs("document.readyState==='complete' && document.querySelectorAll('.directory-card').length===60"))break;await timeout(150);}
+ const responsiveDirectory=await evalJs("({cards:document.querySelectorAll('.directory-card').length,sections:document.querySelectorAll('.directory-heading').length,overflow:document.documentElement.scrollWidth>innerWidth})");
+ assert.equal(responsiveDirectory.cards,60);
+ assert.equal(responsiveDirectory.sections,10);
+ assert.equal(responsiveDirectory.overflow,false,'Mobile directory horizontal overflow');
+ await capture('skills-index-mobile-390.png');
+ observations.push({name:'skills-index-mobile',result:'PASS',details:responsiveDirectory});
+
  assert.equal(runtimeExceptions.length,0,'Browser runtime exceptions: '+runtimeExceptions.join(' / '));
  observations.push({name:'runtime-exceptions',result:'PASS',details:'No JavaScript exceptions'});
  await writeFile(join(evidence,'browser-qa.json'),JSON.stringify({url,observations,at:new Date().toISOString(),isolatedProfile:true},null,2));
