@@ -88,3 +88,13 @@ Cần sau deploy chạy `scripts/verify-pages.ps1 -Full` so khớp toàn bộ Gi
 Bằng chứng: [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · [Desktop](evidence/2026-11-14-final/home-desktop-1440.png) · [Mobile](evidence/2026-11-14-final/home-mobile-390.png) · [Popup skill](evidence/2026-11-14-final/skill-detail-desktop.png) · [Trang hướng dẫn mobile](evidence/2026-11-14-final/docs-mobile-390.png).
 
 **Giới hạn:** Đây là QA smoke tự động đối với các chức năng đã xác định, không thay thế đánh giá toàn diện về học thuật, tính tương thích mọi trình duyệt hoặc WCAG. Sau mỗi commit thay đổi báo cáo, phải chạy lại integrity verifier để khẳng định nội dung công khai khớp GitHub.
+
+## Bổ sung thư viện và trình cài (14/11/2026)
+
+**Đã thực hiện:** tạo danh mục trực tuyến 60 skills / 14 playbook; metadata của bốn guide 11–14 được sửa; cung cấp CLI installer dry-run mặc định với `--write` rõ ràng, không ghi đè skill có sẵn, từ chối tên không hợp lệ, ba layout và checksum SHA256.
+
+**Kiểm thử chạy trên WIN11-181 (cùng commit ứng viên):** `node scripts/validate.mjs` PASS, `node scripts/test-install-skills.mjs` PASS (60 skills + negative cases), `node scripts/test-preview.mjs` PASS, MCP smoke PASS, `git fsck` PASS.
+
+**Cổng chưa hoàn tất tại thời điểm ghi ghi chú này:** ba browser checks bổ sung (`directory-pages`, `skills-index-mobile`, `installer-guide`) chưa có bằng chứng thực chạy vì DESKTOP-PHA1S90 đang offline và Chrome headless trên 181 không đủ tài nguyên. Những trường hợp này phải mang trạng thái NOT_RUN cho đến khi có xác minh riêng; 16/16 browser PASS trước đây không tự mở rộng thành 19/19.
+
+**Sau khi deploy:** chạy `scripts/verify-pages.ps1 -Full` để đối chiếu byte các trang chỉ mục, trình cài, 60 skills và tài nguyên site với HEAD. Không sử dụng GitHub Actions.

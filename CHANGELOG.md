@@ -1,3 +1,10 @@
+## 2026-11-14 — Discoverability and safe skill installation
+
+- Trang danh mục riêng `docs/index.html` (14 playbook) và `skills/index.html` (60 skill/10 nhóm), đọc được khi tắt JavaScript.
+- Trang `install.html` và trình cài Node.js không có dependencies; chế độ mặc định dry-run, yêu cầu `--write` và thư mục đích rõ ràng, không ghi đè.
+- Sửa nhãn FIELD GUIDE và mô tả SEO cho các hướng dẫn 11–14; thêm liên kết chỉ mục và ba URL vào sitemap.
+- Bộ kiểm thử Node đã PASS trên WIN11-181 (60 skills, 14 guides, link check, security, installer, MCP, fsck). Ba trường hợp browser mới về trang chỉ mục và hướng dẫn cài cần chạy trên Chrome/Chromium riêng sau triển khai; kết quả 16/16 trước đó vẫn chỉ áp dụng phạm vi cũ.
+
 ## 2026-11-14 — Browser blockers closed
 
 **16/16 Browser QA PASS — live GitHub Pages.** Ba ca focus trap, Escape và Back đã được chạy trực tiếp trên bản public; JSON và 4 ảnh bằng chứng đã được đưa vào `evidence/2026-11-14-final`. Script verify-pages kiểm tra cả bộ bằng chứng này.

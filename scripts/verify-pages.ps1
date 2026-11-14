@@ -9,9 +9,10 @@ $site = 'https://trinhtanphat.github.io/agent-harness-skillbook/'
 Push-Location $repo
 $tmp = Join-Path $env:TEMP ('skillbook-pages-verify-' + [guid]::NewGuid().ToString('N'))
 New-Item -Path $tmp -ItemType Directory -Force | Out-Null
-$paths = @('index.html','assets/app.js','assets/styles.css','assets/docs.css',
+$paths = @('index.html','skills/index.html','install.html','assets/app.js','assets/styles.css','assets/docs.css','assets/directory.css',
            'data/catalog.js','sitemap.xml','QA_REPORT.md','README.md',
-           'examples/mcp-stdio-demo/server.mjs','examples/mcp-stdio-demo/client-smoke.mjs')
+           'examples/mcp-stdio-demo/server.mjs','examples/mcp-stdio-demo/client-smoke.mjs',
+           'INSTALL_SKILLS.md','scripts/install-skills.mjs','scripts/test-install-skills.mjs')
 $paths += @(Get-ChildItem (Join-Path $repo 'docs') -Filter '*.html' -File | ForEach-Object { 'docs/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14') -Filter '*.png' -File | ForEach-Object { 'evidence/2026-11-14/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-final') -File | ForEach-Object { 'evidence/2026-11-14-final/' + $_.Name })
