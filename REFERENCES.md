@@ -26,3 +26,14 @@ Quyền truy cập web công khai không tự động cấp quyền sao chép co
 ## Hạn chế
 
 Các sample là hướng dẫn tham khảo; phải kiểm tra API/SDK và giấy phép tại thời điểm sử dụng. Không có chứng cứ nào từ tài liệu này tự chứng minh một bản deploy cụ thể đã thành công.
+
+## Tiêu chuẩn bổ sung năm 2026
+
+- [Agent Skills format — đặc tả chính thức](https://agentskills.io/specification): giới hạn name/description, metadata, layout và skill bundling.
+- [MCP bản 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28): mô hình stateless với version và client capabilities trong mỗi request.
+- [MCP Discovery 2026](https://modelcontextprotocol.io/specification/2026-07-28/server/discover): server/discover và supportedVersions.
+- [MCP Tools 2026](https://modelcontextprotocol.io/specification/2026-07-28/server/tools): resultType, tool validation errors và output schema.
+- [MCP TypeScript SDK v2](https://ts.sdk.modelcontextprotocol.io/v2/): hỗ trợ modern/legacy cần được cấu hình rõ theo client.
+- [SLSA](https://slsa.dev/): provenance của build artifacts.
+- [GitHub Releases API](https://docs.github.com/en/rest/releases/releases): Releases và assets ngoài Git refs.
+- [Git docs](https://git-scm.com/docs): integrity, clone mirror, fsck.

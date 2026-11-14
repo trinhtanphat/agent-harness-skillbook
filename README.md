@@ -1,60 +1,75 @@
 # Agent Harness Skillbook
 
-> **Kho hướng dẫn thực hành bằng tiếng Việt** về agentic engineering, kỹ năng tái sử dụng, MCP, nghiên cứu học thuật, tái tạo ứng dụng có quyền, kiểm toán, QA và triển khai an toàn.
+**Kho kiến thức thực hành AI Engineering, Agent Harness, Skills và MCP bằng tiếng Việt.** Nội dung được viết thành các quy trình có phạm vi, quyền, output, testcase và bằng chứng. Tài liệu tự biên soạn dựa trên tiêu chuẩn/tài liệu công khai; không phải sản phẩm chính thức của các tổ chức được tham khảo.
 
-🌐 **Website GitHub Pages:** https://trinhtanphat.github.io/agent-harness-skillbook/  
-📚 **Thư viện:** [Mở trang chủ](index.html) · [Skills](.agents/skills/) · [Playbooks](playbooks/) · [Nguồn tham khảo](REFERENCES.md)
+🌐 **Website:** https://trinhtanphat.github.io/agent-harness-skillbook/  
+📚 **Tài liệu:** [14 hướng dẫn dạng HTML](docs/) · [60 SKILL.md](.agents/skills/) · [Danh mục nguồn](REFERENCES.md)  
+💡 **MCP mẫu:** [Server stdio 2026-07-28](examples/mcp-stdio-demo/)  
+🔬 **Bộ kiểm thử:** [Validator](scripts/validate.mjs) · [Browser QA](scripts/browser-qa.mjs)
 
-## Mục tiêu
+## 60 kỹ năng / 10 nhóm
 
-1. **Học có cấu trúc**: giải thích khái niệm, quy trình và điểm kiểm soát.
-2. **Làm được thật**: cung cấp `SKILL.md`, mã mẫu, checklist và rubric nghiệm thu.
-3. **Không đánh đồng trạng thái**: phân biệt kế hoạch, mã đã viết, test, commit, deployment và production verified.
-4. **An toàn theo mặc định**: chỉ crawl/clone tài sản được phép, không sao chép bí mật, dữ liệu cá nhân, tài sản có bản quyền khi chưa được phép.
-5. **Sử dụng lại**: mỗi skill là một công việc hẹp, có đầu vào/đầu ra và giới hạn rõ.
-
-## Các học phần
-
-| Nhóm | Nội dung |
+| Nhóm | Ví dụ |
 |---|---|
-| Agent Harness | lập kế hoạch, tool routing, context/memory, reasoning effort, delegation, checkpoint |
-| Skills | SKILL.md, progressive disclosure, trigger design, evaluation |
-| MCP | host/client/server, stdio vs Streamable HTTP, OAuth, RBAC, least privilege |
-| Crawl & App Reconstruction | scope & quyền, sitemap, network capture, UI diff, assets, API contracts, regression |
-| PhD Research | câu hỏi nghiên cứu, PRISMA, thư mục tài liệu, SLR, citation, chất lượng bằng chứng |
-| Problem Solving | RCA, 5 Whys, falsification, risk matrix, recovery |
-| QA & SRE | unit/integration/E2E, visual QA, artifact provenance, rollback |
-| Coding & Deployment | Git, branch, PR, reviewer gate, release manifests, GitHub Pages |
-| Security | secrets, prompt injection, supply chain, threat modeling |
-| Multi-agent & Eval | agents, separation of duties, benchmark, cost/latency |
+| Agent Harness & Skills | agent loop, trigger design, context/memory, multi-agent, evaluation |
+| Crawl & App Reconstruction | quyền/scope, route map, API contract, visual QA, asset provenance |
+| Research & PhD | research protocol, PRISMA, screening, dedupe, evidence synthesis |
+| MCP & Integrations | host/client/server, OAuth/RBAC, permission, observability, schema |
+| Problem Solving | scientific debugging, 5 Whys, RCA, incident, evidence reporting |
+| QA, Security & Delivery | unit/integration/E2E, blue/green, rollbacks, security |
+| Reverse Engineering & Forensics | static archaeology, sandbox, PE/ELF, PCAP, JS bundle |
+| Knowledge & RAG | ingestion, PDF extraction, chunking, hybrid search, grounded eval |
+| Git & Release Engineering | full Git mirror, LFS/submodules/releases, local CI, attestation |
+| Data & Automation | crawler delta, durable scheduler, data invariants, idempotent queue |
 
-## Bắt đầu
+## 14 playbooks
 
-Site tĩnh (HTML/CSS/JS), không cần Node, cơ sở dữ liệu hay Actions. Mở `index.html` hoặc chạy local web server, ví dụ:
+| Số | Chuyên đề |
+|---|---|
+| 01 | [Crawl & xây lại ứng dụng có quyền](docs/01-app-reconstruction.html) |
+| 02 | [Nghiên cứu luận án có hệ thống](docs/02-phd-research.html) |
+| 03 | [MCP & thiết bị từ xa](docs/03-mcp-integration.html) |
+| 04 | [Giải quyết vấn đề gốc](docs/04-problem-solving.html) |
+| 05 | [Agent Harness & Multi-agent](docs/05-agent-harness.html) |
+| 06 | [QA & Blue/Green](docs/06-qa-release.html) |
+| 07 | [Evidence ledger & nghiệm thu](docs/07-evidence-reporting.html) |
+| 08 | [Security, quyền và đạo đức](docs/08-security-ethics.html) |
+| 09 | [Đánh giá agent & chi phí](docs/09-evaluation-cost.html) |
+| 10 | [Lộ trình 30 ngày](docs/10-learning-roadmap.html) |
+| 11 | [Reverse engineering / Forensics](docs/11-reverse-forensics.html) |
+| 12 | [Knowledge Engineering / RAG](docs/12-knowledge-rag.html) |
+| 13 | [Git mirror toàn bộ refs, LFS, Releases](docs/13-full-github-mirror.html) |
+| 14 | [Data pipelines & scheduler](docs/14-data-automation.html) |
 
-```bash
-python -m http.server 8000
-```
+## Khởi chạy / kiểm thử local
 
-Để dùng các skill với Codex, lưu `SKILL.md` trong `.agents/skills/<skill-name>/`. Kiểm tra phiên bản công cụ và tài liệu chính thức trước khi cấu hình.
+Yêu cầu Node 22+ cho bộ kiểm thử. Website chạy hoàn toàn tĩnh, không cần API, framework hay GitHub Actions.
 
-## Quy ước trạng thái
+~~~bash
+git clone https://github.com/trinhtanphat/agent-harness-skillbook.git
+cd agent-harness-skillbook
+node --check assets/app.js
+node --check data/catalog.js
+node scripts/validate.mjs
+node examples/mcp-stdio-demo/client-smoke.mjs
+~~~
 
-`DRAFT` → `IMPLEMENTED` → `TESTED` → `COMMITTED` → `DEPLOYED` → `PRODUCTION_VERIFIED`. Không bỏ qua bằng chứng hoặc coi một bước là toàn bộ dự án hoàn tất.
+Browser QA với Chromium hoặc Edge headless **profile cách ly**:
 
-## Nguồn tham khảo
+~~~bash
+node scripts/browser-qa.mjs https://trinhtanphat.github.io/agent-harness-skillbook/
+~~~
 
-- [OpenAI Build skills](https://learn.chatgpt.com/docs/build-skills)
-- [OpenAI Codex customization](https://learn.chatgpt.com/docs/customization/overview)
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [GitHub Pages documentation](https://docs.github.com/en/pages)
-- [PRISMA 2020](https://www.prisma-statement.org/)
-- [Playwright](https://playwright.dev/)
+Nếu không phát hiện browser binary, script sẽ SKIP minh bạch. QA images và browser-qa.json được ghi trong thư mục qa-evidence của workspace local (không tự động gửi dữ liệu đi).
 
-Chi tiết ghi tại [REFERENCES.md](REFERENCES.md). Tất cả nội dung diễn giải được biên soạn lại, không sao chép nguyên văn nội dung nguồn.
+## Dùng Skill
 
-## Giấy phép
+Đọc metadata và phạm vi SKILL.md, sau đó sử dụng trong hệ thống agent tương thích định dạng [Agent Skills](https://agentskills.io/specification). Chẳng hạn: [skill Git mirror](.agents/skills/complete-repository-mirror/SKILL.md).
 
-Nội dung hướng dẫn và mã mẫu do dự án tạo ra: MIT (xem `LICENSE`). Tài liệu và mã nguồn bên thứ ba vẫn thuộc giấy phép/chủ sở hữu tương ứng.
+## Nghiệm thu và đạo đức
 
-**Ghi chú:** Số lượng test PASS hay URL trả HTTP 200 không đủ chứng minh ứng dụng đã khớp nguồn và đạt nghiệm thu hình ảnh/kinh doanh.
+Tách **IMPLEMENTED → TESTED → REVIEWED → DEPLOYED → PRODUCTION_VERIFIED → ACCEPTED**. HTTP 200, unit PASS hoặc SHA trùng không đủ tự chứng minh đầy đủ chức năng và chất lượng UI/asset. Không đưa credential, PII, nội dung riêng tư hoặc tài sản có bản quyền thiếu phép vào repository.
+
+Các mẫu là tài liệu giáo dục; phải xác minh tool/SDK, giấy phép và quyền theo môi trường trước khi áp dụng. Repo sử dụng giấy phép MIT cho nội dung/mã do dự án biên soạn. Tư liệu bên thứ ba giữ nguyên bản quyền riêng.
+
+Nguồn: [Agent Skills](https://agentskills.io/specification) · [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) · [PRISMA](https://www.prisma-statement.org/) · [Playwright](https://playwright.dev/).

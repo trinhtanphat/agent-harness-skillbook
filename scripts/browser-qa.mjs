@@ -92,14 +92,14 @@ try{
  requestError(await send('Page.navigate',{url:appRoot.href}));
  await ready();
  const initial=await evalJs("({cards:document.querySelectorAll('.skill-card').length,categories:document.querySelectorAll('.category-btn').length,title:document.title,overflow:document.documentElement.scrollWidth>innerWidth})");
- assert.equal(initial.cards,36,'Expected 36 skill cards');
- assert.equal(initial.categories,7,'Expected 6 categories plus all');
+ assert.equal(initial.cards,60,'Expected 60 skill cards');
+ assert.equal(initial.categories,11,'Expected 10 categories plus all');
  assert.equal(initial.overflow,false,'Desktop horizontal overflow');
  observations.push({name:'desktop-catalog',result:'PASS',details:initial});
  await capture('home-desktop-1440.png');
 
  const search=await evalJs("(()=>{const e=document.getElementById('searchInput');e.value='MCP';e.dispatchEvent(new Event('input',{bubbles:true}));return {count:document.querySelectorAll('.skill-card').length,title:document.getElementById('resultCount').textContent}})()");
- assert.ok(search.count>0 && search.count<36,'Search must narrow results');
+ assert.ok(search.count>0 && search.count<60,'Search must narrow results');
  observations.push({name:'search-MCP',result:'PASS',details:search});
  const filtered=await evalJs("(()=>{const btn=Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Research'));document.getElementById('searchInput').value='';document.getElementById('searchInput').dispatchEvent(new Event('input',{bubbles:true}));btn.click();return {count:document.querySelectorAll('.skill-card').length,selected:Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Research')).getAttribute('aria-pressed')}})()");
  assert.equal(filtered.count,6,'Research category must have six skills');
@@ -117,7 +117,7 @@ try{
  requestError(await send('Page.reload',{ignoreCache:true}));
  await ready();
  const mobile=await evalJs("({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,cards:document.querySelectorAll('.skill-card').length,brand:!!document.querySelector('.brand')})");
- assert.equal(mobile.cards,36,'Mobile catalog');
+ assert.equal(mobile.cards,60,'Mobile catalog');
  assert.ok(mobile.scrollWidth<=mobile.width+1,'Mobile horizontal overflow: '+JSON.stringify(mobile));
  await capture('home-mobile-390.png');
  observations.push({name:'mobile-390',result:'PASS',details:mobile});
@@ -126,7 +126,7 @@ try{
  requestError(await send('Page.navigate',{url:guideUrl}));
  for(let n=0;n<60;n++){if(await evalJs("document.readyState==='complete' && !!document.querySelector('.prose h1')"))break;await timeout(150);}
  const docs=await evalJs("({h1:document.querySelector('.prose h1')?.textContent,items:document.querySelectorAll('.docs-aside nav a').length,overflow:document.documentElement.scrollWidth>innerWidth})");
- assert.ok(docs.h1 && docs.items===10 && !docs.overflow,'Document reader check');
+ assert.ok(docs.h1 && docs.items===14 && !docs.overflow,'Document reader check');
  await capture('docs-mobile-390.png');
  observations.push({name:'docs-mobile',result:'PASS',details:docs});
  assert.equal(runtimeExceptions.length,0,'Browser runtime exceptions: '+runtimeExceptions.join(' / '));
