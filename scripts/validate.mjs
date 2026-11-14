@@ -24,7 +24,7 @@ for(const s of skills){
 assert.equal(categories.size,10,'categories');
 const names=['app-reconstruction','phd-research','mcp-integration','problem-solving','agent-harness','qa-release','evidence-reporting','security-ethics','evaluation-cost','learning-roadmap','reverse-forensics','knowledge-rag','full-github-mirror','data-automation'];
 for(let i=0;i<names.length;i++){const p='playbooks/'+String(i+1).padStart(2,'0')+'-'+names[i]+'.md';assert.ok(existsSync(join(root,p)),'playbook exists: '+p);assert.ok(read(p).length>1500,'playbook length: '+p);}
-for(const p of ['index.html','assets/styles.css','assets/app.js','assets/favicon.svg','REFERENCES.md','AGENTS.md','.nojekyll','scripts/local-preview.mjs','scripts/test-local.mjs','LOCAL_PREVIEW.md'])assert.ok(existsSync(join(root,p)),'site file '+p);
+for(const p of ['index.html','assets/styles.css','assets/app.js','assets/favicon.svg','REFERENCES.md','AGENTS.md','.nojekyll','scripts/local-preview.mjs','scripts/test-local.mjs','scripts/test-preview.mjs','LOCAL_PREVIEW.md'])assert.ok(existsSync(join(root,p)),'site file '+p);
 const html=read('index.html');
 for(const m of html.matchAll(/\b(?:href|src)="([^"]+)"/g)){const u=m[1];if(/^(https?:\/\/|#|mailto:)/.test(u))continue;const p=u.split('#')[0].split('?')[0].replace(/^\.\//,'');if(p)assert.ok(existsSync(join(root,p)),'local link '+u);}
 assert.ok(html.includes('Content-Security-Policy'),'CSP');
