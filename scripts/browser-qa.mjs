@@ -215,6 +215,8 @@ try{
    const obs=await evalJs("(()=>{const bad=[...document.querySelectorAll('body *')].filter(e=>{const s=getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&(r.right>321||r.left < -1)}).slice(0,16).map(e=>({tag:e.tagName,cls:e.className?.toString().slice(0,100),text:e.textContent?.trim().slice(0,35),left:Math.round(e.getBoundingClientRect().left),right:Math.round(e.getBoundingClientRect().right),scroll:e.scrollWidth,client:e.clientWidth}));return {url:location.pathname,width:innerWidth,scrollWidth:document.documentElement.scrollWidth,bodyWidth:document.body.scrollWidth,heading:!!document.querySelector('h1'),overflowing:bad}})()");
    assert.ok(obs.heading && obs.scrollWidth<=320 && obs.bodyWidth<=320,'Horizontal overflow on 320px page '+JSON.stringify(obs));
    smallScreens.push(obs);
+   if(path==='')await capture('home-mobile-320.png');
+   if(path==='install.html')await capture('install-mobile-320.png');
  }
  observations.push({name:'mobile-320-four-routes',result:'PASS',details:smallScreens});
  // Honor reduced-motion system settings in the slide-in drawer.

@@ -117,3 +117,10 @@ const previewCode=read('scripts/local-preview.mjs');
 assert.ok(previewCode.includes('canonicalRoot+sep')&&previewCode.includes('realpath(candidate)'),'Local preview must enforce canonical path containment');
 assert.ok(previewCode.includes("s.startsWith('.env.')"),'Preview must block environment files');
 console.log('PASS: canonical path containment and sensitive-file exclusions');
+
+const seoDescription=html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1]||'';
+assert.ok(seoDescription.includes('60 Agent Skills')&&seoDescription.includes('14 playbook')&&!seoDescription.includes('36 kỹ năng'),'Index SEO catalog statistics');
+const modalCode=read('assets/app.js');
+assert.ok(modalCode.includes('setBackgroundInert(true)')&&modalCode.includes('setBackgroundInert(false)'),'Modal background focus isolation');
+assert.ok(read('assets/docs.css').includes('.prose pre{max-width:100%;overflow-x:auto'),'CLI code blocks must scroll inside viewport');
+console.log('PASS: SEO accuracy, modal a11y and responsive code blocks');

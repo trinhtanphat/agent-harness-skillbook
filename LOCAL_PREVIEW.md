@@ -26,3 +26,5 @@ Test results and screenshots go to `qa-evidence-local/` and should **not** be co
 Before a release, additionally run `node scripts/validate.mjs`, `node examples/mcp-stdio-demo/client-smoke.mjs`, and after GitHub Pages deploy run `scripts/verify-pages.ps1 -Full` on Windows to compare public bytes with Git HEAD.
 
 For fast headless-server checks with **no Chromium installed**: `node scripts/test-preview.mjs` (12 cases). These verify only file serving and local scope, not UI interactivity.
+
+Security hardening: the preview refuses `.env.*`, `.npmrc`, `.pypirc`, `.ssh`, `.aws`, `.git`, `.github` and QA/cache directories. Every served file must resolve canonically under the repository root, including after following symbolic links. `node scripts/test-preview.mjs` tests this dynamically when the operating system permits symlink creation. It does not expose LAN interfaces.

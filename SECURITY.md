@@ -16,3 +16,7 @@ Mở issue cho lỗi công khai không chứa secret. Với vấn đề nhạy c
 ## Local preview boundary
 
 `node scripts/local-preview.mjs` chỉ bind `127.0.0.1`, phục vụ các tệp website cần thiết và từ chối `.git`, `.env`, `node_modules`, `qa-evidence` và `qa-evidence-local`. Không đổi host sang `0.0.0.0` hoặc công khai preview khi chưa có đánh giá bảo mật. `test-local.mjs` chạy trên server cùng tiến trình và chủ động đóng server khi xong.
+
+### Extra local-preview protections
+
+The local server validates the canonical target of every file before serving it, preventing symlink escapes from the repository root. It refuses `.env.*`, `.npmrc`, `.pypirc`, `.ssh` and `.aws` paths as well as the previously blocked directories. These protections apply only to the local preview server, not GitHub Pages hosting policy.

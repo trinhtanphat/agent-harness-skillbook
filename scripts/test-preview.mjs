@@ -4,6 +4,11 @@
  */
 import assert from 'node:assert/strict';
 import {startPreview} from './local-preview.mjs';
+import {symlink,writeFile,rm} from 'node:fs/promises';
+import {join,resolve,dirname} from 'node:path';
+import {tmpdir} from 'node:os';
+import {randomUUID} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 
 const {server,url}=await startPreview(0);
 async function check(path,status,method='GET',contentType){
@@ -31,6 +36,29 @@ try {
  await check('/',405,'POST');
  const head=await check('/',200,'HEAD','text/html');
  assert.equal((await head.text()).length,0,'HEAD must have no response body');
+ // If OS permissions allow symlinks, verify the realpath escape is blocked.
+ const projectRoot=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+ const token=randomUUID();
+ const secret=join(tmpdir(),'skillbook-outside-'+token+'.txt');
+ const link=join(projectRoot,'preview-symlink-'+token+'.txt');
+ let externalLinkCreated=false;
+ try{
+  await writeFile(secret,'PRIVATE DATA MUST NEVER BE SERVED',{flag:'wx'});
+  try{
+   await symlink(secret,link,'file');
+   externalLinkCreated=true;
+  }catch(error){
+   if(!['EPERM','EACCES','ENOTSUP','EOPNOTSUPP'].includes(error.code))throw error;
+   console.log('SKIP: OS disallows test symlink creation, canonical containment statically checked');
+  }
+  if(externalLinkCreated) {
+   await check('/preview-symlink-'+token+'.txt',403);
+   console.log('PASS: symlink escape blocked by canonical containment');
+  }
+ }finally{
+  if(externalLinkCreated)await rm(link,{force:true});
+  await rm(secret,{force:true});
+ }
  console.log('PASS: 15 static preview cases / only loopback / internal files protected');
 }finally {
  await new Promise(resolve=>server.close(resolve));

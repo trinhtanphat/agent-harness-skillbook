@@ -31,6 +31,9 @@ try{
  assert.deepEqual(await readFile(target),source);
  assert.notEqual(run('--skill',name,'--target',tmp,'--write').code,0,'never overwrite');
  assert.deepEqual(await readFile(target),source);
+ const allCollision=run('--all','--target',tmp,'--write');
+ assert.notEqual(allCollision.code,0,'all-skill collision preflight must fail');
+ assert.equal(await exists(join(tmp,'.agents','skills','agent-operating-loop')),false,'preflight must not partially install');
  for(const kind of ['claude','github']){
   const r=run('--skill',name,'--target',tmp,'--format',kind,'--write');
   assert.equal(r.code,0,r.err);
