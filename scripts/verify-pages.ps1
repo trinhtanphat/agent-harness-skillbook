@@ -14,6 +14,7 @@ $paths = @('index.html','assets/app.js','assets/styles.css','assets/docs.css',
            'examples/mcp-stdio-demo/server.mjs','examples/mcp-stdio-demo/client-smoke.mjs')
 $paths += @(Get-ChildItem (Join-Path $repo 'docs') -Filter '*.html' -File | ForEach-Object { 'docs/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14') -Filter '*.png' -File | ForEach-Object { 'evidence/2026-11-14/' + $_.Name })
+$paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-final') -File | ForEach-Object { 'evidence/2026-11-14-final/' + $_.Name })
 if($Full){
   $paths += @(Get-ChildItem (Join-Path $repo 'playbooks') -Filter '*.md' -File | ForEach-Object { 'playbooks/' + $_.Name })
   $paths += @(Get-ChildItem (Join-Path $repo '.agents/skills') -Filter 'SKILL.md' -File -Recurse | ForEach-Object {
