@@ -102,3 +102,13 @@ const installPage=read('install.html');
 assert.ok(installPage.includes('<article id="install"')&&installPage.includes('scripts/install-skills.mjs'),'Installer guide HTML');
 assert.ok(siteMap.includes('https://trinhtanphat.github.io/agent-harness-skillbook/install.html'),'Installer missing from sitemap');
 console.log('PASS: installer web guide and sitemap');
+
+// Verify release QA evidence for the 19 public-site browser gates.
+const qa19=JSON.parse(read('evidence/2026-11-14-19qa/browser-qa.json'));
+const qa19names=["desktop-catalog","theme-toggle","search-MCP","category-filter","expanded-category-filter","category-keyboard-focus","drawer-share-link","drawer-focus-trap","skill-drawer","direct-link-reload","escape-close","browser-back-close","mobile-390","docs-mobile","14-guide-link-smoke","directory-pages","skills-index-mobile","installer-guide","runtime-exceptions"];
+assert.equal(qa19.url,'https://trinhtanphat.github.io/agent-harness-skillbook/','QA website');
+assert.equal(qa19.isolatedProfile,true,'QA isolated profile');
+assert.equal(qa19.observations.length,19,'expected browser gates');
+for(const name of qa19names)assert.ok(qa19.observations.some(x=>x.name===name&&x.result==='PASS'),'Missing live PASS: '+name);
+assert.ok(existsSync(join(root,'evidence/2026-11-14-19qa/skills-index-mobile-390.png')),'Missing mobile QA screenshot');
+console.log('PASS: latest live browser QA evidence 19/19 and responsive index screenshot');

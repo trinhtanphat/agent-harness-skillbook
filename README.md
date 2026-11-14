@@ -112,3 +112,7 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 - Kiểm thử cài đặt: node scripts/test-install-skills.mjs (không phụ thuộc npm packages).
 
 **Phát triển / QA:** thêm kiểm tra tự động hai trang chỉ mục, 60 deep links và bốn meta descriptions. Chạy `node scripts/validate.mjs`, `node scripts/test-install-skills.mjs` và `node scripts/browser-qa.mjs <site-url>` trên trình duyệt cô lập để nghiệm thu giao diện.
+
+## Trạng thái kiểm thử công khai mở rộng
+
+**19/19 Chrome browser smoke PASS** trên URL GitHub Pages public, gồm kiểm thử mới của danh mục 14 playbook, 60 skill trên mobile 390px và hướng dẫn cài. [Bằng chứng JSON](evidence/2026-11-14-19qa/browser-qa.json) · [Ảnh mobile](evidence/2026-11-14-19qa/skills-index-mobile-390.png) · [QA_REPORT](QA_REPORT.md). Đây là phạm vi smoke automation, không phải chứng nhận mọi môi trường.

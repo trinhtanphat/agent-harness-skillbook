@@ -109,3 +109,17 @@ Bằng chứng: [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · 
 - **Kiểm tra lại:** khi có Chromium cô lập, chạy `node scripts/browser-qa.mjs https://trinhtanphat.github.io/agent-harness-skillbook/` và cập nhật lại kết luận theo kết quả thực tế. Không cần dùng GitHub Actions.
 
 Ghi chú: cập nhật báo cáo này làm đổi HEAD; cần chạy lại verifier để xác nhận **commit chứa chính ghi chú** cũng đã phát hành.
+
+## Kết quả mở rộng 19/19 browser QA — 14/11/2026
+
+**Trạng thái hiện tại: 19/19 Browser QA PASS trên website public.** Ba ca từng NOT_RUN ở các mốc cũ (`directory-pages`, `skills-index-mobile`, `installer-guide`) đã được chạy lại thực tế và PASS. Các mục lịch sử được giữ để audit, không còn phản ánh blocker hiện tại.
+
+- Đích: https://trinhtanphat.github.io/agent-harness-skillbook/
+- Commit source đã kiểm thử: `ee6707a43091565f077aa2939b0520f461b484e0`.
+- DESKTOP-PHA1S90, Chrome headless, browser profile tạm riêng, không can thiệp Session 2.
+- Lệnh: `node scripts/browser-qa.mjs https://trinhtanphat.github.io/agent-harness-skillbook/`. Exit code 0.
+- Thời điểm ghi nhận: `2026-11-14T13:13:27.206Z` (20:13:27 giờ Việt Nam).
+- Kết quả: 19 PASS; danh mục 60 skill ở mobile 390px không tràn ngang, 14 guide routes HTTP 200, trang hướng dẫn cài có lệnh và cảnh báo dry-run, 0 JS runtime exceptions.
+- [JSON 19 kết quả](evidence/2026-11-14-19qa/browser-qa.json) · [Ảnh danh mục skill trên mobile](evidence/2026-11-14-19qa/skills-index-mobile-390.png).
+
+Giới hạn: PASS có nghĩa cả 19 smoke assertions định nghĩa trước đã đạt. Chưa khẳng định WCAG toàn diện, mọi nội dung học thuật, hoặc mọi loại trình duyệt. Sau khi commit bằng chứng, đối chiếu GitHub Pages với Git HEAD mới bằng verifier SHA.

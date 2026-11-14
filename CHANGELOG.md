@@ -1,3 +1,10 @@
+## 2026-11-14 — Browser QA 19/19 live PASS
+
+- DESKTOP-PHA1S90 đã chạy Chrome headless cô lập trên public GitHub Pages, 19/19 kiểm thử PASS.
+- Đóng ba browser QA blocker trước đó: directory pages, mobile 60-skill index, installer guide.
+- Lưu JSON chạy thực tế và ảnh mobile trong `evidence/2026-11-14-19qa`.
+- Mở rộng kiểm tra deployed SHA để bao gồm bằng chứng mới.
+
 ## 2026-11-14 — Discoverability and safe skill installation
 
 - Trang danh mục riêng `docs/index.html` (14 playbook) và `skills/index.html` (60 skill/10 nhóm), đọc được khi tắt JavaScript.
