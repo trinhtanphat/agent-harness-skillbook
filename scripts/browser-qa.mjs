@@ -101,7 +101,7 @@ try{
  const search=await evalJs("(()=>{const e=document.getElementById('searchInput');e.value='MCP';e.dispatchEvent(new Event('input',{bubbles:true}));return {count:document.querySelectorAll('.skill-card').length,title:document.getElementById('resultCount').textContent}})()");
  assert.ok(search.count>0 && search.count<36,'Search must narrow results');
  observations.push({name:'search-MCP',result:'PASS',details:search});
- const filtered=await evalJs("(()=>{const btn=Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Research'));document.getElementById('searchInput').value='';document.getElementById('searchInput').dispatchEvent(new Event('input',{bubbles:true}));btn.click();return {count:document.querySelectorAll('.skill-card').length,selected:btn.getAttribute('aria-pressed')}})()");
+ const filtered=await evalJs("(()=>{const btn=Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Research'));document.getElementById('searchInput').value='';document.getElementById('searchInput').dispatchEvent(new Event('input',{bubbles:true}));btn.click();return {count:document.querySelectorAll('.skill-card').length,selected:Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Research')).getAttribute('aria-pressed')}})()");
  assert.equal(filtered.count,6,'Research category must have six skills');
  assert.equal(filtered.selected,'true');
  observations.push({name:'category-filter',result:'PASS',details:filtered});
