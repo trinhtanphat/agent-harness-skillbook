@@ -116,7 +116,7 @@ console.log('PASS: latest live browser QA evidence 19/19 and responsive index sc
 
 const previewCode=read('scripts/local-preview.mjs');
 assert.ok(previewCode.includes('canonicalRoot+sep')&&previewCode.includes('realpath(candidate)'),'Local preview must enforce canonical path containment');
-assert.ok(previewCode.includes("s.startsWith('.env.')"),'Preview must block environment files');
+assert.ok(previewCode.includes("name.startsWith('.env.')") && previewCode.includes("segment.toLowerCase()"),'Preview must block mixed-case environment files');
 console.log('PASS: canonical path containment and sensitive-file exclusions');
 assert.ok(previewCode.includes('resolvedParts.some(isSensitiveSegment)'),'Canonical path segments must be security checked');
 assert.ok(previewCode.includes('segment.toLowerCase()'),'Case-insensitive sensitive segment validation');
