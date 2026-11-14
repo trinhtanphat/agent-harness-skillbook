@@ -97,6 +97,10 @@ try{
  assert.equal(initial.overflow,false,'Desktop horizontal overflow');
  observations.push({name:'desktop-catalog',result:'PASS',details:initial});
  await capture('home-desktop-1440.png');
+ const theme = await evalJs("(()=>{const a=document.body.classList.contains('light');document.getElementById('themeBtn').click();const b=document.body.classList.contains('light');document.getElementById('themeBtn').click();return {before:a,after:b,restored:document.body.classList.contains('light')===a}})()");
+ assert.notEqual(theme.before,theme.after,'Theme toggle');
+ assert.equal(theme.restored,true,'Theme restore');
+ observations.push({name:'theme-toggle',result:'PASS',details:theme});
 
  const search=await evalJs("(()=>{const e=document.getElementById('searchInput');e.value='MCP';e.dispatchEvent(new Event('input',{bubbles:true}));return {count:document.querySelectorAll('.skill-card').length,title:document.getElementById('resultCount').textContent}})()");
  assert.ok(search.count>0 && search.count<60,'Search must narrow results');
@@ -105,6 +109,10 @@ try{
  assert.equal(filtered.count,6,'Research category must have six skills');
  assert.equal(filtered.selected,'true');
  observations.push({name:'category-filter',result:'PASS',details:filtered});
+ const gitCategory=await evalJs("(()=>{const btn=Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Git & Release'));btn.click();return {count:document.querySelectorAll('.skill-card').length,selected:Array.from(document.querySelectorAll('.category-btn')).find(b=>b.textContent.includes('Git & Release')).getAttribute('aria-pressed')}})()");
+ assert.equal(gitCategory.count,6,'Git category must have six skills');
+ assert.equal(gitCategory.selected,'true');
+ observations.push({name:'expanded-category-filter',result:'PASS',details:gitCategory});
 
  const drawer=await evalJs("(()=>{document.querySelector('.skill-card').click();return {open:document.querySelector('#skillDrawer').classList.contains('open'),heading:document.querySelector('#drawerTitle').textContent}})()");
  assert.ok(drawer.open&&drawer.heading,'Drawer opened');
@@ -129,6 +137,10 @@ try{
  assert.ok(docs.h1 && docs.items===14 && !docs.overflow,'Document reader check');
  await capture('docs-mobile-390.png');
  observations.push({name:'docs-mobile',result:'PASS',details:docs});
+ const guideLinks=await evalJs("(async()=>{const links=[...document.querySelectorAll('.docs-aside nav a')];const statuses=await Promise.all(links.map(a=>fetch(a.href).then(r=>r.status).catch(()=>0)));return {total:links.length,verified:statuses.filter(x=>x===200).length,statuses};})()");
+ assert.equal(guideLinks.total,14,'14 guide links');
+ assert.equal(guideLinks.verified,14,'All 14 guide URLs load over HTTP');
+ observations.push({name:'14-guide-link-smoke',result:'PASS',details:{total:guideLinks.total,verified:guideLinks.verified}});
  assert.equal(runtimeExceptions.length,0,'Browser runtime exceptions: '+runtimeExceptions.join(' / '));
  observations.push({name:'runtime-exceptions',result:'PASS',details:'No JavaScript exceptions'});
  await writeFile(join(evidence,'browser-qa.json'),JSON.stringify({url,observations,at:new Date().toISOString(),isolatedProfile:true},null,2));
