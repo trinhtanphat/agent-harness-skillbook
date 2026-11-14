@@ -3,7 +3,7 @@ import {join,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
 const root=join(dirname(fileURLToPath(import.meta.url)),'..');
-const read=p=>readFileSync(join(root,p),'utf8');
+const read=p=>readFileSync(join(root,p),'utf8').replace(/\r\n/g,'\n');
 const source=read('data/catalog.js');
 const prefix='window.SKILLBOOK_CATALOG = ';
 assert.ok(source.startsWith(prefix),'catalog format');
