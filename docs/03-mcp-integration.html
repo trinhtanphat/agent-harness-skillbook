@@ -1,0 +1,67 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1022"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'"><title>Kiến trúc MCP và thiết bị · Agent Harness Skillbook</title><meta name="description" content="Kiến trúc MCP và thiết bị — Playbook hướng dẫn thực hành có bằng chứng."><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/docs.css"></head><body><a class="skip-link" href="#doc">Chuyển tới nội dung</a><header class="site-header"><div class="shell nav"><a href="../" class="brand"><span class="brand-mark">⌘</span><span class="brand-lines"><strong>HARN<span>ESS</span></strong><small>THE AGENT SKILLBOOK</small></span></a><nav class="nav-links"><a href="../#explorer">Thư viện</a><a href="../#learning">Lộ trình</a><a class="active" href="../#playbooks">Playbooks</a></nav><div class="nav-actions"><a class="github-button" href="../">← Trở về thư viện</a></div></div></header><main class="shell"><div class="docs-banner"><div class="section-kicker">FIELD GUIDES / 03</div><h1>Playbooks <span class="gradient-text">/ Documentation</span></h1><p class="intro">Kho quy trình thực hành. Đọc theo thứ tự hoặc chọn một vấn đề cần giải quyết.</p></div><div class="docs-layout"><aside class="docs-aside"><strong>10 PLAYBOOKS</strong><nav aria-label="Chọn playbook"><a class="" href="01-app-reconstruction.html"><span>01</span>Crawl / Clone ứng dụng có quyền</a>
+<a class="" href="02-phd-research.html"><span>02</span>Nghiên cứu luận án</a>
+<a class="active" href="03-mcp-integration.html"><span>03</span>Kiến trúc MCP và thiết bị</a>
+<a class="" href="04-problem-solving.html"><span>04</span>Xử lý vấn đề / RCA</a>
+<a class="" href="05-agent-harness.html"><span>05</span>Harness / Skills / Multi-agent</a>
+<a class="" href="06-qa-release.html"><span>06</span>QA, release và rollback</a>
+<a class="" href="07-evidence-reporting.html"><span>07</span>Evidence ledger / nghiệm thu</a>
+<a class="" href="08-security-ethics.html"><span>08</span>Security, quyền và đạo đức</a>
+<a class="" href="09-evaluation-cost.html"><span>09</span>Agent eval / chi phí</a>
+<a class="" href="10-learning-roadmap.html"><span>10</span>Lộ trình 30 ngày</a></nav></aside><div class="doc-content"><div class="doc-top"><span>FIELD GUIDE / 03</span><a href="../playbooks/03-mcp-integration.md">Xem Markdown gốc ↗</a></div><article id="doc" class="prose" tabindex="-1"><h1>Playbook — Thiết kế MCP và điều phối thiết bị</h1>
+<blockquote>Hiểu host, MCP client, server, tools, resources, prompts và trust boundary; kết nối không có nghĩa tự động có quyền truy cập toàn máy.</blockquote>
+<p><strong>Workflow:</strong> scope → evidence → controlled execution → independent verification → truthful handoff.</p>
+<h2>1. Architecture</h2>
+<ol>
+<li>Host như ChatGPT hoặc Codex sử dụng client; client giao tiếp MCP server cục bộ qua stdio hoặc remote qua Streamable HTTP khi được hỗ trợ.</li>
+</ol>
+<ol>
+<li>Tools thực hiện hành động; Resources cung cấp dữ liệu; Prompts cung cấp mẫu tương tác.</li>
+</ol>
+<ol>
+<li>Mỗi server, device và tool phải có quyền riêng.</li>
+</ol>
+<h2>2. Tool contract</h2>
+<ol>
+<li>Định nghĩa input schema chặt, enum, maxLength, required, additionalProperties=false.</li>
+</ol>
+<ol>
+<li>Output có status, error code, correlation ID; giới hạn bytes, timeout, concurrency và retries.</li>
+</ol>
+<ol>
+<li>Cho write dùng optimistic concurrency và idempotency; không cho arbitrary shell theo mặc định.</li>
+</ol>
+<h2>3. Authentication và Authorization</h2>
+<ol>
+<li>Phân biệt xác thực ai, phân quyền hành động nào, trên resource nào, vào thời điểm nào.</li>
+</ol>
+<ol>
+<li>Kết hợp OAuth/scope khi phù hợp HTTP transport; local stdio giữ credential qua env với cách bảo vệ hợp lệ.</li>
+</ol>
+<ol>
+<li>403 phải ghi DENIED cùng principal, action, policy; không tự tăng quyền để tránh lỗi.</li>
+</ol>
+<h2>4. Remote operations</h2>
+<ol>
+<li>Discovery thiết bị online, pin device id, giữ phiên GUI người dùng và production hiện có.</li>
+</ol>
+<ol>
+<li>Kiểm tra disk, process, lock, network, runtime version theo read-only trước khi write.</li>
+</ol>
+<ol>
+<li>Tạo workspace riêng, checkpoint, rollback; chú ý SSRF, path traversal, symlink và secret leakage.</li>
+</ol>
+<h2>Bàn giao</h2>
+<p>Tool matrix, permissions/RBAC, test 401/403, tracing, rollback playbook.</p>
+<h2>Checklist nghiệm thu</h2>
+<ul>
+<li>[ ] Có quyền thực hiện và ranh giới hệ thống rõ ràng.</li>
+<li>[ ] Có log hoặc nguồn cho từng khẳng định về kết quả.</li>
+<li>[ ] Có negative test và kiểm tra sai lệch giả định.</li>
+<li>[ ] Có rollback hoặc phương án khôi phục nếu tác động dữ liệu.</li>
+<li>[ ] Có báo cáo PARTIAL nếu còn bất kỳ bước nào chưa kiểm chứng.</li>
+</ul>
+<h2>Nguồn tham khảo</h2>
+<ul>
+<li>https://modelcontextprotocol.io/</li>
+<li>https://learn.chatgpt.com/docs/build-skills</li>
+</ul></article><div class="doc-nav"><a href="02-phd-research.html">← Nghiên cứu luận án</a><a href="04-problem-solving.html">Xử lý vấn đề / RCA →</a></div></div></div></main><footer class="docs-footer shell"><a href="../">← Agent Harness Skillbook</a> · 2026 · Nội dung tự biên soạn và có ghi nguồn tham khảo.</footer></body></html>

@@ -1,0 +1,67 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1022"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'"><title>QA, release và rollback · Agent Harness Skillbook</title><meta name="description" content="QA, release và rollback — Playbook hướng dẫn thực hành có bằng chứng."><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/docs.css"></head><body><a class="skip-link" href="#doc">Chuyển tới nội dung</a><header class="site-header"><div class="shell nav"><a href="../" class="brand"><span class="brand-mark">⌘</span><span class="brand-lines"><strong>HARN<span>ESS</span></strong><small>THE AGENT SKILLBOOK</small></span></a><nav class="nav-links"><a href="../#explorer">Thư viện</a><a href="../#learning">Lộ trình</a><a class="active" href="../#playbooks">Playbooks</a></nav><div class="nav-actions"><a class="github-button" href="../">← Trở về thư viện</a></div></div></header><main class="shell"><div class="docs-banner"><div class="section-kicker">FIELD GUIDES / 06</div><h1>Playbooks <span class="gradient-text">/ Documentation</span></h1><p class="intro">Kho quy trình thực hành. Đọc theo thứ tự hoặc chọn một vấn đề cần giải quyết.</p></div><div class="docs-layout"><aside class="docs-aside"><strong>10 PLAYBOOKS</strong><nav aria-label="Chọn playbook"><a class="" href="01-app-reconstruction.html"><span>01</span>Crawl / Clone ứng dụng có quyền</a>
+<a class="" href="02-phd-research.html"><span>02</span>Nghiên cứu luận án</a>
+<a class="" href="03-mcp-integration.html"><span>03</span>Kiến trúc MCP và thiết bị</a>
+<a class="" href="04-problem-solving.html"><span>04</span>Xử lý vấn đề / RCA</a>
+<a class="" href="05-agent-harness.html"><span>05</span>Harness / Skills / Multi-agent</a>
+<a class="active" href="06-qa-release.html"><span>06</span>QA, release và rollback</a>
+<a class="" href="07-evidence-reporting.html"><span>07</span>Evidence ledger / nghiệm thu</a>
+<a class="" href="08-security-ethics.html"><span>08</span>Security, quyền và đạo đức</a>
+<a class="" href="09-evaluation-cost.html"><span>09</span>Agent eval / chi phí</a>
+<a class="" href="10-learning-roadmap.html"><span>10</span>Lộ trình 30 ngày</a></nav></aside><div class="doc-content"><div class="doc-top"><span>FIELD GUIDE / 06</span><a href="../playbooks/06-qa-release.md">Xem Markdown gốc ↗</a></div><article id="doc" class="prose" tabindex="-1"><h1>Playbook — QA, Blue/Green, Rollback và phát hành</h1>
+<blockquote>Các cổng nghiệm thu từ unit đến runtime, giữ production ổn định và không phụ thuộc GitHub Actions.</blockquote>
+<p><strong>Workflow:</strong> scope → evidence → controlled execution → independent verification → truthful handoff.</p>
+<h2>1. Test matrix</h2>
+<ol>
+<li>Static/lint/secret scan khác unit; unit khác contract, integration, E2E và visual.</li>
+</ol>
+<ol>
+<li>Thiết kế happy path, boundary, denied role, retries, timeout, idempotency, đa viewport và browser.</li>
+</ol>
+<ol>
+<li>Với 3D kiểm tra đồ họa phần cứng và screenshot thực tế.</li>
+</ol>
+<h2>2. Trước triển khai</h2>
+<ol>
+<li>Chạy QA cục bộ trên máy được cho phép; ghi command, timestamp, dependency versions, logs.</li>
+</ol>
+<ol>
+<li>Kiểm tra disk, release lock, backup, DB migration, artifact manifest và hash.</li>
+</ol>
+<ol>
+<li>Không xóa release/worktree có commit chưa merge hoặc đang được tiến trình dùng.</li>
+</ol>
+<h2>3. Blue/Green</h2>
+<ol>
+<li>Giữ blue phục vụ, build green tách biệt, chạy smoke, readiness và E2E với SHA hiện tại.</li>
+</ol>
+<ol>
+<li>Chỉ chuyển traffic khi gate còn hiệu lực, mọi yêu cầu rollback đã chuẩn bị.</li>
+</ol>
+<ol>
+<li>Giám sát post-deploy, revert nếu SLI xấu hoặc runtime drift.</li>
+</ol>
+<h2>4. Báo cáo kết quả</h2>
+<ol>
+<li>Ghi branch, SHA, build artifact, environment, số test đã chạy, thời gian và quality review.</li>
+</ol>
+<ol>
+<li>API 200 không chứng minh visual match; snapshot tải được không chứng minh đã nghiệm thu.</li>
+</ol>
+<ol>
+<li>Không claim production verified nếu chưa kiểm chứng user journey thực tế.</li>
+</ol>
+<h2>Bàn giao</h2>
+<p>Test logs, release manifest, rollback rehearsal, deployment verification report.</p>
+<h2>Checklist nghiệm thu</h2>
+<ul>
+<li>[ ] Có quyền thực hiện và ranh giới hệ thống rõ ràng.</li>
+<li>[ ] Có log hoặc nguồn cho từng khẳng định về kết quả.</li>
+<li>[ ] Có negative test và kiểm tra sai lệch giả định.</li>
+<li>[ ] Có rollback hoặc phương án khôi phục nếu tác động dữ liệu.</li>
+<li>[ ] Có báo cáo PARTIAL nếu còn bất kỳ bước nào chưa kiểm chứng.</li>
+</ul>
+<h2>Nguồn tham khảo</h2>
+<ul>
+<li>https://docs.github.com/en/pages</li>
+<li>https://learn.chatgpt.com/docs/build-skills</li>
+</ul></article><div class="doc-nav"><a href="05-agent-harness.html">← Harness / Skills / Multi-agent</a><a href="07-evidence-reporting.html">Evidence ledger / nghiệm thu →</a></div></div></div></main><footer class="docs-footer shell"><a href="../">← Agent Harness Skillbook</a> · 2026 · Nội dung tự biên soạn và có ghi nguồn tham khảo.</footer></body></html>

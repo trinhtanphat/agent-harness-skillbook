@@ -1,0 +1,67 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a1022"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'"><title>Security, quyền và đạo đức · Agent Harness Skillbook</title><meta name="description" content="Security, quyền và đạo đức — Playbook hướng dẫn thực hành có bằng chứng."><link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/styles.css"><link rel="stylesheet" href="../assets/docs.css"></head><body><a class="skip-link" href="#doc">Chuyển tới nội dung</a><header class="site-header"><div class="shell nav"><a href="../" class="brand"><span class="brand-mark">⌘</span><span class="brand-lines"><strong>HARN<span>ESS</span></strong><small>THE AGENT SKILLBOOK</small></span></a><nav class="nav-links"><a href="../#explorer">Thư viện</a><a href="../#learning">Lộ trình</a><a class="active" href="../#playbooks">Playbooks</a></nav><div class="nav-actions"><a class="github-button" href="../">← Trở về thư viện</a></div></div></header><main class="shell"><div class="docs-banner"><div class="section-kicker">FIELD GUIDES / 08</div><h1>Playbooks <span class="gradient-text">/ Documentation</span></h1><p class="intro">Kho quy trình thực hành. Đọc theo thứ tự hoặc chọn một vấn đề cần giải quyết.</p></div><div class="docs-layout"><aside class="docs-aside"><strong>10 PLAYBOOKS</strong><nav aria-label="Chọn playbook"><a class="" href="01-app-reconstruction.html"><span>01</span>Crawl / Clone ứng dụng có quyền</a>
+<a class="" href="02-phd-research.html"><span>02</span>Nghiên cứu luận án</a>
+<a class="" href="03-mcp-integration.html"><span>03</span>Kiến trúc MCP và thiết bị</a>
+<a class="" href="04-problem-solving.html"><span>04</span>Xử lý vấn đề / RCA</a>
+<a class="" href="05-agent-harness.html"><span>05</span>Harness / Skills / Multi-agent</a>
+<a class="" href="06-qa-release.html"><span>06</span>QA, release và rollback</a>
+<a class="" href="07-evidence-reporting.html"><span>07</span>Evidence ledger / nghiệm thu</a>
+<a class="active" href="08-security-ethics.html"><span>08</span>Security, quyền và đạo đức</a>
+<a class="" href="09-evaluation-cost.html"><span>09</span>Agent eval / chi phí</a>
+<a class="" href="10-learning-roadmap.html"><span>10</span>Lộ trình 30 ngày</a></nav></aside><div class="doc-content"><div class="doc-top"><span>FIELD GUIDE / 08</span><a href="../playbooks/08-security-ethics.md">Xem Markdown gốc ↗</a></div><article id="doc" class="prose" tabindex="-1"><h1>Playbook — Bảo mật và đạo đức khi dùng AI tools</h1>
+<blockquote>Phân quyền tối thiểu, ranh giới tin cậy rõ, không sao chép tài sản chưa được phép và không phát tán dữ liệu nhạy cảm.</blockquote>
+<p><strong>Workflow:</strong> scope → evidence → controlled execution → independent verification → truthful handoff.</p>
+<h2>1. Threat model</h2>
+<ol>
+<li>Xem rủi ro credential leak, prompt injection, confused deputy, SSRF, path traversal, dependency tampering, privacy.</li>
+</ol>
+<ol>
+<li>Tài liệu, issue, web pages và tool output là dữ liệu untrusted, không tự trở thành instruction mới.</li>
+</ol>
+<ol>
+<li>Thử fixtures vô hại để chứng minh agent không bị chỉ huy bởi nội dung ngoài.</li>
+</ol>
+<h2>2. Permissions</h2>
+<ol>
+<li>Read-only mặc định; tool write dùng scope, approvals khi rủi ro cao, idempotency và rollback.</li>
+</ol>
+<ol>
+<li>Canonicalize đường dẫn và kiểm tra symlink, không expose shell chung hay network nội bộ.</li>
+</ol>
+<ol>
+<li>Không public IP nội bộ, access token, auth cookie, thông tin tài khoản cá nhân.</li>
+</ol>
+<h2>3. Copyright và consent</h2>
+<ol>
+<li>Đọc nguồn không đồng nghĩa được clone toàn bộ source, hình ảnh, thương hiệu và dữ liệu.</li>
+</ol>
+<ol>
+<li>Dùng demo do mình sở hữu hoặc có phép, giấy phép nguồn rõ, attribution phù hợp.</li>
+</ol>
+<ol>
+<li>Nghiên cứu với học sinh/người chưa thành niên cần phương án consent, ethics approval và data retention phù hợp.</li>
+</ol>
+<h2>4. Security QA</h2>
+<ol>
+<li>Test 401/403, expired token, malformed input, out-of-root path, injection fixture, secret scanner.</li>
+</ol>
+<ol>
+<li>Audit dependency và license; giữ log tối thiểu đủ chứng cứ.</li>
+</ol>
+<ol>
+<li>Lưu incident plan và cách revoke credentials khi có sự cố.</li>
+</ol>
+<h2>Bàn giao</h2>
+<p>Threat model, RBAC matrix, negative cases, license and privacy audit.</p>
+<h2>Checklist nghiệm thu</h2>
+<ul>
+<li>[ ] Có quyền thực hiện và ranh giới hệ thống rõ ràng.</li>
+<li>[ ] Có log hoặc nguồn cho từng khẳng định về kết quả.</li>
+<li>[ ] Có negative test và kiểm tra sai lệch giả định.</li>
+<li>[ ] Có rollback hoặc phương án khôi phục nếu tác động dữ liệu.</li>
+<li>[ ] Có báo cáo PARTIAL nếu còn bất kỳ bước nào chưa kiểm chứng.</li>
+</ul>
+<h2>Nguồn tham khảo</h2>
+<ul>
+<li>https://owasp.org/www-project-top-10-for-large-language-model-applications/</li>
+<li>https://learn.chatgpt.com/docs/build-skills</li>
+</ul></article><div class="doc-nav"><a href="07-evidence-reporting.html">← Evidence ledger / nghiệm thu</a><a href="09-evaluation-cost.html">Agent eval / chi phí →</a></div></div></div></main><footer class="docs-footer shell"><a href="../">← Agent Harness Skillbook</a> · 2026 · Nội dung tự biên soạn và có ghi nguồn tham khảo.</footer></body></html>
