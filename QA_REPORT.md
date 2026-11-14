@@ -153,3 +153,11 @@ Giới hạn: PASS có nghĩa cả 19 smoke assertions định nghĩa trước �
 JSON chứa **24/24 PASS**, URL GitHub Pages chính thức, thông tin profile trình duyệt cô lập và dấu thời gian `2026-11-14T13:39:43.122Z`. Tệp gốc đã được kiểm tra tại PHA; Git blob SHA của cả ba file khi upload lên GitHub trùng với kết quả `git hash-object` từ máy nguồn. Bảng SHA-256 và quy trình chuyển: [PROVENANCE.md](evidence/2026-11-14-a11y-24qa/PROVENANCE.md).
 
 Đây là cập nhật trạng thái **thay thế kết luận 'chưa tải được'** ở đoạn ghi nhận lịch sử phía trên. Những đoạn lịch sử được giữ để truy vết. Sau khi commit, phải chạy lại validator và deployed SHA verifier trên HEAD mới trước khi đóng Issue #1.
+
+## Local preview canonical-path hardening — 15/11/2026
+
+Audit phát hiện việc kiểm tra chuỗi đường dẫn đầu vào không đủ để chặn bí danh symlink trỏ vào các file nhạy cảm **bên trong** repository. Bản vá bổ sung so khớp các segment của đường dẫn đã được `realpath` giải quyết, không phân biệt hoa/thường, và chỉ phục vụ file theo đường dẫn canonical được kiểm tra.
+
+**Kiểm thử trên nhánh ứng viên:** 17 ca HTTP preview cùng 2 tình huống symlink ngoài root và bên trong root đều PASS trên WIN11-181 và PHA. Browser smoke cục bộ 24/24 PASS trên PHA; bộ cài, MCP và Git fsck PASS trên WIN11-181.
+
+[Bằng chứng kiểm thử và phạm vi](evidence/2026-11-15-preview-security/QA.md). Lưu ý đây là bản vá cho server preview localhost, không tác động runtime GitHub Pages. Sau khi cập nhật báo cáo, cần xác minh Git SHA và các file công khai ở bản phát hành mới.

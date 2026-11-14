@@ -120,3 +120,7 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 ## Kiểm toán bổ sung: 24/24 Browser QA
 
 Đợt ngày 14/11/2026 bổ sung hỗ trợ điện thoại 320px, cách ly background khi popup mở, giảm chuyển động, mô tả SEO đúng 60 skill và bảo vệ preview khỏi symlink ra ngoài root. **24/24 Chrome browser smoke PASS trên website công khai**, 15 kiểm thử preview và kiểm thử cài 60 skill PASS. [Biên bản kiểm thử](QA_REPORT.md) · [Kết quả dòng lệnh](evidence/2026-11-14-a11y-24qa/live-browser-run.md). Không phải chứng nhận WCAG toàn diện.
+
+## Kiểm tra bảo mật máy xem trước
+
+Server preview chỉ lắng nghe `127.0.0.1`, chặn thư mục và tệp nhạy cảm sau khi giải quyết symlink (bao gồm đường dẫn bí danh bên trong root), không phân biệt chữ hoa/thường. Kiểm thử: `node scripts/test-preview.mjs` và [biên bản QA](evidence/2026-11-15-preview-security/QA.md). Mã hoạt động trên máy cục bộ; không phải cấu hình bảo mật của GitHub Pages.

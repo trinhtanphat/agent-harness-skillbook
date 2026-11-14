@@ -158,3 +158,6 @@ for(const item of originalEvidence){
 }
 assert.ok(existsSync(join(root,'evidence/2026-11-14-a11y-24qa/PROVENANCE.md')),'Evidence provenance manifest present');
 console.log('PASS: original PHA 24/24 browser QA, exact SHA256 of 3 files and PNG signatures');
+
+assert.ok(existsSync(join(root,'evidence/2026-11-15-preview-security/QA.md')),'Preview security regression evidence available');
+console.log('PASS: preview security QA evidence committed');

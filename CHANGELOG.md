@@ -1,3 +1,10 @@
+## 2026-11-15 — Preview sensitive-path alias regression
+
+- Deny case variants of sensitive dotfiles and aliases inside the repository after resolving symlinks.
+- Stream file content via the canonical path and extend 17 HTTP smoke tests with live symlink aliases.
+- Confirmed new negative-case tests PASS on PHA and WIN11-181, 24/24 local browser QA PASS.
+- Expanded Pages integrity coverage to the preview scripts, validation and security docs.
+
 ## 2026-11-15 — Recover and publish original 24/24 Chrome QA artifacts
 
 - Reconnected to the original PHA QA host; archived untouched `browser-qa.json`, `home-mobile-320.png`, and `install-mobile-320.png`.
