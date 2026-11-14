@@ -3,9 +3,17 @@
   const items = Array.isArray(window.SKILLBOOK_CATALOG) ? window.SKILLBOOK_CATALOG : [];
   const $ = (id) => document.getElementById(id);
   const categoryNames = ['Tất cả', ...new Set(items.map(s => s.category))];
-  const symbols = {'Agent Harness & Skills':'⌘','Crawl & App Reconstruction':'▦','Research & PhD':'✳','MCP & Integrations':'◇','Problem Solving':'⌁','QA, Security & Delivery':'⛨'};
+  const symbols = {'Agent Harness & Skills':'⌘','Crawl & App Reconstruction':'▦','Research & PhD':'✳','MCP & Integrations':'◇','Problem Solving':'⌁','QA, Security & Delivery':'⛨','Reverse Engineering & Forensics':'⌕','Knowledge & RAG':'◈','Git & Release Engineering':'⎇','Data & Automation':'⟲'};
   const state = {query:'',category:'Tất cả',level:'all'};
-  let lastFocus = null, toastTimer = 0;
+  let lastFocus = null, toastTimer = 0, previousHash = '#explorer';
+  const hashPrefix = '#skill/';
+  const skillById = new Map(items.map(item => [item.id, item]));
+  const skillLink = skill => location.origin + location.pathname + location.search + hashPrefix + encodeURIComponent(skill.id);
+  function fromHash() {
+    if (!location.hash.startsWith(hashPrefix)) return null;
+    try { return skillById.get(decodeURIComponent(location.hash.slice(hashPrefix.length))) || null; }
+    catch { return null; }
+  }
   const safe = (value) => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const normalize = x => String(x).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('vi');
   const make = (tag, className, text) => { const e=document.createElement(tag); if(className) e.className=className; if(text!=null) e.textContent=text; return e; };
@@ -13,10 +21,15 @@
     const root=$('categories'); root.replaceChildren();
     categoryNames.forEach(cat=>{
       const b=make('button','category-btn',cat==='Tất cả'?'✧ Tất cả':(symbols[cat]||'✦')+' '+cat);
-      b.type='button'; b.setAttribute('aria-pressed',String(cat===state.category));
+      b.type='button'; b.dataset.category=cat; b.setAttribute('aria-pressed',String(cat===state.category));
       b.addEventListener('click',()=>{state.category=cat;render();});
       root.appendChild(b);
     });
+  }
+  function updateCategories() {
+    for (const b of $('categories').querySelectorAll('.category-btn')) {
+      b.setAttribute('aria-pressed', String(b.dataset.category === state.category));
+    }
   }
   function matches(s) {
     if(state.category!=='Tất cả' && s.category!==state.category)return false;
@@ -26,7 +39,7 @@
     return state.query.trim().split(/\s+/).every(term=>hay.includes(normalize(term)));
   }
   function render() {
-    renderCategories();
+    updateCategories();
     const visible=items.filter(matches), grid=$('skillGrid'); grid.replaceChildren();
     $('resultCount').textContent=String(visible.length);
     $('statSkills').textContent=String(items.length);
@@ -43,33 +56,56 @@
     });
   }
   function notify(msg){const e=$('toast');e.textContent=msg;e.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.hidden=true,2700);}
-  function openDrawer(s){
-    lastFocus=document.activeElement;
+  function openDrawer(s,{updateHash=true}={}){
+    const alreadyOpen=document.body.classList.contains('drawer-open');
+    if (!alreadyOpen) {
+      lastFocus=document.activeElement;
+      previousHash=location.hash.startsWith(hashPrefix) ? '#explorer' : (location.hash || '#explorer');
+    }
     $('drawerNo').textContent=String(items.indexOf(s)+1).padStart(2,'0');
     const body=$('drawerContent'); body.innerHTML=
-      '<div class="section-kicker">'+safe(s.category)+'</div><h2 id="drawerTitle">'+safe(s.title)+'</h2><p class="drawer-summary">'+safe(s.summary)+'</p>'+
+      '<div class="section-kicker">'+safe(s.category)+'</div><h2 id="drawerTitle">'+safe(s.title)+'</h2><p id="drawerSummary" class="drawer-summary">'+safe(s.summary)+'</p>'+
       '<div class="drawer-pills"><span class="drawer-pill">'+safe(s.level)+'</span><span class="drawer-pill">'+safe(s.origin)+'</span>'+s.tags.map(t=>'<span class="drawer-pill">#'+safe(t)+'</span>').join('')+'</div>'+
       '<h3>QUY TRÌNH THỰC HÀNH</h3><ol>'+s.steps.map(x=>'<li>'+safe(x)+'</li>').join('')+'</ol>'+
       '<div class="drawer-outcome"><strong>DELIVERABLES / ĐẦU RA</strong>'+safe(s.deliverables)+'</div>'+
       '<h3>ACCEPTANCE / TIÊU CHÍ</h3><ul>'+s.checks.map(x=>'<li>'+safe(x)+'</li>').join('')+'</ul>'+
       '<h3>GIỚI HẠN AN TOÀN</h3><p class="drawer-summary">Chỉ dùng với hệ thống hoặc tài liệu có quyền truy cập; không tiết lộ khóa, dữ liệu cá nhân hoặc sao chép tài sản không được cấp phép. Mọi trạng thái phải có bằng chứng.</p>'+
-      '<div class="drawer-actions"><a class="primary-button" href="'+safe(s.path)+'" target="_blank" rel="noopener noreferrer">Mở SKILL.md ↗</a><button class="secondary-button" id="copyPrompt" type="button">Sao chép prompt ↗</button></div>'+
+      '<div class="drawer-actions"><a class="primary-button" href="'+safe(s.path)+'" target="_blank" rel="noopener noreferrer">Mở SKILL.md ↗</a><button class="secondary-button" id="copyPrompt" type="button">Sao chép prompt ↗</button><button class="secondary-button" id="copySkillLink" type="button">Sao chép liên kết</button></div>'+
       '<p class="drawer-source">Nguồn tham khảo: <a href="'+safe(s.source)+'" target="_blank" rel="noopener noreferrer">'+safe(s.source)+'</a></p>';
     $('copyPrompt').addEventListener('click',async ()=>{
       const prompt='Hãy sử dụng skill '+s.id+' để thực hiện nhiệm vụ sau. Mục tiêu: [điền]. Giới hạn quyền: [điền]. Làm theo các bước: '+s.steps.join('; ')+'. Bàn giao: '+s.deliverables+'. Đính kèm bằng chứng và nêu rõ phần chưa được kiểm chứng.';
       try{await navigator.clipboard.writeText(prompt);notify('Đã sao chép prompt mẫu');}catch(e){notify('Không thể sao chép tự động trên trình duyệt này');}
     });
+    $('copySkillLink').addEventListener('click',async()=>{
+      try { await navigator.clipboard.writeText(skillLink(s));notify('Đã sao chép liên kết kỹ năng'); }
+      catch { notify('Không thể sao chép. Hãy lấy URL trên thanh địa chỉ.'); }
+    });
     $('drawerOverlay').hidden=false;
+    $('skillDrawer').inert=false;
     $('skillDrawer').classList.add('open');
     $('skillDrawer').setAttribute('aria-hidden','false');
     document.body.classList.add('drawer-open');
     $('closeDrawer').focus();
-    if(location.hash.indexOf('#skill/')===0) history.replaceState(null,'',location.pathname+location.search+'#explorer');
+    if(updateHash && location.hash!==hashPrefix+encodeURIComponent(s.id)) history.pushState({skill:s.id},'',skillLink(s));
   }
-  function closeDrawer(){
-    $('skillDrawer').classList.remove('open');$('skillDrawer').setAttribute('aria-hidden','true');
-    $('drawerOverlay').hidden=true;document.body.classList.remove('drawer-open');
-    if(lastFocus && typeof lastFocus.focus==='function')lastFocus.focus();
+  function closeDrawer({updateHash=true}={}){
+    if(!document.body.classList.contains('drawer-open'))return;
+    $('skillDrawer').classList.remove('open');
+    $('skillDrawer').setAttribute('aria-hidden','true');
+    $('skillDrawer').inert=true;
+    $('drawerOverlay').hidden=true;
+    document.body.classList.remove('drawer-open');
+    if(updateHash && location.hash.startsWith(hashPrefix)) {
+      history.replaceState(null,'',location.pathname+location.search+previousHash);
+    }
+    if(lastFocus && lastFocus.isConnected && typeof lastFocus.focus==='function') lastFocus.focus();
+    else $('searchInput').focus();
+    lastFocus=null;
+  }
+  function syncFromURL(){
+    const match=fromHash();
+    if(match) openDrawer(match,{updateHash:false});
+    else closeDrawer({updateHash:false});
   }
   function clearFilters(){state.category='Tất cả';state.query='';state.level='all';$('searchInput').value='';$('levelSelect').value='all';render();}
   $('searchInput').addEventListener('input',e=>{state.query=e.target.value;render();});
@@ -93,5 +129,9 @@
   let savedTheme='dark';try{savedTheme=localStorage.getItem('skillbook-theme')||'dark';}catch(e){}
   if(savedTheme==='light')document.body.classList.add('light');
   themeButton.addEventListener('click',()=>{const light=document.body.classList.toggle('light');try{localStorage.setItem('skillbook-theme',light?'light':'dark');}catch(e){};notify(light?'Đã bật giao diện sáng':'Đã bật giao diện tối');});
+  renderCategories();
   render();
+  syncFromURL();
+  window.addEventListener('hashchange',syncFromURL);
+  window.addEventListener('popstate',syncFromURL);
 })();
