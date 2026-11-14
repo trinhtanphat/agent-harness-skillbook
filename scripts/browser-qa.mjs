@@ -187,6 +187,10 @@ try{
  assert.equal(responsiveDirectory.overflow,false,'Mobile directory horizontal overflow');
  await capture('skills-index-mobile-390.png');
  observations.push({name:'skills-index-mobile',result:'PASS',details:responsiveDirectory});
+ const installPage=await evalJs("(async()=>{const r=await fetch('../install.html');const t=await r.text();return {status:r.status,hasCommands:t.includes('scripts/install-skills.mjs'),hasDryRun:t.includes('Mặc định chỉ xem trước')}})()");
+ assert.equal(installPage.status,200,'Installer guide must be public');
+ assert.ok(installPage.hasCommands&&installPage.hasDryRun,'Installer guide contains safety instructions');
+ observations.push({name:'installer-guide',result:'PASS',details:installPage});
 
  assert.equal(runtimeExceptions.length,0,'Browser runtime exceptions: '+runtimeExceptions.join(' / '));
  observations.push({name:'runtime-exceptions',result:'PASS',details:'No JavaScript exceptions'});

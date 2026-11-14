@@ -97,3 +97,8 @@ for(const p of ['docs/index.html','skills/index.html']){
 const siteMap=read('sitemap.xml');
 for(const target of ['docs/index.html','skills/index.html'])assert.ok(siteMap.includes('https://trinhtanphat.github.io/agent-harness-skillbook/'+target),'Sitemap missing '+target);
 console.log('PASS: 14/60 static directories, metadata, CSP, links and sitemap');
+
+const installPage=read('install.html');
+assert.ok(installPage.includes('<article id="install"')&&installPage.includes('scripts/install-skills.mjs'),'Installer guide HTML');
+assert.ok(siteMap.includes('https://trinhtanphat.github.io/agent-harness-skillbook/install.html'),'Installer missing from sitemap');
+console.log('PASS: installer web guide and sitemap');
