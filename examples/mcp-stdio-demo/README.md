@@ -1,29 +1,32 @@
-# MCP stdio demo — Node.js, zero dependencies
+# MCP stdio demo — protocol revision 2026-07-28
 
-This is a **learning-only** implementation of a small JSON-RPC MCP server. It exposes two harmless tools: add_numbers and build_scope_checklist. It reads no files, uses no network, and receives no credentials. For production integrations, use the current official MCP SDK and security guidelines.
+This **teaching-only** server implements a deliberately small subset of the modern stateless [MCP 2026-07-28 protocol](https://modelcontextprotocol.io/specification/2026-07-28/). It is not a full MCP SDK and should **not** be deployed as a production server.
 
-## Run smoke tests
+## Major version change
 
-~~~bash
+- **2025-11-25 and earlier:** session-scoped \`initialize\` / \`notifications/initialized\`.
+- **2026-07-28:** no initialize handshake; \`server/discover\` and mandatory per-request \`_meta\` with protocol version/client capabilities; \`resultType\` in result responses.
+- New servers need to implement tool execution errors as \`isError: true\` for correctable input validation; unknown methods/tools use JSON-RPC errors.
+- For compatibility with older MCP hosts, use a version-aware SDK that can negotiate both eras; this sample deliberately supports only \`2026-07-28\`.
+
+## Run
+
+\`\`\`bash
 node examples/mcp-stdio-demo/client-smoke.mjs
-~~~
+\`\`\`
 
-Expected result: PASS for initialize, tools/list, tools/call, invalid input and checklist. This is not a production compliance suite.
+Expected PASS covers: discovery, metadata, list, call, invalid input, unknown tool, unsupported version and missing meta. Node.js 22+; no packages.
 
-## Manual transport
+Manual protocol example (one JSON-RPC object per stdin line):
 
-Run server:
+\`\`\`json
+{"jsonrpc":"2.0","id":1,"method":"server/discover","params":{"_meta":{"io.modelcontextprotocol/protocolVersion":"2026-07-28","io.modelcontextprotocol/clientCapabilities":{},"io.modelcontextprotocol/clientInfo":{"name":"demo","version":"1.0.0"}}}}
+\`\`\`
 
-~~~bash
-node examples/mcp-stdio-demo/server.mjs
-~~~
+This demo **does not read local files, credentials, network, or browser sessions**. Run only locally. Do not expose it as unauthenticated HTTP.
 
-Send one JSON-RPC object per line through stdin and read one response line from stdout:
+## For real MCP apps
 
-~~~json
-{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"demo","version":"1"}}}
-~~~
+Use the maintained official [TypeScript SDK v2](https://ts.sdk.modelcontextprotocol.io/v2/) or the [Python SDK](https://py.sdk.modelcontextprotocol.io/). Configure version negotiation and validate cross-era compatibility with actual target clients.
 
-Then send the initialized notification and tools/list. The transport is local only; **do not expose this teaching process as an unauthenticated remote HTTP service**.
-
-See [MCP docs](https://modelcontextprotocol.io/) for latest wire details and an SDK-built server.
+References: [MCP discover](https://modelcontextprotocol.io/specification/2026-07-28/server/discover), [MCP tools](https://modelcontextprotocol.io/specification/2026-07-28/server/tools), [versioning](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning).
