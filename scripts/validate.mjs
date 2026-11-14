@@ -124,3 +124,6 @@ const modalCode=read('assets/app.js');
 assert.ok(modalCode.includes('setBackgroundInert(true)')&&modalCode.includes('setBackgroundInert(false)'),'Modal background focus isolation');
 assert.ok(read('assets/docs.css').includes('.prose pre{max-width:100%;overflow-x:auto'),'CLI code blocks must scroll inside viewport');
 console.log('PASS: SEO accuracy, modal a11y and responsive code blocks');
+
+assert.ok(existsSync(join(root,'evidence/2026-11-14-a11y-24qa/live-browser-run.md')),'Missing public 24-check browser QA transcript');
+console.log('PASS: public Chrome 24-check transcript included');

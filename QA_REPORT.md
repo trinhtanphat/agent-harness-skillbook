@@ -131,3 +131,17 @@ Giới hạn: PASS có nghĩa cả 19 smoke assertions định nghĩa trước �
 - Bao gồm bằng chứng 19/19: `evidence/2026-11-14-19qa/browser-qa.json` và `skills-index-mobile-390.png`.
 - Lượt kiểm tra SHA đầu tiên đạt 115/116; kiểm tra riêng cả hai bằng chứng mới đều PASS và khi chạy lại toàn bộ đạt 116/116. Không bỏ qua tệp nào trong lần nghiệm thu thành công. Lượt không đạt được giữ trong lịch sử, không xem là PASS.
 - Việc cập nhật dòng báo cáo này làm thay đổi commit; phải chạy lại verifier trên HEAD mới để đóng kiểm toán.
+
+## A11y, mobile 320px và preview security — 14/11/2026
+
+**Kết quả public:** 24/24 browser smoke checks PASS trên GitHub Pages ở source commit `ef3517bbcd1a855ce83142c334b0a3071fba710d`; Chrome headless profile độc lập trên DESKTOP-PHA1S90, exit code 0. Năm phép kiểm bổ sung kiểm tra SEO 60 skills / 14 playbook, nền popup inert và phục hồi, bốn trang trên mobile 320px, và `prefers-reduced-motion`.
+
+**Lỗi đã khắc phục:** meta description còn ghi 36 skills; thanh header/section link gây trang rộng 339px trên mobile 320px; code block installer dài tới 904px; background tương tác qua screen reader khi modal đang mở.
+
+**An toàn server xem trước:** chặn `.env.*`, `.npmrc`, `.ssh`, `.aws`; dùng đường dẫn canonical để không phục vụ tệp qua symlink bên ngoài root. Cả PHA và WIN11-181 đã thử symlink thật và nhận phản hồi từ chối; 15 ca preview smoke PASS. Bộ cài 60 skills, preflight trùng đích và MCP smoke cũng PASS.
+
+**Đối chiếu sau merge mã:** 116/116 Git blob SHA trên GitHub Pages khớp HEAD, `DEPLOY_INTEGRITY_PASS`, exit code 0. Vòng browser công khai đầu tiên gặp cache metadata cũ; sau khi công khai đồng bộ byte, vòng browser thứ hai PASS 24/24.
+
+**Bằng chứng:** [Console QA công khai được ghi lại](evidence/2026-11-14-a11y-24qa/live-browser-run.md). JSON và ảnh 320px được runner lưu trên PHA, nhưng lúc biên tập báo cáo máy PHA mất kết nối nên chưa sao chép lên GitHub. Không suy diễn thêm kết quả chưa đo. Kết quả này không phải chứng nhận accessibility/WCAG đầy đủ hoặc kiểm định toàn bộ nội dung học thuật.
+
+**Yêu cầu cuối:** vì cập nhật báo cáo thay đổi HEAD, chạy lại `scripts/verify-pages.ps1 -Full` trên commit mới.

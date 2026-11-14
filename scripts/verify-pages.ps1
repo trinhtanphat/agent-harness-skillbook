@@ -17,6 +17,7 @@ $paths += @(Get-ChildItem (Join-Path $repo 'docs') -Filter '*.html' -File | ForE
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14') -Filter '*.png' -File | ForEach-Object { 'evidence/2026-11-14/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-final') -File | ForEach-Object { 'evidence/2026-11-14-final/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-19qa') -File | ForEach-Object { 'evidence/2026-11-14-19qa/' + $_.Name })
+$paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-a11y-24qa') -File | ForEach-Object { 'evidence/2026-11-14-a11y-24qa/' + $_.Name })
 if($Full){
   $paths += @(Get-ChildItem (Join-Path $repo 'playbooks') -Filter '*.md' -File | ForEach-Object { 'playbooks/' + $_.Name })
   $paths += @(Get-ChildItem (Join-Path $repo '.agents/skills') -Filter 'SKILL.md' -File -Recurse | ForEach-Object {

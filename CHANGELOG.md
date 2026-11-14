@@ -1,3 +1,11 @@
+## 2026-11-14 — Compact mobile, modal accessibility and preview security
+
+- Sửa overflow tại viewport 320px: thanh điều hướng và các câu lệnh installer dài.
+- Sửa SEO mô tả 36 thành 60 skills; tôn trọng reduced-motion; cô lập nội dung nền khi popup modal đang mở.
+- Tăng bảo vệ local preview: đường dẫn canonical ngăn symlink escape, deny dotfile nhạy cảm.
+- Kiểm thử public 24/24 Chrome headless PASS, local preview 15 cases và symlink negative test PASS.
+- Ghi console QA và phạm vi hạn chế trong `evidence/2026-11-14-a11y-24qa`.
+
 ## 2026-11-14 — Browser QA 19/19 live PASS
 
 - DESKTOP-PHA1S90 đã chạy Chrome headless cô lập trên public GitHub Pages, 19/19 kiểm thử PASS.

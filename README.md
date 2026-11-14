@@ -116,3 +116,7 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 ## Trạng thái kiểm thử công khai mở rộng
 
 **19/19 Chrome browser smoke PASS** trên URL GitHub Pages public, gồm kiểm thử mới của danh mục 14 playbook, 60 skill trên mobile 390px và hướng dẫn cài. [Bằng chứng JSON](evidence/2026-11-14-19qa/browser-qa.json) · [Ảnh mobile](evidence/2026-11-14-19qa/skills-index-mobile-390.png) · [QA_REPORT](QA_REPORT.md). Đây là phạm vi smoke automation, không phải chứng nhận mọi môi trường.
+
+## Kiểm toán bổ sung: 24/24 Browser QA
+
+Đợt ngày 14/11/2026 bổ sung hỗ trợ điện thoại 320px, cách ly background khi popup mở, giảm chuyển động, mô tả SEO đúng 60 skill và bảo vệ preview khỏi symlink ra ngoài root. **24/24 Chrome browser smoke PASS trên website công khai**, 15 kiểm thử preview và kiểm thử cài 60 skill PASS. [Biên bản kiểm thử](QA_REPORT.md) · [Kết quả dòng lệnh](evidence/2026-11-14-a11y-24qa/live-browser-run.md). Không phải chứng nhận WCAG toàn diện.
