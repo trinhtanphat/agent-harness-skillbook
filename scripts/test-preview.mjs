@@ -24,11 +24,14 @@ try {
  await check('/node_modules/package.json',403);
  await check('/qa-evidence-local/file.png',403);
  await check('/.env',403);
+ await check('/.env.production',403);
+ await check('/.npmrc',403);
+ await check('/.ssh/id_rsa',403);
  await check('/not-a-real-page',404);
  await check('/',405,'POST');
  const head=await check('/',200,'HEAD','text/html');
  assert.equal((await head.text()).length,0,'HEAD must have no response body');
- console.log('PASS: 12 static preview cases / only loopback / internal files protected');
+ console.log('PASS: 15 static preview cases / only loopback / internal files protected');
 }finally {
  await new Promise(resolve=>server.close(resolve));
 }

@@ -4,13 +4,15 @@
  */
 import {createServer} from 'node:http';
 import {createReadStream} from 'node:fs';
-import {stat} from 'node:fs/promises';
+import {stat,realpath} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import {resolve,sep,extname} from 'node:path';
 
 const root=resolve(fileURLToPath(new URL('../',import.meta.url)));
+const canonicalRoot=await realpath(root);
 const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.md':'text/markdown; charset=utf-8','.txt':'text/plain; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.csv':'text/csv; charset=utf-8','.xml':'application/xml; charset=utf-8'};
-const secretSegments=new Set(['.git','node_modules','qa-evidence','qa-evidence-local','.env','.github']);
+const secretSegments=new Set(['.git','node_modules','qa-evidence','qa-evidence-local','.env','.github','.npmrc','.pypirc','.ssh','.aws']);
+const isSensitiveSegment = s => secretSegments.has(s) || s.startsWith('.env.');
 const deny=res=>{res.writeHead(403,{'Content-Type':'text/plain; charset=utf-8'});res.end('Forbidden');};
 export function createPreviewServer(){
  return createServer(async (req,res)=>{
@@ -24,11 +26,16 @@ export function createPreviewServer(){
    if(name.includes('\0')||name.includes('\\')){deny(res);return;}
   }catch{res.writeHead(400);res.end('Bad URL');return;}
   const parts=name.split('/').filter(Boolean);
-  if(parts.some(p=>secretSegments.has(p))){deny(res);return;}
+  if(parts.some(isSensitiveSegment)){deny(res);return;}
   const candidate=resolve(root,'.'+(name.endsWith('/')?name+'index.html':name));
   if(candidate!==root&&!candidate.startsWith(root+sep)){deny(res);return;}
-  let st;
-  try{st=await stat(candidate);}catch{res.writeHead(404);res.end('Not found');return;}
+  let st,canonical;
+  try{
+    canonical=await realpath(candidate);
+    st=await stat(candidate);
+  }catch{res.writeHead(404);res.end('Not found');return;}
+  // A symlink may escape the repository even when its lexical path is safe.
+  if(canonical!==canonicalRoot&&!canonical.startsWith(canonicalRoot+sep)){deny(res);return;}
   if(st.isDirectory()){
    const location=name.endsWith('/')?name+'index.html':name+'/index.html';
    res.writeHead(302,{Location:location});res.end();return;

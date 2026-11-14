@@ -112,3 +112,8 @@ assert.equal(qa19.observations.length,19,'expected browser gates');
 for(const name of qa19names)assert.ok(qa19.observations.some(x=>x.name===name&&x.result==='PASS'),'Missing live PASS: '+name);
 assert.ok(existsSync(join(root,'evidence/2026-11-14-19qa/skills-index-mobile-390.png')),'Missing mobile QA screenshot');
 console.log('PASS: latest live browser QA evidence 19/19 and responsive index screenshot');
+
+const previewCode=read('scripts/local-preview.mjs');
+assert.ok(previewCode.includes('canonicalRoot+sep')&&previewCode.includes('realpath(candidate)'),'Local preview must enforce canonical path containment');
+assert.ok(previewCode.includes("s.startsWith('.env.')"),'Preview must block environment files');
+console.log('PASS: canonical path containment and sensitive-file exclusions');
