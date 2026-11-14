@@ -54,3 +54,11 @@ assert.ok(app.includes('updateCategories()')&&app.includes('renderCategories();'
 const local=read('scripts/local-preview.mjs');
 assert.ok(local.includes("'127.0.0.1'")&&local.includes("'.git'"),'Local preview security invariants');
 console.log('PASS: deep-link/a11y invariants and private loopback preview');
+
+const finalQA=JSON.parse(read('evidence/2026-11-14-final/browser-qa.json'));
+assert.equal(finalQA.url,'https://trinhtanphat.github.io/agent-harness-skillbook/','final QA site');
+assert.equal(finalQA.isolatedProfile,true,'final QA isolated browser');
+assert.equal(finalQA.observations.length,16,'final QA count');
+for(const name of ["desktop-catalog","theme-toggle","search-MCP","category-filter","expanded-category-filter","category-keyboard-focus","drawer-share-link","drawer-focus-trap","skill-drawer","direct-link-reload","escape-close","browser-back-close","mobile-390","docs-mobile","14-guide-link-smoke","runtime-exceptions"])assert.ok(finalQA.observations.some(r=>r.name===name&&r.result==='PASS'),'final QA: '+name);
+for(const p of ['home-desktop-1440.png','home-mobile-390.png','skill-detail-desktop.png','docs-mobile-390.png'])assert.ok(existsSync(join(root,'evidence/2026-11-14-final',p)),'final screenshot: '+p);
+console.log('PASS: latest 16/16 public browser QA evidence and 4 screenshots');
