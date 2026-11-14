@@ -15,3 +15,18 @@ body.light{color-scheme:light;--bg:#f4f8fc;--bg2:#eaf1f9;--surface:#fff;--surfac
 /* Focusable category chips retain stable identity. A closed drawer must be inert. */
 .category-btn:focus-visible{outline-offset:2px;scroll-margin-inline:10px}.skill-drawer[inert]{visibility:hidden;pointer-events:none}.drawer-actions button{min-height:43px}.skill-drawer:not(.open){pointer-events:none}
 @media (prefers-reduced-motion:reduce){.skill-drawer{transition:none}}
+
+/* Compact 320px phones: keep header controls and section links inside viewport. */
+@media(max-width:360px){
+ .nav{gap:8px}
+ .brand{gap:7px}
+ .brand-mark{width:34px;height:34px;font-size:25px;flex-shrink:0}
+ .brand-lines strong{font-size:15px;letter-spacing:.035em}
+ .brand-lines small{font-size:7px;letter-spacing:.035em}
+ .nav-actions{gap:5px}
+ .nav-actions .icon-button{width:34px;height:34px;font-size:18px}
+ .nav-actions .github-button{font-size:11px;padding:8px}
+ .section-head{flex-wrap:wrap;gap:12px}
+ .section-head>div{min-width:0}
+ .section-head .subtle-link{white-space:normal}
+}
