@@ -24,3 +24,5 @@ node scripts/test-local.mjs
 Test results and screenshots go to `qa-evidence-local/` and should **not** be committed automatically. The local preview checks no production APIs. The browser script uses its own disposable user profile instead of attaching to your open Edge session.
 
 Before a release, additionally run `node scripts/validate.mjs`, `node examples/mcp-stdio-demo/client-smoke.mjs`, and after GitHub Pages deploy run `scripts/verify-pages.ps1 -Full` on Windows to compare public bytes with Git HEAD.
+
+For fast headless-server checks with **no Chromium installed**: `node scripts/test-preview.mjs` (12 cases). These verify only file serving and local scope, not UI interactivity.
