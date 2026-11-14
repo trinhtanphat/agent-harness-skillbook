@@ -99,3 +99,7 @@ node scripts/test-local.mjs
 Các file QA local được lưu trong `qa-evidence-local/` (đã gitignore). Không được coi test cục bộ là xác minh GitHub Pages; sau merge/deploy phải kiểm tra riêng.
 
 Kiểm thử server loopback không cần trình duyệt: `node scripts/test-preview.mjs`. Bộ này kiểm tra HTTP status, file type, cấm `.git`/`.env`, HEAD và POST.
+
+## Nghiệm thu cuối cùng (14/11/2026)
+
+**16/16 Browser QA PASS — live GitHub Pages.** Chrome headless trên máy PHA đã kiểm tra trực tiếp website, bao gồm focus trap bằng Tab, Escape và browser Back. Kết quả: 0 JavaScript exception, 14/14 đường dẫn hướng dẫn hoạt động. [Biên bản QA](QA_REPORT.md) · [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · [Ảnh desktop](evidence/2026-11-14-final/home-desktop-1440.png) · [Ảnh mobile](evidence/2026-11-14-final/home-mobile-390.png). Đây là nghiệm thu smoke theo phạm vi xác định, không phải chứng nhận WCAG hoặc học thuật toàn diện.
