@@ -1,0 +1,2 @@
+requirement_id,scope,commit_sha,artifact_sha,test_name,test_environment,executed_at,pass,reviewer,approval,proof_url,notes
+REQ-001,example,,,,,,false,,PENDING,,example only

@@ -1,0 +1,2 @@
+record_id,database,doi,title,year,language,fulltext_state,title_abstract_decision,fulltext_decision,exclusion_reason,reviewer,notes
+R001,example,,,,,NOT_SCREENED,PENDING,PENDING,,,example only

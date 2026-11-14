@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0a1022">
+  <meta name="description" content="Agent Harness Skillbook: 36 kỹ năng và playbook thực hành AI agents, MCP, crawl ứng dụng hợp pháp, nghiên cứu luận án, QA và giải quyết vấn đề.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'">
+  <title>Agent Harness Skillbook • Learn, Build, Verify</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="data/catalog.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#explorer">Đi tới thư viện</a>
+  <div class="aurora" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="shell nav">
+      <a href="./" class="brand" aria-label="Agent Harness Skillbook — trang chủ">
+        <span class="brand-mark">⌘</span>
+        <span class="brand-lines"><strong>HARN<span>ESS</span></strong><small>THE AGENT SKILLBOOK</small></span>
+      </a>
+      <nav class="nav-links" aria-label="Điều hướng">
+        <a class="active" href="#explorer">Thư viện</a>
+        <a href="#learning">Lộ trình</a>
+        <a href="#playbooks">Playbooks</a>
+        <a href="#principles">Triết lý</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="themeBtn" class="icon-button" type="button" aria-label="Đổi giao diện" title="Đổi sáng / tối">◐</button>
+        <a class="github-button" href="https://github.com/trinhtanphat/agent-harness-skillbook" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">↗</span> GitHub <span class="desktop-only">Repository</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> OPEN KNOWLEDGE BASE <span class="eyebrow-date">EDITION 2026</span></div>
+        <h1>Biến AI từ <em>trả lời</em><br>thành <span class="gradient-text">làm việc có bằng chứng.</span></h1>
+        <p class="hero-lead">Một bộ cẩm nang kỹ thuật có thể dùng lại: <strong>Agent Harness, Skills, MCP, reverse-engineering có quyền, nghiên cứu học thuật, giải quyết sự cố</strong> và triển khai an toàn.</p>
+        <div class="hero-actions">
+          <a href="#explorer" class="primary-button">Khám phá kỹ năng <span aria-hidden="true">↘</span></a>
+          <a href="playbooks/05-agent-harness.md" class="secondary-button">Xem quy trình mẫu <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="hero-foot"><span>✦ Việt ngữ</span><span>✦ Mã nguồn mở</span><span>✦ Không phụ thuộc API</span></div>
+      </div>
+      <div class="hero-graphic" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="core"><span class="core-glyph">⌘</span><span>AGENT CORE</span></div>
+        <div class="float-tag tag-one"><span>01</span> SKILLS.md</div>
+        <div class="float-tag tag-two"><span>02</span> MCP TOOLS</div>
+        <div class="float-tag tag-three"><span>03</span> EVIDENCE</div>
+        <div class="float-tag tag-four"><span>04</span> RELEASE</div>
+        <span class="star star-one">+</span><span class="star star-two">+</span><span class="star star-three">·</span>
+      </div>
+    </section>
+
+    <div class="shell stats-band" aria-label="Chỉ số nội dung">
+      <div><strong id="statSkills">36</strong><span>SKILLS DÙNG LẠI</span></div>
+      <div><strong id="statTracks">6</strong><span>CHUYÊN MỤC</span></div>
+      <div><strong>10<span class="stat-plus">+</span></strong><span>PLAYBOOK & MẪU</span></div>
+      <div class="stats-note"><span class="note-dot"></span> <strong>Proof over promises.</strong><small>Không nhầm PASS với hoàn tất.</small></div>
+    </div>
+
+    <section id="explorer" class="section shell">
+      <div class="section-head">
+        <div><div class="section-kicker">01 / KNOWLEDGE EXPLORER</div><h2>Thư viện <span class="muted">kỹ năng</span></h2><p>Chọn chuyên mục, tìm nhanh hoặc mở chi tiết để sử dụng ngay bộ hướng dẫn <code>SKILL.md</code>.</p></div>
+        <div class="live-count"><span class="live-dot"></span> <span id="resultCount">36</span> kỹ năng</div>
+      </div>
+      <div class="explorer-panel">
+        <div class="search-row">
+          <label class="search-field" for="searchInput"><span class="search-icon">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Tìm kỹ năng, MCP, luận án, QA, crawl..." aria-label="Tìm kỹ năng"><kbd>Ctrl K</kbd></label>
+          <label class="sort-label" for="levelSelect"><span>Độ khó</span><select id="levelSelect"><option value="all">Tất cả</option><option value="Cơ bản">Cơ bản</option><option value="Trung cấp">Trung cấp</option><option value="Nâng cao">Nâng cao</option></select></label>
+        </div>
+        <div class="category-scroll" id="categories" aria-label="Lọc theo nhóm"></div>
+        <div class="results-meta"><span id="filterCaption">Toàn bộ kỹ năng</span><button id="resetBtn" class="reset-button" type="button">Xóa bộ lọc ↺</button></div>
+        <div id="skillGrid" class="skill-grid" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state" hidden><span>⌕</span><h3>Chưa tìm thấy kỹ năng</h3><p>Thử từ khóa rộng hơn hoặc xóa bộ lọc.</p><button id="emptyReset" class="secondary-button" type="button">Hiện tất cả</button></div>
+      </div>
+    </section>
+
+    <section id="learning" class="section section-alt">
+      <div class="shell"><div class="section-head"><div><div class="section-kicker">02 / LEARNING PATH</div><h2>Học theo <span class="muted">tình huống</span></h2><p>Bốn lộ trình, từ làm quen công cụ đến xây hệ thống có thể kiểm toán.</p></div></div>
+        <div class="roadmap">
+          <button class="road-card" type="button" data-focus="Agent Harness & Skills"><span class="road-number">PATH 01</span><span class="road-symbol">◎</span><h3>Agent Builder</h3><p>Tool routing → SKILL.md → context → multi-agent → eval.</p><span class="road-link">Xem 6 kỹ năng ↗</span></button>
+          <button class="road-card" type="button" data-focus="Crawl & App Reconstruction"><span class="road-number">PATH 02</span><span class="road-symbol">▤</span><h3>App Reconstruction</h3><p>Scope → route map → UI/API → assets → visual gate.</p><span class="road-link">Xem 6 kỹ năng ↗</span></button>
+          <button class="road-card" type="button" data-focus="Research & PhD"><span class="road-number">PATH 03</span><span class="road-symbol">◈</span><h3>Research Studio</h3><p>Research question → PRISMA → citation → evidence → thesis.</p><span class="road-link">Xem 6 kỹ năng ↗</span></button>
+          <button class="road-card" type="button" data-focus="QA, Security & Delivery"><span class="road-number">PATH 04</span><span class="road-symbol">⬡</span><h3>Production Engineer</h3><p>Test pyramid → security → blue/green → verified release.</p><span class="road-link">Xem 6 kỹ năng ↗</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="playbooks" class="section shell">
+      <div class="section-head"><div><div class="section-kicker">03 / FIELD GUIDES</div><h2>Playbooks <span class="muted">thực chiến</span></h2><p>Hướng dẫn dài có checklist, template và phương pháp nghiệm thu.</p></div><a class="subtle-link" href="https://github.com/trinhtanphat/agent-harness-skillbook/tree/main/playbooks" target="_blank" rel="noopener noreferrer">Xem trên GitHub ↗</a></div>
+      <div class="playbook-grid">
+        <a href="playbooks/01-app-reconstruction.md" class="play-card"><span class="play-icon">▦</span><span class="play-tag">ENGINEERING</span><h3>Crawl / Clone ứng dụng có quyền</h3><p>Audit route, UI, tài sản, chức năng; đo coverage và visual diff.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/02-phd-research.md" class="play-card"><span class="play-icon">✳</span><span class="play-tag">ACADEMIC</span><h3>Nghiên cứu luận án có hệ thống</h3><p>Thiết kế protocol, search strings, PRISMA và synthesis.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/03-mcp-integration.md" class="play-card"><span class="play-icon">◇</span><span class="play-tag">INFRASTRUCTURE</span><h3>Kiến trúc MCP & máy tính từ xa</h3><p>Server, auth, permission, observability và vận hành nhiều máy.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/04-problem-solving.md" class="play-card"><span class="play-icon">⌁</span><span class="play-tag">OPERATIONS</span><h3>Xử lý vấn đề từ gốc</h3><p>Repro → giả thuyết → RCA → fix → chứng minh.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/05-agent-harness.md" class="play-card"><span class="play-icon">⌘</span><span class="play-tag">AGENTS</span><h3>Thiết kế Harness, Skills, Multi-agent</h3><p>Cách đóng gói workflow, phân nhiệm và giới hạn quyền.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/06-qa-release.md" class="play-card"><span class="play-icon">⊞</span><span class="play-tag">SHIP IT</span><h3>QA, CI local, Blue/Green, Rollback</h3><p>Thang bằng chứng trước, trong và sau phát hành.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/07-evidence-reporting.md" class="play-card"><span class="play-icon">◌</span><span class="play-tag">AUDIT</span><h3>Evidence ledger & nghiệm thu 100%</h3><p>Không báo hoàn tất khi chỉ mới upload, test hoặc HTTP 200.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/08-security-ethics.md" class="play-card"><span class="play-icon">⛨</span><span class="play-tag">TRUST</span><h3>Bảo mật, quyền và đạo đức</h3><p>Bí mật, bản quyền, injection, least privilege và PII.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/09-evaluation-cost.md" class="play-card"><span class="play-icon">◫</span><span class="play-tag">MEASUREMENT</span><h3>Agent eval & tối ưu chi phí</h3><p>Đo accuracy, variance, tokens, runtime và failure rate.</p><span class="play-arrow">↗</span></a>
+        <a href="playbooks/10-learning-roadmap.md" class="play-card"><span class="play-icon">↗</span><span class="play-tag">CURRICULUM</span><h3>Lộ trình thực hành 30 ngày</h3><p>4 tuần, milestone, bài tập và tiêu chí đánh giá.</p><span class="play-arrow">↗</span></a>
+      </div>
+    </section>
+
+    <section id="principles" class="section principles">
+      <div class="shell principle-wrap"><div><div class="section-kicker">04 / OPERATING PRINCIPLES</div><h2>Đủ bằng chứng.<br><span class="gradient-text">Mới gọi là xong.</span></h2><p>Đừng nhầm “đã commit” với “đã deploy”. Đừng nhầm “200 OK” với giao diện đúng. Đừng nhầm “36/36 PASS” với bao phủ 100% nghiệp vụ.</p><a href="playbooks/07-evidence-reporting.md" class="secondary-button">Đọc tiêu chí nghiệm thu ↗</a></div>
+        <div class="ladder" aria-label="Các cổng nghiệm thu">
+          <div><span>01</span> SPECIFIED <small>Phạm vi rõ</small></div>
+          <div><span>02</span> IMPLEMENTED <small>Mã đã viết</small></div>
+          <div><span>03</span> TESTED <small>Bài kiểm thử</small></div>
+          <div><span>04</span> DEPLOYED <small>Bản chạy</small></div>
+          <div class="ladder-success"><span>05</span> VERIFIED <small>Quan sát thực tế</small></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell footer-inner"><div><span class="footer-logo">⌘</span><strong>Agent Harness Skillbook</strong><p>Independent educational collection. Designed for reproducibility, not blind automation.</p></div><div class="footer-links"><a href="REFERENCES.md">Nguồn tham khảo</a><a href="LICENSE">MIT License</a><a href="AGENTS.md">AGENTS.md</a><a href="https://github.com/trinhtanphat/agent-harness-skillbook/issues" target="_blank" rel="noopener noreferrer">Góp ý / Issue</a></div><small>© 2026 · Built with vanilla HTML, CSS & JS · No trackers.</small></div></footer>
+
+  <div id="drawerOverlay" class="drawer-overlay" hidden></div>
+  <aside id="skillDrawer" class="skill-drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+    <div class="drawer-header"><span class="drawer-eyebrow">SKILL DETAILS / <span id="drawerNo">01</span></span><button type="button" id="closeDrawer" class="icon-button close-button" aria-label="Đóng thông tin kỹ năng">✕</button></div>
+    <div id="drawerContent" class="drawer-content"></div>
+  </aside>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body></html>

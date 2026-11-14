@@ -1,0 +1,23 @@
+{
+  "name": "read_project_file",
+  "description": "Read one UTF-8 file under a single authorized root",
+  "inputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "relative_path"
+    ],
+    "properties": {
+      "relative_path": {
+        "type": "string",
+        "maxLength": 256
+      }
+    }
+  },
+  "securityNotes": [
+    "Validate canonical path and symlinks",
+    "Enforce server-side permission",
+    "Bound response size and timeout",
+    "Never log tokens"
+  ]
+}
