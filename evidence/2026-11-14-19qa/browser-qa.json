@@ -1,0 +1,176 @@
+{
+  "url": "https://trinhtanphat.github.io/agent-harness-skillbook/",
+  "observations": [
+    {
+      "name": "desktop-catalog",
+      "result": "PASS",
+      "details": {
+        "cards": 60,
+        "categories": 11,
+        "title": "Agent Harness Skillbook • Learn, Build, Verify",
+        "overflow": false
+      }
+    },
+    {
+      "name": "theme-toggle",
+      "result": "PASS",
+      "details": {
+        "before": false,
+        "after": true,
+        "restored": true
+      }
+    },
+    {
+      "name": "search-MCP",
+      "result": "PASS",
+      "details": {
+        "count": 7,
+        "title": "7"
+      }
+    },
+    {
+      "name": "category-filter",
+      "result": "PASS",
+      "details": {
+        "count": 6,
+        "selected": "true"
+      }
+    },
+    {
+      "name": "expanded-category-filter",
+      "result": "PASS",
+      "details": {
+        "count": 6,
+        "selected": "true"
+      }
+    },
+    {
+      "name": "category-keyboard-focus",
+      "result": "PASS",
+      "details": {
+        "focused": true,
+        "pressed": "true",
+        "stillConnected": true
+      }
+    },
+    {
+      "name": "drawer-share-link",
+      "result": "PASS",
+      "details": {
+        "hash": "#skill/complete-repository-mirror",
+        "inert": false,
+        "shareButton": true,
+        "ariaExpanded": "false"
+      }
+    },
+    {
+      "name": "drawer-focus-trap",
+      "result": "PASS",
+      "details": {
+        "firstFocused": true,
+        "prevented": true
+      }
+    },
+    {
+      "name": "skill-drawer",
+      "result": "PASS",
+      "details": {
+        "open": true,
+        "heading": "Mirror toàn bộ nhánh và refs có quyền",
+        "close": {
+          "hidden": true,
+          "inert": true,
+          "hash": "#explorer"
+        }
+      }
+    },
+    {
+      "name": "direct-link-reload",
+      "result": "PASS",
+      "details": {
+        "open": true,
+        "title": "Mirror toàn bộ nhánh và refs có quyền",
+        "hash": "#skill/complete-repository-mirror",
+        "closeFocus": "closeDrawer"
+      }
+    },
+    {
+      "name": "escape-close",
+      "result": "PASS",
+      "details": {
+        "closed": true,
+        "inert": true
+      }
+    },
+    {
+      "name": "browser-back-close",
+      "result": "PASS",
+      "details": {
+        "closed": true
+      }
+    },
+    {
+      "name": "mobile-390",
+      "result": "PASS",
+      "details": {
+        "width": 390,
+        "scrollWidth": 390,
+        "cards": 60,
+        "brand": true
+      }
+    },
+    {
+      "name": "docs-mobile",
+      "result": "PASS",
+      "details": {
+        "h1": "Playbook — Crawl / Clone ứng dụng có quyền",
+        "items": 14,
+        "overflow": false
+      }
+    },
+    {
+      "name": "14-guide-link-smoke",
+      "result": "PASS",
+      "details": {
+        "total": 14,
+        "verified": 14
+      }
+    },
+    {
+      "name": "directory-pages",
+      "result": "PASS",
+      "details": {
+        "docsStatus": 200,
+        "skillsStatus": 200,
+        "docsCards": 14,
+        "skillsCards": 60,
+        "guideStale": false
+      }
+    },
+    {
+      "name": "skills-index-mobile",
+      "result": "PASS",
+      "details": {
+        "cards": 60,
+        "sections": 10,
+        "overflow": false
+      }
+    },
+    {
+      "name": "installer-guide",
+      "result": "PASS",
+      "details": {
+        "status": 200,
+        "hasCommands": true,
+        "hasDryRun": true
+      }
+    },
+    {
+      "name": "runtime-exceptions",
+      "result": "PASS",
+      "details": "No JavaScript exceptions"
+    }
+  ],
+  "at": "2026-11-14T13:13:27.206Z",
+  "isolatedProfile": true
+}
