@@ -96,6 +96,10 @@ try{
  assert.equal(initial.categories,11,'Expected 10 categories plus all');
  assert.equal(initial.overflow,false,'Desktop horizontal overflow');
  observations.push({name:'desktop-catalog',result:'PASS',details:initial});
+ const seo=await evalJs("({description:document.querySelector('meta[name=description]')?.content,lang:document.documentElement.lang})");
+ assert.ok(seo.description.includes('60 Agent Skills') && seo.description.includes('14 playbook') && !seo.description.includes('36 kỹ năng'),'Outdated index SEO metadata');
+ assert.equal(seo.lang,'vi','Vietnamese document language');
+ observations.push({name:'metadata-counts',result:'PASS',details:seo});
  await capture('home-desktop-1440.png');
  const theme = await evalJs("(()=>{const a=document.body.classList.contains('light');document.getElementById('themeBtn').click();const b=document.body.classList.contains('light');document.getElementById('themeBtn').click();return {before:a,after:b,restored:document.body.classList.contains('light')===a}})()");
  assert.notEqual(theme.before,theme.after,'Theme toggle');
@@ -122,6 +126,9 @@ try{
  const drawerAccess=await evalJs("({hash:location.hash,inert:document.getElementById('skillDrawer').inert,shareButton:!!document.getElementById('copySkillLink'),ariaExpanded:document.getElementById('skillDrawer').getAttribute('aria-hidden')})");
  assert.ok(drawerAccess.hash.startsWith('#skill/') && !drawerAccess.inert && drawerAccess.shareButton && drawerAccess.ariaExpanded==='false','Accessible deep-link drawer');
  observations.push({name:'drawer-share-link',result:'PASS',details:drawerAccess});
+ const backgroundA11y=await evalJs("({mainInert:document.querySelector('main').inert,headerInert:document.querySelector('.site-header').inert,footerInert:document.querySelector('footer').inert,drawerInert:document.getElementById('skillDrawer').inert})");
+ assert.ok(backgroundA11y.mainInert && backgroundA11y.headerInert && backgroundA11y.footerInert && !backgroundA11y.drawerInert,'Modal must isolate background content');
+ observations.push({name:'modal-background-inert',result:'PASS',details:backgroundA11y});
  const focusTrap=await evalJs("(()=>{const d=document.getElementById('skillDrawer');const buttons=[...d.querySelectorAll('button,a[href]')];buttons.at(-1).focus();const event=new KeyboardEvent('keydown',{key:'Tab',bubbles:true,cancelable:true});document.dispatchEvent(event);return {firstFocused:document.activeElement===buttons[0],prevented:event.defaultPrevented}})()");
  assert.ok(focusTrap.firstFocused && focusTrap.prevented,'Dialog Tab focus wraps inside dialog');
  observations.push({name:'drawer-focus-trap',result:'PASS',details:focusTrap});
@@ -129,6 +136,9 @@ try{
  const closed=await evalJs("(()=>{document.getElementById('closeDrawer').click();return {hidden:document.querySelector('#skillDrawer').getAttribute('aria-hidden')==='true',inert:document.getElementById('skillDrawer').inert,hash:location.hash}})()");
  assert.ok(closed.hidden && closed.inert && !closed.hash.startsWith('#skill/'),'Drawer close should restore hash and inert state');
  observations.push({name:'skill-drawer',result:'PASS',details:{...drawer,close:closed}});
+ const restoredA11y=await evalJs("({main:document.querySelector('main').inert,header:document.querySelector('.site-header').inert,footer:document.querySelector('footer').inert})");
+ assert.ok(!restoredA11y.main && !restoredA11y.header && !restoredA11y.footer,'Background must be usable after dialog closes');
+ observations.push({name:'modal-background-restore',result:'PASS',details:restoredA11y});
  const directUrl=new URL('#skill/complete-repository-mirror',appRoot);
  requestError(await send('Page.navigate',{url:directUrl.href}));
  await ready();
@@ -191,6 +201,30 @@ try{
  assert.equal(installPage.status,200,'Installer guide must be public');
  assert.ok(installPage.hasCommands&&installPage.hasDryRun,'Installer guide contains safety instructions');
  observations.push({name:'installer-guide',result:'PASS',details:installPage});
+ // Test small phones rather than assuming that a 390px layout covers 320px.
+ requestError(await send('Emulation.setDeviceMetricsOverride',{width:320,height:700,deviceScaleFactor:1,mobile:true}));
+ const smallPaths=['','docs/index.html','skills/index.html','install.html'];
+ const smallScreens=[];
+ for (const path of smallPaths) {
+   requestError(await send('Page.navigate',{url:new URL(path,appRoot).href}));
+   for(let i=0;i<65;i++){
+     const loaded=await evalJs("document.readyState==='complete' && document.body?.children.length>0");
+     if(loaded)break;
+     await timeout(120);
+   }
+   const obs=await evalJs("({url:location.pathname,width:innerWidth,scrollWidth:document.documentElement.scrollWidth,bodyWidth:document.body.scrollWidth,heading:!!document.querySelector('h1')})");
+   assert.ok(obs.heading && obs.scrollWidth<=320 && obs.bodyWidth<=320,'Horizontal overflow on 320px page '+JSON.stringify(obs));
+   smallScreens.push(obs);
+ }
+ observations.push({name:'mobile-320-four-routes',result:'PASS',details:smallScreens});
+ // Honor reduced-motion system settings in the slide-in drawer.
+ requestError(await send('Page.navigate',{url:appRoot.href}));
+ await ready();
+ requestError(await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]}));
+ const motion=await evalJs("(()=>{const e=document.getElementById('skillDrawer');return {prefers:matchMedia('(prefers-reduced-motion: reduce)').matches,transition:getComputedStyle(e).transitionDuration,scroll:getComputedStyle(document.documentElement).scrollBehavior}})()");
+ assert.ok(motion.prefers && motion.transition.split(',').every(t=>parseFloat(t)===0),'Reduced-motion transition must be disabled');
+ observations.push({name:'reduced-motion',result:'PASS',details:motion});
+ requestError(await send('Emulation.setEmulatedMedia',{features:[]}));
 
  assert.equal(runtimeExceptions.length,0,'Browser runtime exceptions: '+runtimeExceptions.join(' / '));
  observations.push({name:'runtime-exceptions',result:'PASS',details:'No JavaScript exceptions'});

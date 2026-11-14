@@ -7,6 +7,14 @@
   const state = {query:'',category:'Tất cả',level:'all'};
   let lastFocus = null, toastTimer = 0, previousHash = '#explorer';
   const hashPrefix = '#skill/';
+  // A modal must also isolate background content for keyboard and assistive
+  // technology navigation. Keep the drawer and live toast outside inert roots.
+  const backgroundRoots = [...document.body.children].filter(el =>
+    !['skillDrawer','drawerOverlay','toast'].includes(el.id)
+  );
+  function setBackgroundInert(value){
+    for(const root of backgroundRoots) root.inert = value;
+  }
   const skillById = new Map(items.map(item => [item.id, item]));
   const skillLink = skill => location.origin + location.pathname + location.search + hashPrefix + encodeURIComponent(skill.id);
   function fromHash() {
@@ -81,6 +89,7 @@
       catch { notify('Không thể sao chép. Hãy lấy URL trên thanh địa chỉ.'); }
     });
     $('drawerOverlay').hidden=false;
+    setBackgroundInert(true);
     $('skillDrawer').inert=false;
     $('skillDrawer').classList.add('open');
     $('skillDrawer').setAttribute('aria-hidden','false');
@@ -94,6 +103,7 @@
     $('skillDrawer').setAttribute('aria-hidden','true');
     $('skillDrawer').inert=true;
     $('drawerOverlay').hidden=true;
+    setBackgroundInert(false);
     document.body.classList.remove('drawer-open');
     if(updateHash && location.hash.startsWith(hashPrefix)) {
       history.replaceState(null,'',location.pathname+location.search+previousHash);
