@@ -97,3 +97,5 @@ node scripts/test-local.mjs
 ```
 
 Các file QA local được lưu trong `qa-evidence-local/` (đã gitignore). Không được coi test cục bộ là xác minh GitHub Pages; sau merge/deploy phải kiểm tra riêng.
+
+Kiểm thử server loopback không cần trình duyệt: `node scripts/test-preview.mjs`. Bộ này kiểm tra HTTP status, file type, cấm `.git`/`.env`, HEAD và POST.
