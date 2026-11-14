@@ -1,0 +1,17 @@
+/* Accessible static directory pages: no JavaScript needed */
+.directory-links{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 32px}
+.directory-links a{display:inline-block;border:1px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);background:var(--surface);text-decoration:none;font-size:13px}
+.directory-links a:hover,.directory-links a:focus-visible{border-color:var(--accent)}
+.directory-heading{margin:28px 0 12px;font-size:clamp(20px,3vw,29px);letter-spacing:-.025em}
+.directory-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:40px}
+.directory-card{border:1px solid var(--border);border-radius:14px;padding:19px;background:var(--surface);min-width:0}
+.directory-card h3{font-size:15px;margin:0 0 10px;line-height:1.45}
+.directory-card h3 a{color:var(--text);text-decoration:none}
+.directory-card h3 a:hover,.directory-card h3 a:focus-visible{color:var(--accent);text-decoration:underline}
+.directory-card p{font-size:12px;color:var(--muted);line-height:1.65;margin:0 0 12px}
+.directory-card small{display:block;color:var(--dim);font-size:11px;margin:0 0 8px}
+.directory-card .source-link{font-size:11px;color:var(--accent);text-underline-offset:3px}
+.directory-count{font-size:12px;color:var(--accent)}
+.directory-footer{border-top:1px solid var(--border);padding:28px 0 45px;color:var(--muted);font-size:12px}
+@media(max-width:900px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:570px){.directory-grid{grid-template-columns:1fr}.directory-card{padding:16px}}

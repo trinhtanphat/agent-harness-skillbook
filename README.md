@@ -5,7 +5,7 @@
 ![Kiểm thử giao diện desktop 1440×900](evidence/2026-11-14/home-desktop-1440.png)
 
 🌐 **Website:** https://trinhtanphat.github.io/agent-harness-skillbook/  
-📚 **Tài liệu:** [14 hướng dẫn dạng HTML](docs/) · [60 SKILL.md](.agents/skills/) · [Danh mục nguồn](REFERENCES.md)  
+📚 **Tài liệu:** [14 hướng dẫn dạng HTML](docs/index.html) · [60 SKILL.md](skills/index.html) · [Danh mục nguồn](REFERENCES.md)  
 💡 **MCP mẫu:** [Server stdio 2026-07-28](examples/mcp-stdio-demo/)  
 🔬 **Bộ kiểm thử:** [Validator](scripts/validate.mjs) · [Browser QA](scripts/browser-qa.mjs)
 
@@ -103,3 +103,10 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 ## Nghiệm thu cuối cùng (14/11/2026)
 
 **16/16 Browser QA PASS — live GitHub Pages.** Chrome headless trên máy PHA đã kiểm tra trực tiếp website, bao gồm focus trap bằng Tab, Escape và browser Back. Kết quả: 0 JavaScript exception, 14/14 đường dẫn hướng dẫn hoạt động. [Biên bản QA](QA_REPORT.md) · [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · [Ảnh desktop](evidence/2026-11-14-final/home-desktop-1440.png) · [Ảnh mobile](evidence/2026-11-14-final/home-mobile-390.png). Đây là nghiệm thu smoke theo phạm vi xác định, không phải chứng nhận WCAG hoặc học thuật toàn diện.
+
+## Truy cập theo danh mục và cài vào dự án
+
+- [Danh mục 14 playbook trực tuyến](docs/index.html).
+- [Danh mục 60 skills trực tuyến](skills/index.html).
+- [Hướng dẫn cài an toàn vào dự án khác](INSTALL_SKILLS.md): dry-run mặc định, --write để cài, không ghi đè.
+- Kiểm thử cài đặt: node scripts/test-install-skills.mjs (không phụ thuộc npm packages).
