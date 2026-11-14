@@ -34,7 +34,7 @@ const evidence=resolve(process.env.SKILLBOOK_EVIDENCE_DIR||join(process.cwd(),'q
 await mkdir(evidence,{recursive:true});
 const child=spawn(exe,[
  '--headless=new','--disable-extensions','--no-first-run','--no-default-browser-check',
- '--disable-background-networking','--no-sandbox','--disable-gpu-sandbox',
+ '--disable-background-networking',
  '--user-data-dir='+profile,'--remote-debugging-port='+port,
  '--window-size=1440,900','about:blank'
 ],{stdio:'ignore',windowsHide:true});

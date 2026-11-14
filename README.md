@@ -2,6 +2,8 @@
 
 **Kho kiến thức thực hành AI Engineering, Agent Harness, Skills và MCP bằng tiếng Việt.** Nội dung được viết thành các quy trình có phạm vi, quyền, output, testcase và bằng chứng. Tài liệu tự biên soạn dựa trên tiêu chuẩn/tài liệu công khai; không phải sản phẩm chính thức của các tổ chức được tham khảo.
 
+![Kiểm thử giao diện desktop 1440×900](evidence/2026-11-14/home-desktop-1440.png)
+
 🌐 **Website:** https://trinhtanphat.github.io/agent-harness-skillbook/  
 📚 **Tài liệu:** [14 hướng dẫn dạng HTML](docs/) · [60 SKILL.md](.agents/skills/) · [Danh mục nguồn](REFERENCES.md)  
 💡 **MCP mẫu:** [Server stdio 2026-07-28](examples/mcp-stdio-demo/)  
@@ -73,3 +75,7 @@ Tách **IMPLEMENTED → TESTED → REVIEWED → DEPLOYED → PRODUCTION_VERIFIED
 Các mẫu là tài liệu giáo dục; phải xác minh tool/SDK, giấy phép và quyền theo môi trường trước khi áp dụng. Repo sử dụng giấy phép MIT cho nội dung/mã do dự án biên soạn. Tư liệu bên thứ ba giữ nguyên bản quyền riêng.
 
 Nguồn: [Agent Skills](https://agentskills.io/specification) · [MCP 2026-07-28](https://modelcontextprotocol.io/specification/2026-07-28) · [PRISMA](https://www.prisma-statement.org/) · [Playwright](https://playwright.dev/).
+
+## Báo cáo QA có bằng chứng
+
+Xem [QA_REPORT.md](QA_REPORT.md) và [ảnh mobile 390px](evidence/2026-11-14/home-mobile-390.png). Các ảnh được chụp trên Chrome headless profile riêng, không có tài khoản đăng nhập hoặc dữ liệu người dùng. Kết quả chỉ đại diện phạm vi test ghi trong báo cáo.

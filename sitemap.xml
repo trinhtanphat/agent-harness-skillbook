@@ -1,1 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/01-app-reconstruction.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/02-phd-research.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/03-mcp-integration.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/04-problem-solving.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/05-agent-harness.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/06-qa-release.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/07-evidence-reporting.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/08-security-ethics.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/09-evaluation-cost.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/10-learning-roadmap.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/11-reverse-forensics.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/12-knowledge-rag.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/13-full-github-mirror.html</loc></url>
+  <url><loc>https://trinhtanphat.github.io/agent-harness-skillbook/docs/14-data-automation.html</loc></url>
+</urlset>
