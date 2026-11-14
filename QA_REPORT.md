@@ -1,5 +1,8 @@
 # QA REPORT — Agent Harness Skillbook
 
+> **TRẠNG THÁI MỚI NHẤT — 14/11/2026, 17:08 giờ Việt Nam: 16/16 BROWSER QA PASS TRÊN GITHUB PAGES CÔNG KHAI.** Ba phép thử từng ghi NOT_RUN (Tab focus trap, Escape và Back) hiện đã chạy thực tế và PASS. Kết quả JSON: [browser-qa.json](evidence/2026-11-14-final/browser-qa.json). Mã giao diện đã kiểm thử: `bda13a5e5d83883238ecf7e5db6ee88f9c4a5589`. Phần NOT_RUN phía dưới là **lịch sử kiểm thử cũ, không phải trạng thái hiện tại**.
+
+
 **Ngày chạy:** 2026-11-14 07:45:40 UTC (14:45:40 Việt Nam)  
 **Repo:** trinhtanphat/agent-harness-skillbook  
 **Commit kiểm thử:** e4d2f97bebb92670392dc96a67eec6a8f0c7875c  
@@ -72,3 +75,16 @@ Có thêm 3 browser assertions mới trong `scripts/browser-qa.mjs` cần chạy
 ### Điều kiện kết luận
 
 Cần sau deploy chạy `scripts/verify-pages.ps1 -Full` so khớp toàn bộ Git HEAD. Kết quả này tách biệt với nghiệm thu nội dung học thuật và các ứng dụng kỹ năng thực tế. Cổng browser 16/16 chỉ được xác nhận nếu thực chạy thành công, không suy từ 13/13 trước đó.
+
+## Đóng tất cả blocker Browser QA — 17:08 ngày 14/11/2026
+
+- **Đã chạy trực tiếp trên URL:** https://trinhtanphat.github.io/agent-harness-skillbook/
+- **Chrome headless:** DESKTOP-PHA1S90, profile riêng, không dùng cửa sổ Edge của người dùng.
+- **Lệnh:** `node scripts/browser-qa.mjs https://trinhtanphat.github.io/agent-harness-skillbook/`
+- **Exit code:** 0. **Kết quả:** 16/16 PASS, JavaScript exception: 0, 14/14 trang hướng dẫn HTTP 200.
+- **Ba blocker đóng:** `drawer-focus-trap`, `escape-close`, `browser-back-close` đều PASS.
+- **Source commit:** `bda13a5e5d83883238ecf7e5db6ee88f9c4a5589`, chụp bằng chứng ngày 2026-11-14T10:08:03.589Z.
+
+Bằng chứng: [JSON 16 ca test](evidence/2026-11-14-final/browser-qa.json) · [Desktop](evidence/2026-11-14-final/home-desktop-1440.png) · [Mobile](evidence/2026-11-14-final/home-mobile-390.png) · [Popup skill](evidence/2026-11-14-final/skill-detail-desktop.png) · [Trang hướng dẫn mobile](evidence/2026-11-14-final/docs-mobile-390.png).
+
+**Giới hạn:** Đây là QA smoke tự động đối với các chức năng đã xác định, không thay thế đánh giá toàn diện về học thuật, tính tương thích mọi trình duyệt hoặc WCAG. Sau mỗi commit thay đổi báo cáo, phải chạy lại integrity verifier để khẳng định nội dung công khai khớp GitHub.
