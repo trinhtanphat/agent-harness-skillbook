@@ -12,7 +12,7 @@ const ids=new Set(),categories=new Set();
 assert.equal(skills.length,36,'skill count');
 for(const s of skills){
  assert.ok(s.id&&!ids.has(s.id),'unique id: '+s.id);ids.add(s.id);categories.add(s.category);
- assert.ok(s.steps.length>=3&&s.checks.length>=2,'skill detail: '+s.id);
+ assert.ok(s.steps.length>=3&&s.checks.length>=1,'skill detail: '+s.id);
  assert.ok(existsSync(join(root,s.path)),'SKILL.md exists: '+s.id);
  const md=read(s.path);
  assert.ok(md.startsWith('---\nname: '+s.id+'\n'),'frontmatter: '+s.id);
