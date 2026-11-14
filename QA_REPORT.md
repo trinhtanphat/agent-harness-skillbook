@@ -40,3 +40,17 @@ Node smoke tests on WIN11-181: discovery, per-request metadata, tool listing, de
 - Thông tin và mã ví dụ chỉ dùng cho nghiên cứu/phát triển có quyền.
 
 **Quyết định:** PASS cho các kiểm tra ở bảng trên; các mục nằm ngoài phạm vi được ghi chưa kiểm chứng.
+
+## Nghiệm thu bổ sung — 14/11/2026, commit f7024ca
+
+### Browser 10/10 PASS trên PHA
+
+Bổ sung thêm 3 phép thử so với đợt đầu: chuyển dark/light và phục hồi; lọc chuyên mục Git (6 skills); 14/14 URL playbook trên GitHub Pages trả 200. Cùng 7 kiểm thử cũ, tổng cộng 10/10. Chạy lại bằng Chrome headless với profile tạm riêng, không tác động phiên Edge người dùng.
+
+### Đối chiếu live production GitHub Pages: 102/102 PASS
+
+Chạy scripts/verify-pages.ps1 -Full trên WIN11-181, chỉ tải tài nguyên public về thư mục TEMP và đối chiếu **Git blob SHA** với HEAD f7024ca10979a3ddb16b0eb2afd2b2de1b95f3b0.
+
+Kết quả thực tế: 102 tệp trong scope đều có nội dung byte-for-byte trùng Git HEAD, gồm 60 SKILL.md, 14 playbook Markdown, 14 trang HTML, 4 ảnh bằng chứng và các file website/metadata/mẫu MCP. Kết thúc lệnh: DEPLOY_INTEGRITY_PASS, exit code 0.
+
+Kết quả này **không** chứng minh mọi nội dung học thuật hoặc mọi ứng dụng của skill đều được nghiệm thu; nó chứng minh triển khai tĩnh và các chức năng web đã kiểm tra. Việc sửa riêng báo cáo sau khi đo sẽ làm thay đổi HEAD, vì vậy phải chạy verifier lại với commit chứa ghi chú này trước khi công bố trạng thái cuối.
