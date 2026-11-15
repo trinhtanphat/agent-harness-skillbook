@@ -1,3 +1,10 @@
+## 2026-11-15 — One-command, fail-closed release gate
+
+- Add dependency-free `scripts/release-gate.mjs` for node-only, isolated local browser, and full public Pages acceptance.
+- Release preflight and postflight require a clean worktree and direct GitHub origin/main SHA equality; any mismatch fails closed.
+- Add plan/no-side-effects CLI tests, JSON outcome records in ignored QA directory, timeouts and fail-fast behavior.
+- Extend deployed-byte verifier to release tooling and add reproducible QA instructions in RELEASE_GATE.md.
+
 ## 2026-11-15 — Preview sensitive-path alias regression
 
 - Deny case variants of sensitive dotfiles and aliases inside the repository after resolving symlinks.

@@ -161,3 +161,9 @@ Audit phát hiện việc kiểm tra chuỗi đường dẫn đầu vào không 
 **Kiểm thử trên nhánh ứng viên:** 17 ca HTTP preview cùng 2 tình huống symlink ngoài root và bên trong root đều PASS trên WIN11-181 và PHA. Browser smoke cục bộ 24/24 PASS trên PHA; bộ cài, MCP và Git fsck PASS trên WIN11-181.
 
 [Bằng chứng kiểm thử và phạm vi](evidence/2026-11-15-preview-security/QA.md). Lưu ý đây là bản vá cho server preview localhost, không tác động runtime GitHub Pages. Sau khi cập nhật báo cáo, cần xác minh Git SHA và các file công khai ở bản phát hành mới.
+
+## One-command release gate — 15/11/2026
+
+Đã bổ sung `scripts/release-gate.mjs` gom các bài kiểm thử Node, server preview, cài skill, MCP, kiểm thử chính CLI, `git fsck`, Chrome cục bộ, Chrome công khai và phép đối chiếu SHA. Chế độ `--mode release` chặn nếu HEAD không bằng SHA trả về **trực tiếp** bởi GitHub `origin/main`, kiểm tra cả trước và sau QA; không có chức năng push, merge hay deploy.
+
+Trên nhánh thử nghiệm: Node gate 6/6 PASS ở WIN11-181; local gate 7/7 PASS ở PHA. Thử `--mode release` khi branch chưa merge bị từ chối đúng như thiết kế (exit 1, 0/9 bước chạy), không báo PASS giả. [Bằng chứng và cách nghiệm thu](evidence/2026-11-15-release-gate/QA.md). **Cổng release trên website công khai phải được chạy sau khi merge, không được suy diễn từ kết quả local.**

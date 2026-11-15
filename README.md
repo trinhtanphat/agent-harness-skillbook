@@ -124,3 +124,7 @@ Kiểm thử server loopback không cần trình duyệt: `node scripts/test-pre
 ## Kiểm tra bảo mật máy xem trước
 
 Server preview chỉ lắng nghe `127.0.0.1`, chặn thư mục và tệp nhạy cảm sau khi giải quyết symlink (bao gồm đường dẫn bí danh bên trong root), không phân biệt chữ hoa/thường. Kiểm thử: `node scripts/test-preview.mjs` và [biên bản QA](evidence/2026-11-15-preview-security/QA.md). Mã hoạt động trên máy cục bộ; không phải cấu hình bảo mật của GitHub Pages.
+
+## Một lệnh nghiệm thu (không cần GitHub Actions)
+
+[Release Gate](RELEASE_GATE.md) gom các cổng QA theo thứ tự: `node scripts/release-gate.mjs --mode node` (6 bước), `--mode local` (7 bước, Chrome cô lập), `--mode release` (9 bước, bao gồm browser live và toàn vẹn GitHub Pages). Chế độ release đối chiếu `HEAD` với **SHA trực tiếp trên GitHub main** trước và sau QA; nếu sai, dừng ngay, không tự merge hoặc deploy. Xem trước bằng `--mode release --plan`.

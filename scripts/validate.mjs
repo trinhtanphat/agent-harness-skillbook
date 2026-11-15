@@ -161,3 +161,12 @@ console.log('PASS: original PHA 24/24 browser QA, exact SHA256 of 3 files and PN
 
 assert.ok(existsSync(join(root,'evidence/2026-11-15-preview-security/QA.md')),'Preview security regression evidence available');
 console.log('PASS: preview security QA evidence committed');
+
+assert.ok(existsSync(join(root,'scripts/release-gate.mjs')),'Missing one-command release gate');
+assert.ok(existsSync(join(root,'scripts/test-release-gate.mjs')),'Missing release gate contract tests');
+assert.ok(existsSync(join(root,'RELEASE_GATE.md')),'Missing release instructions');
+assert.ok(existsSync(join(root,'evidence/2026-11-15-release-gate/QA.md')),'Missing release gate preflight audit evidence');
+const releaseGate=read('scripts/release-gate.mjs');
+assert.ok(releaseGate.includes('git')&&releaseGate.includes('ls-remote')&&releaseGate.includes('RELEASE_GATE_REMOTE_SHA_VERIFIED'),'Release gate verifies remote main before and after checks');
+assert.ok(releaseGate.includes("report.status='FAIL'")&&releaseGate.includes("if(failure)process.exitCode=1"),'Release gate should fail closed');
+console.log('PASS: release gate, remote postflight, no-Actions QA instructions and evidence');
