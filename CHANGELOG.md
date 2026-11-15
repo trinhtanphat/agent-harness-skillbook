@@ -1,3 +1,9 @@
+## 2026-11-15 — Archive original 10-gate public release evidence
+
+- Archived byte-for-byte PHA `--mode release` report for SHA `7e33a1e` (10/10 PASS, 159/159 Git blobs).
+- Matched original PHA Git blob SHA to uploaded GitHub object and SHA-256.
+- Validator checks evidence provenance; final HEAD will require a separate full Pages verification.
+
 ## 2026-11-15 — Public Git tree security preflight
 
 - Add exact-Git-HEAD, read-only security guard before release and public SHA verification.

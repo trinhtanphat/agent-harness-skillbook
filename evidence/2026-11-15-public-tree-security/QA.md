@@ -23,3 +23,8 @@ Both WIN11-181 and DESKTOP-PHA1S90 subsequently tested the scanner on the initia
 - Rerun 10/10 release gate on public GitHub Pages and all tracked SHA; ensure Pages BUILT and HTTPS on.
 
 Only close the release when those checks are evidenced. This is targeted secret-signature prevention, **not** a complete penetration test or Git history audit.
+### Original public release acceptance
+
+At 2026-11-15T02:14:49.074Z–2026-11-15T02:16:24.271Z, PHA ran full release mode against main commit `7e33a1e6b5831dc7352e2e78894de31a2429690d`. Result 10/10 PASS: Git tree secret preflight 159/159, local and public browser 24/24 each, and deployed SHA 159/159. GitHub main SHA before and after matched `7e33a1e6b5831dc7352e2e78894de31a2429690d`.
+
+[Original JSON](release-gate-public.json) was copied byte-for-byte from the PHA runner, 2152 bytes, SHA-256 `0f9acdf3f5c637005d344c0d746c0a7fd1eebac77e93be6b353778d70bd59a03`, Git blob `9e181253206dc71b6f6366e003363177a5f864c6` identical on PHA and GitHub. An evidence-archiving commit changes HEAD; final Pages check must be rerun.

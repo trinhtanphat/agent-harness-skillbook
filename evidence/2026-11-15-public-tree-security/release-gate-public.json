@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "mode": "release",
+  "startedAt": "2026-11-15T02:14:49.074Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "public-tree-secrets",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 9935,
+      "timedOut": false
+    },
+    {
+      "id": "catalog-and-evidence",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 224,
+      "timedOut": false
+    },
+    {
+      "id": "loopback-preview-security",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 250,
+      "timedOut": false
+    },
+    {
+      "id": "offline-skill-installer",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 1432,
+      "timedOut": false
+    },
+    {
+      "id": "mcp-stdio",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 188,
+      "timedOut": false
+    },
+    {
+      "id": "release-gate-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 1357,
+      "timedOut": false
+    },
+    {
+      "id": "git-fsck",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 193,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-local-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 4590,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-public-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 6616,
+      "timedOut": false
+    },
+    {
+      "id": "deployed-blob-sha",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 68335,
+      "timedOut": false
+    }
+  ],
+  "remote": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "7e33a1e6b5831dc7352e2e78894de31a2429690d",
+    "remoteSha": "7e33a1e6b5831dc7352e2e78894de31a2429690d"
+  },
+  "site": "https://trinhtanphat.github.io/agent-harness-skillbook/",
+  "remoteAfter": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "7e33a1e6b5831dc7352e2e78894de31a2429690d",
+    "remoteSha": "7e33a1e6b5831dc7352e2e78894de31a2429690d"
+  },
+  "finishedAt": "2026-11-15T02:16:24.271Z"
+}

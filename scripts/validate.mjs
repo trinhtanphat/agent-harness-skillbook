@@ -207,3 +207,19 @@ assert.ok(existsSync(join(root,'scripts/test-public-tree.mjs')),'Secret prefligh
 assert.ok(existsSync(join(root,'PUBLIC_TREE_SECURITY.md')),'Secret preflight security policy exists');
 assert.ok(read('scripts/release-gate.mjs').includes("id:'public-tree-secrets'"),'Public tree scan must be included in release gate');
 console.log('PASS: secret publication preflight is registered before local/public release verification');
+
+const publicTreeReleasePath='evidence/2026-11-15-public-tree-security/release-gate-public.json';
+const publicTreeRelease=JSON.parse(read(publicTreeReleasePath));
+const publicTreeFile=readFileSync(join(root,publicTreeReleasePath));
+const publicTreeCanonical=Buffer.from(publicTreeFile.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+assert.equal(publicTreeCanonical.length,2152,'Original PHA 10-gate JSON bytes');
+assert.equal(createHash('sha256').update(publicTreeCanonical).digest('hex'),'0f9acdf3f5c637005d344c0d746c0a7fd1eebac77e93be6b353778d70bd59a03','Original PHA 10-gate SHA256');
+const publicTreeIds=['public-tree-secrets','catalog-and-evidence','loopback-preview-security','offline-skill-installer','mcp-stdio','release-gate-contract','git-fsck','isolated-local-browser','isolated-public-browser','deployed-blob-sha'];
+assert.equal(publicTreeRelease.mode,'release','Public tree evidence must be live release');
+assert.equal(publicTreeRelease.status,'PASS','Public tree evidence status');
+assert.deepEqual(publicTreeRelease.checks.map(x=>x.id),publicTreeIds,'Full 10-gate release order');
+assert.ok(publicTreeRelease.checks.every(x=>x.status==='PASS'&&x.exitCode===0),'10/10 original release checks');
+assert.equal(publicTreeRelease.remote.sha,'7e33a1e6b5831dc7352e2e78894de31a2429690d','Release source SHA attested');
+assert.equal(publicTreeRelease.remote.remoteSha,publicTreeRelease.remote.sha,'GitHub main preflight attested');
+assert.equal(publicTreeRelease.remoteAfter.remoteSha,publicTreeRelease.remote.sha,'GitHub main postflight attested');
+console.log('PASS: original 10/10 public release evidence, exact SHA256 and GitHub remote attestation');
