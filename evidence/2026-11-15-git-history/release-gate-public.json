@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "mode": "release",
+  "startedAt": "2026-11-15T03:20:33.106Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "public-tree-secrets",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 10307,
+      "timedOut": false
+    },
+    {
+      "id": "public-history-secrets",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 632,
+      "timedOut": false
+    },
+    {
+      "id": "public-history-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 2929,
+      "timedOut": false
+    },
+    {
+      "id": "catalog-and-evidence",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 250,
+      "timedOut": false
+    },
+    {
+      "id": "loopback-preview-security",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 234,
+      "timedOut": false
+    },
+    {
+      "id": "offline-skill-installer",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 1381,
+      "timedOut": false
+    },
+    {
+      "id": "mcp-stdio",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 165,
+      "timedOut": false
+    },
+    {
+      "id": "release-gate-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 1350,
+      "timedOut": false
+    },
+    {
+      "id": "git-fsck",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 221,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-local-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 6720,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-public-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 8454,
+      "timedOut": false
+    },
+    {
+      "id": "deployed-blob-sha",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 71674,
+      "timedOut": false
+    }
+  ],
+  "remote": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "474712ee1987307da25aee579ab43e683b9f73f3",
+    "remoteSha": "474712ee1987307da25aee579ab43e683b9f73f3"
+  },
+  "site": "https://trinhtanphat.github.io/agent-harness-skillbook/",
+  "remoteAfter": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "474712ee1987307da25aee579ab43e683b9f73f3",
+    "remoteSha": "474712ee1987307da25aee579ab43e683b9f73f3"
+  },
+  "finishedAt": "2026-11-15T03:22:19.523Z"
+}

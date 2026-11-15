@@ -146,3 +146,5 @@ Chế độ `powershell -NoProfile -File scripts/verify-pages.ps1 -Full` hiện 
 ## Kiểm toán lịch sử Git công khai
 
 Bộ kiểm tra HEAD-only được bổ sung [kiểm toán lịch sử](PUBLIC_HISTORY_SECURITY.md) (`node scripts/audit-public-history.mjs`) để phát hiện **token hoặc đường dẫn nhạy cảm đã commit rồi xóa**, nhưng còn tồn tại trong commit tổ tiên. Các bài fixture sử dụng chuỗi giả, không in giá trị secret. Release Gate nâng lên **9 cổng Node, 10 cổng local, 12 cổng release**. Không kiểm tra refs ngoài nhánh HEAD hoặc toàn bộ Git history trên GitHub nếu chưa fetch.
+
+**Bằng chứng phát hành lịch sử Git:** [JSON gốc 12/12 PASS](evidence/2026-11-15-git-history/release-gate-public.json) của đợt kiểm tra 340 blobs/74 commits, 164/164 Pages SHA và 24/24 Chrome trên commit `474712ee`; checksum nằm trong [QA_REPORT](QA_REPORT.md). Bằng chứng gốc không tự chứng nhận commit ghi nhận báo cáo; phải nghiệm thu lại commit cuối.

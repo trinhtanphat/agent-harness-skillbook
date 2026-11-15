@@ -233,3 +233,19 @@ console.log('PASS: reachable Git history security preflight and synthetic remova
 assert.ok(read('scripts/audit-public-history.mjs').includes('--is-shallow-repository'),'History scanner must refuse shallow repositories');
 assert.ok(read('scripts/test-public-history.mjs').includes('--depth=1'),'History audit must test a real shallow Git clone');
 console.log('PASS: shallow Git history fail-closed enforcement and negative fixture');
+
+const historyReleasePath='evidence/2026-11-15-git-history/release-gate-public.json';
+const historyRelease=JSON.parse(read(historyReleasePath));
+const historyReleaseRaw=readFileSync(join(root,historyReleasePath));
+const historyReleaseCanonical=Buffer.from(historyReleaseRaw.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+assert.equal(historyReleaseCanonical.length,2445,'Original 12-gate PHA JSON length');
+assert.equal(createHash('sha256').update(historyReleaseCanonical).digest('hex'),'bc7b8f8a6fceffc378ac919653142677e07f1ee6c09744fcd42a4ecf2f3c617f','Original 12-gate PHA JSON SHA256');
+const historyReleaseSteps=['public-tree-secrets','public-history-secrets','public-history-contract','catalog-and-evidence','loopback-preview-security','offline-skill-installer','mcp-stdio','release-gate-contract','git-fsck','isolated-local-browser','isolated-public-browser','deployed-blob-sha'];
+assert.equal(historyRelease.mode,'release','Original public history evidence mode');
+assert.equal(historyRelease.status,'PASS','Original public history evidence status');
+assert.deepEqual(historyRelease.checks.map(x=>x.id),historyReleaseSteps,'All 12 history release gates documented');
+assert.ok(historyRelease.checks.every(x=>x.status==='PASS'&&x.exitCode===0),'Original 12 gates passed');
+assert.equal(historyRelease.remote.sha,'474712ee1987307da25aee579ab43e683b9f73f3','Attested source Git SHA');
+assert.equal(historyRelease.remote.remoteSha,historyRelease.remote.sha,'GitHub remote SHA preflight');
+assert.equal(historyRelease.remoteAfter.remoteSha,historyRelease.remote.sha,'GitHub remote SHA postflight');
+console.log('PASS: original 12/12 historical-release JSON, exact SHA-256 and GitHub remote attestation');

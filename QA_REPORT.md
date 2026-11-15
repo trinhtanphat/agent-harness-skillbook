@@ -201,3 +201,9 @@ Bổ sung kiểm toán **Git blobs từng tồn tại ở commit tổ tiên như
 ## Reconcile shallow Git clones — 15/11/2026
 
 Trong vòng QA nhánh `security/git-history-public-secret-audit-20261115`, cả WIN11-181 và PHA đều ban đầu là shallow clone dù cùng HEAD: máy 181 nhìn thấy 69 commit, PHA chỉ có 64. Sau `git fetch --unshallow origin main` **không reset/đổi mã**, cả hai báo `SHALLOW=false`, 71 commit của ứng viên khi đó. Bản scanner mới **fail-closed** cho clone nông; fixture `--depth=1` xác nhận. Trên ứng viên `f63b22a10ab23c1812c1d3dc8dae108adde10b14`, hai máy cùng kiểm toán **331/331 historical blobs, 73 commit PASS**, không thấy dấu hiệu thuộc các mẫu đã định nghĩa. Fixture token giả rồi xóa, `.env` giả rồi xóa, và PGP source-line regression đều PASS. Chưa phải xác minh production của commit cuối; Release Gate `12/12` chỉ được chốt sau khi merge và kiểm tra GitHub Pages.
+
+## Public Git history security release — 15/11/2026
+
+Trên commit `474712ee1987307da25aee579ab43e683b9f73f3`, máy PHA đã chạy `node scripts/release-gate.mjs --mode release` với **12/12 PASS**, gồm Git HEAD secret preflight, kiểm toán full ancestor history `340/340 blobs, 74 commits`, shallow-negative Git fixture, 24/24 Chrome QA local và 24/24 Chrome QA public, và đối chiếu **164/164 deployed Git blobs**. `DEPLOY_INTEGRITY_PASS`, GitHub remote SHA trước/sau cùng bằng `474712ee1987307da25aee579ab43e683b9f73f3`; exit 0, working tree sạch.
+
+[JSON report nguyên gốc](evidence/2026-11-15-git-history/release-gate-public.json) được chuyển từ PHA lên GitHub, **2.445 byte**, SHA-256 `bc7b8f8a6fceffc378ac919653142677e07f1ee6c09744fcd42a4ecf2f3c617f`, source Git object SHA = uploaded GitHub blob SHA `2d5fc14f59f05b79d8f4bf902fc9f5ded2986538`. Báo cáo này thuộc về **SHA đã kiểm thử `474712ee1987307da25aee579ab43e683b9f73f3`**; commit lưu bằng chứng sẽ có SHA khác và phải chạy lại 12/12 cùng Pages integrity trên HEAD mới trước khi chốt.

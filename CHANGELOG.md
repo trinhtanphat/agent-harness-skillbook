@@ -1,3 +1,9 @@
+## 2026-11-15 — Archive verified 12-gate history release
+
+- Preserved the actual PHA release-gate JSON from commit `474712ee` (12/12 PASS; 164/164 deployed blobs).
+- Matched PHA source Git blob to uploaded GitHub object and recorded SHA-256; no secrets in report.
+- Added checksum and release-schema regression validation; final evidence-archive commit must be checked separately.
+
 ## 2026-11-15 — Enforce complete Git ancestry for history audits
 
 - Refuse history audit on shallow repositories instead of reporting a false clean result.
