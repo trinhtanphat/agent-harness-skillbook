@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {mkdtempSync,mkdirSync,writeFileSync,rmSync,unlinkSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 import {spawnSync} from 'node:child_process';
 const root=join(dirname(fileURLToPath(import.meta.url)),'..');
 const audit=join(root,'scripts','audit-public-history.mjs');
@@ -43,6 +43,18 @@ try{
  assert.equal(pathScan.status,3,'Deleted sensitive filename must remain a history risk');
  assert.ok(pathScan.stderr.includes('PUBLIC_HISTORY_RISK HISTORIC_SENSITIVE_PATH'));
  assert.ok(!pathScan.stderr.includes(fakeToken));
+ const clone=join(repo,'..','sb-shallow-clone-'+Date.now());
+ try{
+  const copied=call('git',['clone','--quiet','--depth=1',pathToFileURL(repo).href,clone],repo);
+  assert.equal(copied.status,0,'Depth-1 fixture clone must be created: '+copied.stderr);
+  const isShallow=call('git',['rev-parse','--is-shallow-repository'],clone);
+  assert.equal(isShallow.stdout.trim(),'true','Fixture must actually be a shallow Git checkout');
+  const scan=call(process.execPath,[audit,'--repo',clone],clone);
+  assert.equal(scan.status,2,'Shallow history must fail closed');
+  assert.ok(scan.stderr.includes('shallow'),'Report incomplete ancestry without content');
+ }finally{
+  rmSync(clone,{recursive:true,force:true,maxRetries:5,retryDelay:200});
+ }
 }finally{
  rmSync(repo,{recursive:true,force:true,maxRetries:5,retryDelay:200});
 }
