@@ -1,3 +1,9 @@
+## 2026-11-15 — Preserve complete 154-file release acceptance
+
+- Saved the original PHA release gate JSON (9/9 PASS), including before/after GitHub SHA.
+- Verified 154/154 Git-tracked deployed blobs on source SHA `a4d5cba`; archived exact original Git blob and SHA-256.
+- Requires rerunning the full site gate on the new evidence-archive commit.
+
 ## 2026-11-15 — Full Git-tracked deployment coverage
 
 - Replace the curated-only Full Pages verifier with all Git-tracked paths, so new commits cannot escape SHA verification.

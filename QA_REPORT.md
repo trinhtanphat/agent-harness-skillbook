@@ -177,3 +177,9 @@ Báo cáo này là bằng chứng cho SHA `3abcabf`. Vì lưu report vào GitHub
 ## Full Git-tracked coverage audit — 15/11/2026
 
 Bản kiểm tra cũ xác minh 133/133 file nằm trong danh sách cố định, nhưng repo có 153 file Git-tracked. Khi truy cập trực tiếp 14 file ngoài phạm vi để thử, tất cả 14/14 đều khớp blob SHA. Để tránh bỏ sót file mới, `scripts/verify-pages.ps1 -Full` nay tự hợp nhất danh sách cố định với **toàn bộ `git ls-files --cached`**, kiểm tra HTTP và Git SHA byte-for-byte. Chế độ `-ListOnly` giúp đối chiếu coverage mà không truy cập mạng; kiểm thử contract đảm bảo manifest Full bằng đúng danh sách tracked. [Biên bản](evidence/2026-11-15-full-coverage/QA.md). Cần nghiệm thu lại commit phát hành cuối cùng trước khi gọi PASS.
+
+## Release Gate toàn bộ Git-tracked — 15/11/2026
+
+Đã chạy **9/9 cổng release PASS** trên PHA đối với commit `a4d5cbabb6cc7410fb219e33bd5e038568b2c976`, gồm 24/24 smoke test Chrome local, 24/24 Chrome public và **154/154 tệp Git-tracked** có byte GitHub Pages đúng SHA (`DEPLOY_INTEGRITY_PASS`, exit 0). GitHub `main` được xác minh trực tiếp trước/sau và đều trùng SHA đã chạy.
+
+[JSON kết quả gốc](evidence/2026-11-15-full-coverage/release-gate-public.json) được đọc nguyên vẹn từ PHA, Git blob SHA trên máy nguồn và GitHub cùng là `c3527f8651924320f90cd709dfb869ca8d615bd3`, SHA-256 `c9b8ed48221c69596a1ccd772c194a428f6b31edd223e2558542b9657bda7cbe`. Vì lưu trữ bằng chứng làm thay đổi HEAD và tăng số tệp Git-tracked, **cần chạy lại 9/9 trên commit cuối**; không được xem 154/154 là kết quả của commit mới.

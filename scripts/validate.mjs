@@ -186,3 +186,18 @@ console.log('PASS: original 9/9 public release gate JSON and remote SHA before/a
 assert.ok(existsSync(join(root,'evidence/2026-11-15-full-coverage/QA.md')),'Tracked file coverage audit report exists');
 assert.ok(read('scripts/verify-pages.ps1').includes('ls-files --cached'),'Full verifier must include tracked Git files');
 console.log('PASS: full Git-tracked file verification policy and audit report');
+
+const fullCoverageReleasePath='evidence/2026-11-15-full-coverage/release-gate-public.json';
+const fullCoverageRelease=JSON.parse(read(fullCoverageReleasePath));
+const fullCoverageJson=readFileSync(join(root,fullCoverageReleasePath));
+const fullCoverageNormalized=Buffer.from(fullCoverageJson.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+assert.equal(fullCoverageNormalized.length,2009,'Original PHA full coverage release JSON bytes');
+assert.equal(createHash('sha256').update(fullCoverageNormalized).digest('hex'),'c9b8ed48221c69596a1ccd772c194a428f6b31edd223e2558542b9657bda7cbe','Original PHA full coverage release SHA256');
+assert.equal(fullCoverageRelease.mode,'release','Full coverage evidence is a public site release');
+assert.equal(fullCoverageRelease.status,'PASS','Historical public release status');
+assert.equal(fullCoverageRelease.checks.length,9,'Historical release checked all 9 gates');
+assert.ok(fullCoverageRelease.checks.every(x=>x.status==='PASS'&&x.exitCode===0),'Original release gates passed');
+assert.equal(fullCoverageRelease.remote.sha,'a4d5cbabb6cc7410fb219e33bd5e038568b2c976','Release applies to audited SHA');
+assert.equal(fullCoverageRelease.remote.remoteSha,fullCoverageRelease.remote.sha,'GitHub SHA verified preflight');
+assert.equal(fullCoverageRelease.remoteAfter.remoteSha,fullCoverageRelease.remote.sha,'GitHub SHA verified postflight');
+console.log('PASS: original 9/9 full Git-tracked release evidence, SHA256 and GitHub remote attestation');
