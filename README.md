@@ -142,3 +142,7 @@ Chế độ `powershell -NoProfile -File scripts/verify-pages.ps1 -Full` hiện 
 **Release Gate nay chạy preflight riêng** để phát hiện tệp nhạy cảm hoặc dấu hiệu private key/token trong đúng Git HEAD trước khi tiếp tục kiểm thử website. Chạy `node scripts/audit-public-tree.mjs` và `node scripts/test-public-tree.mjs`; [giải thích giới hạn và mẫu nhận diện](PUBLIC_TREE_SECURITY.md). Kết quả không chứa nội dung khóa. Chế độ QA có **7 cổng Node**, **8 cổng local** và **10 cổng release**; trên production chỉ chốt khi 10/10 PASS. Không thay thế việc bật GitHub secret scanning hay rà soát lịch sử commit.
 
 **Bằng chứng thực tế đã lưu:** [JSON Release Gate 10/10 PASS](evidence/2026-11-15-public-tree-security/release-gate-public.json) của commit `7e33a1e`. Kết quả này gồm preflight Git HEAD, Chrome QA và **159/159 GitHub Pages blobs**. Sau khi thêm bằng chứng, phải xác minh lại GitHub Pages trên HEAD mới.
+
+## Kiểm toán lịch sử Git công khai
+
+Bộ kiểm tra HEAD-only được bổ sung [kiểm toán lịch sử](PUBLIC_HISTORY_SECURITY.md) (`node scripts/audit-public-history.mjs`) để phát hiện **token hoặc đường dẫn nhạy cảm đã commit rồi xóa**, nhưng còn tồn tại trong commit tổ tiên. Các bài fixture sử dụng chuỗi giả, không in giá trị secret. Release Gate nâng lên **9 cổng Node, 10 cổng local, 12 cổng release**. Không kiểm tra refs ngoài nhánh HEAD hoặc toàn bộ Git history trên GitHub nếu chưa fetch.

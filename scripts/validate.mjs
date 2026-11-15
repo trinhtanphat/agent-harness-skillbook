@@ -223,3 +223,9 @@ assert.equal(publicTreeRelease.remote.sha,'7e33a1e6b5831dc7352e2e78894de31a24296
 assert.equal(publicTreeRelease.remote.remoteSha,publicTreeRelease.remote.sha,'GitHub main preflight attested');
 assert.equal(publicTreeRelease.remoteAfter.remoteSha,publicTreeRelease.remote.sha,'GitHub main postflight attested');
 console.log('PASS: original 10/10 public release evidence, exact SHA256 and GitHub remote attestation');
+
+assert.ok(existsSync(join(root,'scripts/audit-public-history.mjs')),'Historical Git blob scanner exists');
+assert.ok(existsSync(join(root,'scripts/test-public-history.mjs')),'Historical scanner fixture tests exist');
+assert.ok(read('scripts/release-gate.mjs').includes("id:'public-history-secrets'"),'Release Gate audits reachable Git history');
+assert.ok(read('scripts/release-gate.mjs').includes("id:'public-history-contract'"),'Release Gate tests deleted-credential fixtures');
+console.log('PASS: reachable Git history security preflight and synthetic removal tests');

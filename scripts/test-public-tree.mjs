@@ -47,3 +47,10 @@ assert.ok(actual.stdout.includes('PUBLIC_TREE_AUDIT_PASS'));
 const invalid=tool(process.execPath,[scanner,'--not-a-real-option'],root);
 assert.equal(invalid.status,2,'Invalid invocation must fail closed');
 console.log('PASS: Git HEAD publication guard, synthetic path/credential negatives, no secret echoes, current repository scan');
+
+const scannerSource=await import('./audit-public-tree.mjs');
+assert.equal(typeof scannerSource.riskForPath,'function','Reusable path guard export');
+assert.equal(typeof scannerSource.risksForContent,'function','Reusable content guard export');
+assert.deepEqual(scannerSource.risksForContent(Buffer.from('-----BEGIN PGP '+'PRIVATE KEY BLOCK-----\n')),['PGP_PRIVATE_BLOCK'],'Real PGP block header at start of line');
+assert.ok(!scannerSource.risksForContent(Buffer.from("const regex=/-----BEGIN PGP PRIVATE KEY BLOCK-----/;")).includes('PGP_PRIVATE_BLOCK'),'Do not flag a regex literal as PGP key');
+console.log('PASS: shared pattern helpers, line-anchored PGP detection and no import side effects');

@@ -50,3 +50,7 @@ Giới hạn: đây là QA smoke/release integrity theo các cổng đã cấu h
 ## Cổng an toàn công khai mới
 
 **Thêm `public-tree-secrets` đứng đầu chuỗi QA**: kiểm tra `git ls-tree -r -l -z HEAD` và nội dung Git blob để chặn đường dẫn tệp credential, PEM/PGP private key và token độ tin cậy cao trước khi xác minh SHA các tệp public. Chạy độc lập bằng `node scripts/audit-public-tree.mjs`; mô phỏng hồi quy (không có khóa thật) bằng `node scripts/test-public-tree.mjs`. Tổng số cổng là Node **7**, local **8**, release **10**. Nếu preflight không PASS thì release FAIL, không deploy và không in token. [Chi tiết](PUBLIC_TREE_SECURITY.md).
+
+## Kiểm toán lịch sử bổ sung
+
+`public-history-secrets` quét Git blob và tên tệp trong mọi commit tổ tiên từ HEAD, kể cả dữ liệu từng bị xóa khỏi branch hiện tại. `public-history-contract` xác minh bằng repo fixture tạm. Tăng từ **7/8/10** lên **9/10/12** cổng Node/local/release. Khi phát hiện dấu hiệu nhạy cảm, dừng release và chỉ báo loại rủi ro/object, không log giá trị. [Phạm vi và giới hạn](PUBLIC_HISTORY_SECURITY.md).

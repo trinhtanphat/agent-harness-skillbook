@@ -1,3 +1,10 @@
+## 2026-11-15 — Scan reachable Git history before public release
+
+- Add read-only, bounded Git history credential scanner using batch Git object inspection.
+- Reuse HEAD scanner path and content signatures, and anchor PGP signature to avoid source-code false positives.
+- Test deleted fake access token and deleted `.env` in temporary Git repositories without exposing values.
+- Expand release gates to 9 Node / 10 local / 12 live and document the scope limits.
+
 ## 2026-11-15 — Archive original 10-gate public release evidence
 
 - Archived byte-for-byte PHA `--mode release` report for SHA `7e33a1e` (10/10 PASS, 159/159 Git blobs).

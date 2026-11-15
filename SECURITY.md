@@ -26,3 +26,7 @@ The local server validates the canonical target of every file before serving it,
 ## Public-tree secret preflight (15/11/2026)
 
 GitHub Pages phục vụ các tệp được commit; integrity check không phát hiện việc xuất bản vô ý credential. `scripts/audit-public-tree.mjs` kiểm tra nội dung Git HEAD bằng Git blob trước khi chạy release. Chặn các tên tệp nhạy cảm, PEM/PGP private key và token độ tin cậy cao mà **không xuất giá trị khóa** ra console. Kiểm thử fixture dùng chuỗi giả trong repo Git tạm, tự dọn sạch. Xem [PUBLIC_TREE_SECURITY.md](PUBLIC_TREE_SECURITY.md). Không bảo đảm phát hiện mọi loại secret và không rà soát các commit lịch sử.
+
+### Git history integrity
+
+Scanner HEAD-only không chứng minh lịch sử không có credential. Thêm `scripts/audit-public-history.mjs` quét Git blob có thể truy cập từ HEAD và các đường dẫn lịch sử, kiểm tra theo cùng luật với scanner public HEAD. Báo kết quả loại rủi ro và object prefix, không xuất nội dung. [Tài liệu](PUBLIC_HISTORY_SECURITY.md). Không tự viết lại lịch sử, force push hoặc thu hồi khóa; khi phát hiện secret thật phải báo để xử lý riêng.

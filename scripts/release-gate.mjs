@@ -46,6 +46,8 @@ function args(argv){
 const node=(p)=>[process.execPath,[join(root,p)]];
 const tasks=[
  {id:'public-tree-secrets',exec:node('scripts/audit-public-tree.mjs'),timeout:90000},
+ {id:'public-history-secrets',exec:node('scripts/audit-public-history.mjs'),timeout:120000},
+ {id:'public-history-contract',exec:node('scripts/test-public-history.mjs'),timeout:120000},
  {id:'catalog-and-evidence',exec:node('scripts/validate.mjs'),timeout:60000},
  {id:'loopback-preview-security',exec:node('scripts/test-preview.mjs'),timeout:70000},
  {id:'offline-skill-installer',exec:node('scripts/test-install-skills.mjs'),timeout:100000},

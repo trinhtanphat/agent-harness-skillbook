@@ -193,3 +193,7 @@ Release Gate trước đây chỉ kiểm tra tính đúng byte của toàn bộ 
 PHA đã chạy `node scripts/release-gate.mjs --mode release` trên commit `7e33a1e6b5831dc7352e2e78894de31a2429690d` từ `2026-11-15T02:14:49.074Z` đến `2026-11-15T02:16:24.271Z`: **10/10 cổng PASS**, bao gồm scanner Git HEAD (159/159 blobs không có dấu hiệu thuộc nhóm rủi ro được hỗ trợ), Chrome local và public (mỗi nhóm 24/24), và **159/159 file public khớp Git SHA** (`DEPLOY_INTEGRITY_PASS`). GitHub `main` được xác minh trước/sau, cùng SHA với ứng viên.
 
 [JSON máy gốc](evidence/2026-11-15-public-tree-security/release-gate-public.json) 2.152 byte được chuyển nguyên vẹn từ PHA: Git blob SHA nguồn và GitHub đều bằng `9e181253206dc71b6f6366e003363177a5f864c6`; SHA-256 là `0f9acdf3f5c637005d344c0d746c0a7fd1eebac77e93be6b353778d70bd59a03`. JSON này thuộc về commit `7e33a1e6b5831dc7352e2e78894de31a2429690d`. Khi đưa JSON lên GitHub sẽ sinh commit khác; phải nghiệm thu lại trên **HEAD cuối** trước khi khẳng định production.
+
+## Reachable Git history secret scan — 15/11/2026
+
+Bổ sung kiểm toán **Git blobs từng tồn tại ở commit tổ tiên nhưng đã bị xóa khỏi HEAD**; scanner HEAD-only không thể phát hiện chúng. Công cụ mới sử dụng batch Git plumbing và các fixture repository Git tạm, không in giá trị token. Mọi lịch sử nội dung ngoài HEAD refs/reflog không nằm trong phạm vi. Cần chạy lại toàn bộ Release Gate 12/12 trên GitHub Pages sau khi merge; không coi kết quả trên nhánh QA là production.

@@ -36,3 +36,7 @@ Chỉ merge thay đổi sau khi kiểm tra cấu trúc, liên kết nội bộ, 
 ## Public tree gate bắt buộc
 
 Release Gate phải chạy `node scripts/audit-public-tree.mjs` trước mọi test public. Kiểm tra đúng blob Git HEAD, không chỉ working tree; fail khi gặp file credential hoặc mẫu private key/token độ tin cậy cao. Không in bí mật vào log và không tự sửa hay xóa file nguồn khi phát hiện lỗi. Các tính năng này **không thay thế** quét Git history, secret scanning chuyên dụng và thu hồi credential nếu đã lộ.
+
+### Lịch sử Git không được bỏ qua
+
+Trước phát hành chạy cả `node scripts/audit-public-tree.mjs` lẫn `node scripts/audit-public-history.mjs` và các fixture âm tính. Mỗi lần release phải báo rõ SHA, cổng đã PASS và các giới hạn phạm vi; không tự tuyên bố GitHub history sạch nếu scanner chưa chạy trên commit tương ứng.

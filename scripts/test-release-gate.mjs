@@ -16,6 +16,9 @@ for(const mode of ['node','local','release']){
  assert.ok(x.text.includes('RELEASE_GATE_PLAN '+mode),'Mode in plan');
  assert.ok(x.text.includes('git fsck')||x.text.includes('git-fsck'),'Node core QA in plan');
  assert.ok(x.text.includes('public-tree-secrets'),'Every mode must audit committed public Git HEAD');
+ assert.ok(x.text.includes('public-history-secrets')&&x.text.includes('public-history-contract'),'Every mode must audit reachable Git history and its synthetic fixture');
+ assert.ok(x.text.indexOf('public-tree-secrets')<x.text.indexOf('public-history-secrets'),'HEAD gate runs before reachable-history check');
+ assert.ok(x.text.indexOf('public-history-contract')<x.text.indexOf('catalog-and-evidence'),'Security guards must precede normal QA');
  assert.ok(x.text.indexOf('public-tree-secrets')<x.text.indexOf('catalog-and-evidence'),'Secret audit must run before other release checks');
  assert.ok(!x.text.includes('RELEASE_GATE_REPORT '),'Dry-run should not create report');
  if(mode==='node'){
