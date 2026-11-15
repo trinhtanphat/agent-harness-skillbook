@@ -1,3 +1,10 @@
+## 2026-11-15 — Full Git-tracked deployment coverage
+
+- Replace the curated-only Full Pages verifier with all Git-tracked paths, so new commits cannot escape SHA verification.
+- Add offline `-Full -ListOnly` manifest enumeration, plus contract tests for coverage and duplicate detection.
+- Record 153 tracked vs. 133 previously checked; 14 additional public-file probes matched SHA.
+- Require new complete GitHub Pages release gate after publication.
+
 ## 2026-11-15 — Public release gate evidence preserved
 
 - Archived actual PHA `--mode release` JSON, 9/9 PASS against GitHub Pages on SHA `3abcabf`.

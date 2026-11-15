@@ -1,14 +1,12 @@
 # Read-only GitHub Pages integrity verifier for Agent Harness Skillbook.
 # Compares byte-for-byte deployed content with the Git object at the local HEAD.
 # No Actions, no repository writes, no production mutations.
-param([switch]$Full)
+param([switch]$Full, [switch]$ListOnly)
 
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $site = 'https://trinhtanphat.github.io/agent-harness-skillbook/'
 Push-Location $repo
-$tmp = Join-Path $env:TEMP ('skillbook-pages-verify-' + [guid]::NewGuid().ToString('N'))
-New-Item -Path $tmp -ItemType Directory -Force | Out-Null
 $paths = @('index.html','skills/index.html','install.html','assets/app.js','assets/styles.css','assets/docs.css','assets/directory.css',
            'data/catalog.js','sitemap.xml','QA_REPORT.md','README.md',
            'examples/mcp-stdio-demo/server.mjs','examples/mcp-stdio-demo/client-smoke.mjs',
@@ -29,8 +27,21 @@ if($Full){
   $paths += @(Get-ChildItem (Join-Path $repo '.agents/skills') -Filter 'SKILL.md' -File -Recurse | ForEach-Object {
     '.agents/skills/' + $_.Directory.Name + '/SKILL.md'
   })
+  # The FULL gate must be closed over every tracked file, not a hand-picked subset.
+  # A newly committed file must never disappear silently from release verification.
+  $tracked = @(& git -c core.quotepath=false ls-files --cached)
+  if($LASTEXITCODE -ne 0 -or $tracked.Count -eq 0){throw 'Cannot enumerate Git-tracked release files'}
+  $paths += $tracked
 }
 $paths = @($paths | Sort-Object -Unique)
+if($ListOnly){
+  # Manifest discovery uses no network and no temporary files.
+  foreach($p in $paths){Write-Output ('PATH ' + $p)}
+  Pop-Location
+  return
+}
+$tmp = Join-Path $env:TEMP ('skillbook-pages-verify-' + [guid]::NewGuid().ToString('N'))
+New-Item -Path $tmp -ItemType Directory -Force | Out-Null
 $passed = 0; $fails = New-Object System.Collections.Generic.List[string]
 try {
   foreach($p in $paths){

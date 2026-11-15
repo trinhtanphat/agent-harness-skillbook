@@ -173,3 +173,7 @@ Trên nhánh thử nghiệm: Node gate 6/6 PASS ở WIN11-181; local gate 7/7 PA
 Máy PHA đã chạy thực tế `node scripts/release-gate.mjs --mode release` trên SHA `3abcabf05155878f5a2901c352f3c6f310b6212f`: **9/9 bước PASS**, gồm 24/24 Chrome QA local, 24/24 Chrome QA public và **132/132 deployed blobs** (`DEPLOY_INTEGRITY_PASS`). Remote SHA GitHub main đã được đối chiếu trực tiếp trước và sau QA, đều trùng commit đã chạy. [JSON gốc](evidence/2026-11-15-release-gate/release-gate-public.json) đã được chuyển nguyên byte từ PHA; Git blob SHA `01da8f101d2f50c4d80c482e6bb69e25c2d8f552` khớp `git hash-object` của máy nguồn; SHA-256 `32fa56109af60fd54fc75d75cb1673376921bab0691648bf3022f35080ae8ded`.
 
 Báo cáo này là bằng chứng cho SHA `3abcabf`. Vì lưu report vào GitHub tạo **commit mới**, cần chạy lại `--mode release` và kiểm tra Pages trên HEAD mới trước khi coi phiên bản báo cáo cuối là đã nghiệm thu.
+
+## Full Git-tracked coverage audit — 15/11/2026
+
+Bản kiểm tra cũ xác minh 133/133 file nằm trong danh sách cố định, nhưng repo có 153 file Git-tracked. Khi truy cập trực tiếp 14 file ngoài phạm vi để thử, tất cả 14/14 đều khớp blob SHA. Để tránh bỏ sót file mới, `scripts/verify-pages.ps1 -Full` nay tự hợp nhất danh sách cố định với **toàn bộ `git ls-files --cached`**, kiểm tra HTTP và Git SHA byte-for-byte. Chế độ `-ListOnly` giúp đối chiếu coverage mà không truy cập mạng; kiểm thử contract đảm bảo manifest Full bằng đúng danh sách tracked. [Biên bản](evidence/2026-11-15-full-coverage/QA.md). Cần nghiệm thu lại commit phát hành cuối cùng trước khi gọi PASS.

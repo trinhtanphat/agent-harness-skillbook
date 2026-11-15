@@ -182,3 +182,7 @@ assert.equal(publicRelease.remote.remoteSha,publicRelease.remote.sha,'GitHub mai
 assert.equal(publicRelease.remoteAfter.remoteSha,publicRelease.remote.remoteSha,'GitHub main stable after QA');
 assert.equal(publicRelease.site,'https://trinhtanphat.github.io/agent-harness-skillbook/','Public release target');
 console.log('PASS: original 9/9 public release gate JSON and remote SHA before/after evidence');
+
+assert.ok(existsSync(join(root,'evidence/2026-11-15-full-coverage/QA.md')),'Tracked file coverage audit report exists');
+assert.ok(read('scripts/verify-pages.ps1').includes('ls-files --cached'),'Full verifier must include tracked Git files');
+console.log('PASS: full Git-tracked file verification policy and audit report');

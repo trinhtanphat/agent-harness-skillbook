@@ -42,3 +42,7 @@ Script ghi JSON mới mỗi lần chạy vào `qa-evidence/release-gate-<mode>.j
 Chỉ kết luận đợt phát hành PASS khi `--mode release` exit 0, GitHub Pages `BUILT`, HEAD trên GitHub đúng commit cần phát hành, và không còn blocker thuộc release scope. Cần báo riêng repository URL, branch, commit SHA, trạng thái PR/review/merge và production. **Merge không đồng nghĩa deploy.**
 
 Giới hạn: đây là QA smoke/release integrity theo các cổng đã cấu hình; không thay thế đánh giá WCAG, bảo mật chuyên sâu, đúng nội dung học thuật hoặc thử nghiệm nhiều trình duyệt.
+
+## Bảo đảm coverage khi thêm file mới
+
+`--mode release` gọi `scripts/verify-pages.ps1 -Full`, giờ bao phủ **tất cả tệp Git-tracked**, không chỉ file điền tay. Bài `node scripts/test-release-gate.mjs` so sánh manifest Full với `git ls-files` (PowerShell bắt buộc trên Windows; có thể chạy cùng `pwsh` trên Unix). Có thể kiểm tra danh sách mà không mở trình duyệt hoặc truy cập mạng: `powershell -NoProfile -File scripts/verify-pages.ps1 -Full -ListOnly`. Mỗi đường dẫn phải nhận HTTP 200 và Git blob SHA đúng. Các file phục vụ công khai như `.gitignore` và `.nojekyll` cũng được kiểm tra; không commit bí mật vào repository công khai.
