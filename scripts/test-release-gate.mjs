@@ -29,5 +29,5 @@ for(const argv of [[],['--mode','garbage'],['--mode','node','--mode','release'],
  assert.notEqual(x.status,0,'Invalid argument must fail closed: '+argv.join(' '));
  assert.ok(x.text.includes('RELEASE_GATE_INVALID_ARGUMENT'));
 }
-const help=run('--help');assert.equal(help.status,0);assert.ok(help.text.includes('--mode release'));
+const help=run('--help');assert.equal(help.status,0);assert.ok(help.text.includes('--mode node|local|release'));
 console.log('PASS: release gate CLI contract, mode selection, no-side-effect plans, fail-closed arguments');
