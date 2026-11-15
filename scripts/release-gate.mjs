@@ -126,6 +126,13 @@ try{
   if(result.code!==0)throw Error(task.id+' failed (exit '+result.code+')');
   console.log('RELEASE_GATE_PASS '+task.id);
  }
+ if(options.mode==='release'){
+  // Refuse a stale success if another agent moved GitHub main during QA.
+  const after=await releasePreflight();
+  if(after.remoteSha!==report.remote.remoteSha)throw Error('Release blocked: GitHub main moved during QA');
+  report.remoteAfter=after;
+  console.log('RELEASE_GATE_REMOTE_SHA_VERIFIED '+after.remoteSha);
+ }
  report.status='PASS';
 }catch(e){failure=e;report.status='FAIL';report.failure=String(e.message||e);console.error('RELEASE_GATE_FAIL '+report.failure);}
 finally{
