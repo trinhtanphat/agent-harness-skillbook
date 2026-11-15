@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "mode": "release",
+  "startedAt": "2026-11-15T00:14:06.096Z",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "catalog-and-evidence",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 497,
+      "timedOut": false
+    },
+    {
+      "id": "loopback-preview-security",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 448,
+      "timedOut": false
+    },
+    {
+      "id": "offline-skill-installer",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 2306,
+      "timedOut": false
+    },
+    {
+      "id": "mcp-stdio",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 235,
+      "timedOut": false
+    },
+    {
+      "id": "release-gate-contract",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 1197,
+      "timedOut": false
+    },
+    {
+      "id": "git-fsck",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 300,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-local-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 12237,
+      "timedOut": false
+    },
+    {
+      "id": "isolated-public-browser",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 13590,
+      "timedOut": false
+    },
+    {
+      "id": "deployed-blob-sha",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationMs": 69713,
+      "timedOut": false
+    }
+  ],
+  "remote": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "3abcabf05155878f5a2901c352f3c6f310b6212f",
+    "remoteSha": "3abcabf05155878f5a2901c352f3c6f310b6212f"
+  },
+  "site": "https://trinhtanphat.github.io/agent-harness-skillbook/",
+  "remoteAfter": {
+    "origin": "https://github.com/trinhtanphat/agent-harness-skillbook.git",
+    "branch": "detached-at-main",
+    "sha": "3abcabf05155878f5a2901c352f3c6f310b6212f",
+    "remoteSha": "3abcabf05155878f5a2901c352f3c6f310b6212f"
+  },
+  "finishedAt": "2026-11-15T00:15:49.108Z"
+}

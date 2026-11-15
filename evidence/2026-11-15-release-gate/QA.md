@@ -21,3 +21,7 @@ Release preflight refused candidate SHA `fe2b7748999962fb72293b06e6e58bca038adaa
 4. Check GitHub Pages `BUILT` and independently re-fetch remote main commit ID. Report PR, merge and production separately.
 
 **Limitations:** smoke test, not a complete WCAG/security certification; verifier only compares explicitly included published files.
+
+## Actual live acceptance after initial merge
+
+Public release gate ran on PHA at `2026-11-15T00:14:06.096Z` to `2026-11-15T00:15:49.108Z` (UTC); **9/9 PASS** for SHA `3abcabf05155878f5a2901c352f3c6f310b6212f`. Verified 24 local Chrome and 24 public Chrome checks, **132/132 deployed blobs**, remote GitHub main SHA before and after. Archived the original [machine-readable JSON](release-gate-public.json) with SHA-256 `32fa56109af60fd54fc75d75cb1673376921bab0691648bf3022f35080ae8ded`. This evidence applies to the tested SHA only; re-run after this evidence-archive commit.

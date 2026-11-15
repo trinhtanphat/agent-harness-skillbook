@@ -167,3 +167,9 @@ Audit phát hiện việc kiểm tra chuỗi đường dẫn đầu vào không 
 Đã bổ sung `scripts/release-gate.mjs` gom các bài kiểm thử Node, server preview, cài skill, MCP, kiểm thử chính CLI, `git fsck`, Chrome cục bộ, Chrome công khai và phép đối chiếu SHA. Chế độ `--mode release` chặn nếu HEAD không bằng SHA trả về **trực tiếp** bởi GitHub `origin/main`, kiểm tra cả trước và sau QA; không có chức năng push, merge hay deploy.
 
 Trên nhánh thử nghiệm: Node gate 6/6 PASS ở WIN11-181; local gate 7/7 PASS ở PHA. Thử `--mode release` khi branch chưa merge bị từ chối đúng như thiết kế (exit 1, 0/9 bước chạy), không báo PASS giả. [Bằng chứng và cách nghiệm thu](evidence/2026-11-15-release-gate/QA.md). **Cổng release trên website công khai phải được chạy sau khi merge, không được suy diễn từ kết quả local.**
+
+## Public release gate 9/9 — 15/11/2026
+
+Máy PHA đã chạy thực tế `node scripts/release-gate.mjs --mode release` trên SHA `3abcabf05155878f5a2901c352f3c6f310b6212f`: **9/9 bước PASS**, gồm 24/24 Chrome QA local, 24/24 Chrome QA public và **132/132 deployed blobs** (`DEPLOY_INTEGRITY_PASS`). Remote SHA GitHub main đã được đối chiếu trực tiếp trước và sau QA, đều trùng commit đã chạy. [JSON gốc](evidence/2026-11-15-release-gate/release-gate-public.json) đã được chuyển nguyên byte từ PHA; Git blob SHA `01da8f101d2f50c4d80c482e6bb69e25c2d8f552` khớp `git hash-object` của máy nguồn; SHA-256 `32fa56109af60fd54fc75d75cb1673376921bab0691648bf3022f35080ae8ded`.
+
+Báo cáo này là bằng chứng cho SHA `3abcabf`. Vì lưu report vào GitHub tạo **commit mới**, cần chạy lại `--mode release` và kiểm tra Pages trên HEAD mới trước khi coi phiên bản báo cáo cuối là đã nghiệm thu.

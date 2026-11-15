@@ -17,7 +17,8 @@ $paths = @('index.html','skills/index.html','install.html','assets/app.js','asse
            'scripts/verify-pages.ps1','LOCAL_PREVIEW.md','SECURITY.md',
            'evidence/2026-11-15-preview-security/QA.md',
            'scripts/release-gate.mjs','scripts/test-release-gate.mjs','RELEASE_GATE.md',
-           'evidence/2026-11-15-release-gate/QA.md')
+           'evidence/2026-11-15-release-gate/QA.md',
+           'evidence/2026-11-15-release-gate/release-gate-public.json')
 $paths += @(Get-ChildItem (Join-Path $repo 'docs') -Filter '*.html' -File | ForEach-Object { 'docs/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14') -Filter '*.png' -File | ForEach-Object { 'evidence/2026-11-14/' + $_.Name })
 $paths += @(Get-ChildItem (Join-Path $repo 'evidence/2026-11-14-final') -File | ForEach-Object { 'evidence/2026-11-14-final/' + $_.Name })

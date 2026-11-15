@@ -1,3 +1,9 @@
+## 2026-11-15 — Public release gate evidence preserved
+
+- Archived actual PHA `--mode release` JSON, 9/9 PASS against GitHub Pages on SHA `3abcabf`.
+- Verified 132/132 deployed blob SHA and direct remote main SHA before and after the run.
+- Added evidence-schema validator and released-file coverage; final repository commit must be re-verified separately.
+
 ## 2026-11-15 — One-command, fail-closed release gate
 
 - Add dependency-free `scripts/release-gate.mjs` for node-only, isolated local browser, and full public Pages acceptance.

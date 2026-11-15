@@ -170,3 +170,15 @@ const releaseGate=read('scripts/release-gate.mjs');
 assert.ok(releaseGate.includes('git')&&releaseGate.includes('ls-remote')&&releaseGate.includes('RELEASE_GATE_REMOTE_SHA_VERIFIED'),'Release gate verifies remote main before and after checks');
 assert.ok(releaseGate.includes("report.status='FAIL'")&&releaseGate.includes("if(failure)process.exitCode=1"),'Release gate should fail closed');
 console.log('PASS: release gate, remote postflight, no-Actions QA instructions and evidence');
+
+const publicRelease=JSON.parse(read('evidence/2026-11-15-release-gate/release-gate-public.json'));
+const releaseIds=['catalog-and-evidence','loopback-preview-security','offline-skill-installer','mcp-stdio','release-gate-contract','git-fsck','isolated-local-browser','isolated-public-browser','deployed-blob-sha'];
+assert.equal(publicRelease.mode,'release','Evidence must be public-site acceptance mode');
+assert.equal(publicRelease.status,'PASS','Public release gate status');
+assert.deepEqual(publicRelease.checks.map(x=>x.id),releaseIds,'Complete 9-step release gate');
+assert.ok(publicRelease.checks.every(x=>x.status==='PASS'&&x.exitCode===0),'Every release gate should pass');
+assert.equal(publicRelease.remote.sha,'3abcabf05155878f5a2901c352f3c6f310b6212f','Archive applies to original source SHA');
+assert.equal(publicRelease.remote.remoteSha,publicRelease.remote.sha,'GitHub main matched original HEAD');
+assert.equal(publicRelease.remoteAfter.remoteSha,publicRelease.remote.remoteSha,'GitHub main stable after QA');
+assert.equal(publicRelease.site,'https://trinhtanphat.github.io/agent-harness-skillbook/','Public release target');
+console.log('PASS: original 9/9 public release gate JSON and remote SHA before/after evidence');

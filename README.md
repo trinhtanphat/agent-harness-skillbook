@@ -128,3 +128,5 @@ Server preview chỉ lắng nghe `127.0.0.1`, chặn thư mục và tệp nhạy
 ## Một lệnh nghiệm thu (không cần GitHub Actions)
 
 [Release Gate](RELEASE_GATE.md) gom các cổng QA theo thứ tự: `node scripts/release-gate.mjs --mode node` (6 bước), `--mode local` (7 bước, Chrome cô lập), `--mode release` (9 bước, bao gồm browser live và toàn vẹn GitHub Pages). Chế độ release đối chiếu `HEAD` với **SHA trực tiếp trên GitHub main** trước và sau QA; nếu sai, dừng ngay, không tự merge hoặc deploy. Xem trước bằng `--mode release --plan`.
+
+**Bằng chứng lần chạy release thực tế:** [JSON 9/9 PASS](evidence/2026-11-15-release-gate/release-gate-public.json) — gồm SHA GitHub `main` trước/sau và phép đối chiếu 132/132 tệp trên GitHub Pages, tại commit `3abcabf`.
