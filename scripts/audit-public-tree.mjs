@@ -19,7 +19,7 @@ const forbiddenSegments=new Set([
 const forbiddenEndings=/\.(?:pem|p12|pfx|jks|keystore|kdbx|ovpn|tfstate|tfvars|sqlite|sqlite3)$/i;
 const signatureRules=[
  ['PRIVATE_KEY_BLOCK',/-----BEGIN (?:RSA |EC |OPENSSH |DSA |ENCRYPTED )?PRIVATE KEY-----/],
- ['PGP_PRIVATE_BLOCK',new RegExp('^-----BEGIN PGP '+'PRIVATE KEY BLOCK-----\\s*
+ ['PGP_PRIVATE_BLOCK',new RegExp('^-----BEGIN PGP '+'PRIVATE KEY BLOCK-----\\s*$','m')],
  ['AWS_ACCESS_KEY',/\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/],
  ['GITHUB_ACCESS_TOKEN',/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]{36,}\b/],
  ['GITHUB_FINE_GRAINED_TOKEN',/\bgithub_pat_[A-Za-z0-9_]{65,}\b/],
