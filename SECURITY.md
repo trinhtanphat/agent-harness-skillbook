@@ -30,3 +30,5 @@ GitHub Pages phục vụ các tệp được commit; integrity check không phá
 ### Git history integrity
 
 Scanner HEAD-only không chứng minh lịch sử không có credential. Thêm `scripts/audit-public-history.mjs` quét Git blob có thể truy cập từ HEAD và các đường dẫn lịch sử, kiểm tra theo cùng luật với scanner public HEAD. Báo kết quả loại rủi ro và object prefix, không xuất nội dung. [Tài liệu](PUBLIC_HISTORY_SECURITY.md). Không tự viết lại lịch sử, force push hoặc thu hồi khóa; khi phát hiện secret thật phải báo để xử lý riêng.
+
+**Important history integrity gate:** the history scanner refuses shallow clones (`git rev-parse --is-shallow-repository`). Matching Git SHA alone does not prove the clone contains all reachable parents. See [PUBLIC_HISTORY_SECURITY.md](PUBLIC_HISTORY_SECURITY.md). No rewriting or deletion of Git history is authorized by the scanner.

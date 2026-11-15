@@ -1,3 +1,10 @@
+## 2026-11-15 — Enforce complete Git ancestry for history audits
+
+- Refuse history audit on shallow repositories instead of reporting a false clean result.
+- Add real depth-one temporary Git clone negative regression.
+- Reconciled QA on WIN11-181 and PHA to full history; observed identical 331 blobs / 73 commits at candidate `f63b22a`.
+- Document safe unshallow workflow, limitations, and no-history-rewrite policy.
+
 ## 2026-11-15 — Scan reachable Git history before public release
 
 - Add read-only, bounded Git history credential scanner using batch Git object inspection.

@@ -24,3 +24,7 @@ Chỉ đọc **Git HEAD** bằng `git ls-tree -r -l -z HEAD` và `git cat-file b
 Release Gate chạy bước `public-tree-secrets` đầu tiên ở cả `node`, `local` và `release`, trước browser QA hay tải GitHub Pages. Kết quả âm tính là một lý do từ chối phát hành; không xóa hoặc sửa nguồn tự động.
 
 **Giới hạn:** regex có thể bỏ sót dạng secret mới và không thể thay cho kiểm toán lịch sử Git, hệ thống secret scanning chuyên dụng hoặc kiểm định thủ công. Quá trình kiểm tra nội dung Git HEAD không xác nhận rằng toàn bộ lịch sử commit chưa từng chứa bí mật. Nếu nghi ngờ đã lộ khóa, phải thu hồi/đổi khóa và rà soát lịch sử phù hợp.
+
+### Reachable history
+
+HEAD-only không phát hiện một token từng commit rồi xóa. Chạy thêm [public history audit](PUBLIC_HISTORY_SECURITY.md) (`node scripts/audit-public-history.mjs`), bắt buộc Git clone **không shallow**. Scanner dùng chung quy tắc chữ ký và không ghi giá trị bí mật vào log. Giới hạn: chỉ tổ tiên của HEAD.

@@ -40,3 +40,5 @@ Release Gate phải chạy `node scripts/audit-public-tree.mjs` trước mọi t
 ### Lịch sử Git không được bỏ qua
 
 Trước phát hành chạy cả `node scripts/audit-public-tree.mjs` lẫn `node scripts/audit-public-history.mjs` và các fixture âm tính. Mỗi lần release phải báo rõ SHA, cổng đã PASS và các giới hạn phạm vi; không tự tuyên bố GitHub history sạch nếu scanner chưa chạy trên commit tương ứng.
+
+**Shallow clone không đủ để tuyên bố lịch sử an toàn:** nếu `git rev-parse --is-shallow-repository` là `true`, phải dừng kiểm toán lịch sử. Chỉ fetch đầy đủ từ remote chính xác trên worktree QA có quyền; không ghi đè mã hoặc force push.

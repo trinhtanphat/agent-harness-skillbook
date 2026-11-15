@@ -197,3 +197,7 @@ PHA đã chạy `node scripts/release-gate.mjs --mode release` trên commit `7e3
 ## Reachable Git history secret scan — 15/11/2026
 
 Bổ sung kiểm toán **Git blobs từng tồn tại ở commit tổ tiên nhưng đã bị xóa khỏi HEAD**; scanner HEAD-only không thể phát hiện chúng. Công cụ mới sử dụng batch Git plumbing và các fixture repository Git tạm, không in giá trị token. Mọi lịch sử nội dung ngoài HEAD refs/reflog không nằm trong phạm vi. Cần chạy lại toàn bộ Release Gate 12/12 trên GitHub Pages sau khi merge; không coi kết quả trên nhánh QA là production.
+
+## Reconcile shallow Git clones — 15/11/2026
+
+Trong vòng QA nhánh `security/git-history-public-secret-audit-20261115`, cả WIN11-181 và PHA đều ban đầu là shallow clone dù cùng HEAD: máy 181 nhìn thấy 69 commit, PHA chỉ có 64. Sau `git fetch --unshallow origin main` **không reset/đổi mã**, cả hai báo `SHALLOW=false`, 71 commit của ứng viên khi đó. Bản scanner mới **fail-closed** cho clone nông; fixture `--depth=1` xác nhận. Trên ứng viên `f63b22a10ab23c1812c1d3dc8dae108adde10b14`, hai máy cùng kiểm toán **331/331 historical blobs, 73 commit PASS**, không thấy dấu hiệu thuộc các mẫu đã định nghĩa. Fixture token giả rồi xóa, `.env` giả rồi xóa, và PGP source-line regression đều PASS. Chưa phải xác minh production của commit cuối; Release Gate `12/12` chỉ được chốt sau khi merge và kiểm tra GitHub Pages.

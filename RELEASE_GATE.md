@@ -54,3 +54,5 @@ Giới hạn: đây là QA smoke/release integrity theo các cổng đã cấu h
 ## Kiểm toán lịch sử bổ sung
 
 `public-history-secrets` quét Git blob và tên tệp trong mọi commit tổ tiên từ HEAD, kể cả dữ liệu từng bị xóa khỏi branch hiện tại. `public-history-contract` xác minh bằng repo fixture tạm. Tăng từ **7/8/10** lên **9/10/12** cổng Node/local/release. Khi phát hiện dấu hiệu nhạy cảm, dừng release và chỉ báo loại rủi ro/object, không log giá trị. [Phạm vi và giới hạn](PUBLIC_HISTORY_SECURITY.md).
+
+**Shallow-clone policy:** for a complete release check, `git rev-parse --is-shallow-repository` must return `false`. If a QA checkout is shallow, the history step exits nonzero. `git fetch --unshallow origin main` may be used only in the authorized QA repository and does not reset tracked files; confirm HEAD, clean status, and remote SHA after fetching.

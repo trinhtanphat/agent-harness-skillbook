@@ -22,3 +22,8 @@ Release Gate chạy liên tiếp `public-tree-secrets`, `public-history-secrets`
 ### Kết quả
 
 Chỉ cập nhật phần dưới sau khi chạy QA trên commit ứng viên rồi nghiệm thu lại bản công khai ở SHA cuối.
+## Bắt buộc clone đầy đủ trước khi quét
+
+Một repository `git clone --depth=1` có thể chứa **HEAD giống GitHub** nhưng thiếu commit tổ tiên. Vì vậy scanner gọi `git rev-parse --is-shallow-repository` và **từ chối kết luận PASS** nếu giá trị không phải `false`. Trong worktree QA đã được cho phép, dùng `git fetch --unshallow origin main`; sau đó xác minh SHA HEAD và `git rev-list --count HEAD`. Chỉ bổ sung đối tượng Git, không reset mã hoặc force push.
+
+Các bài test tự tạo clone nông thực sự bằng `file://`, kiểm tra scanner trả exit code `2`. Khi scanner báo phát hiện token hoặc tên tệp lịch sử, exit code `3`. Khi PASS, exit code `0`. Sự khác biệt giữa các máy về số commit là dấu hiệu cần kiểm tra shallow trước khi kết luận.

@@ -229,3 +229,7 @@ assert.ok(existsSync(join(root,'scripts/test-public-history.mjs')),'Historical s
 assert.ok(read('scripts/release-gate.mjs').includes("id:'public-history-secrets'"),'Release Gate audits reachable Git history');
 assert.ok(read('scripts/release-gate.mjs').includes("id:'public-history-contract'"),'Release Gate tests deleted-credential fixtures');
 console.log('PASS: reachable Git history security preflight and synthetic removal tests');
+
+assert.ok(read('scripts/audit-public-history.mjs').includes('--is-shallow-repository'),'History scanner must refuse shallow repositories');
+assert.ok(read('scripts/test-public-history.mjs').includes('--depth=1'),'History audit must test a real shallow Git clone');
+console.log('PASS: shallow Git history fail-closed enforcement and negative fixture');
