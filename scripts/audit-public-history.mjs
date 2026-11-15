@@ -24,6 +24,12 @@ function parsePaths(repo){
  return [...new Set(raw.split('\0').filter(Boolean))];
 }
 function scanHistory(repo){
+ // A shallow clone can report a clean partial history while earlier commits
+ // remain reachable on GitHub. Never report PASS from incomplete ancestry.
+ const shallow=git(repo,['rev-parse','--is-shallow-repository']).toString('ascii').trim();
+ if(shallow!=='false'){
+  throw Error('Git history is shallow/incomplete; fetch --unshallow from trusted origin before auditing');
+ }
  const hashes=git(repo,['rev-list','--objects','--no-object-names','HEAD'])
   .toString('ascii').split(/\r?\n/).filter(Boolean);
  if(!hashes.length||hashes.some(s=>!/^([0-9a-f]{40}|[0-9a-f]{64})$/.test(s))){
