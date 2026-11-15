@@ -22,3 +22,7 @@ Mở issue cho lỗi công khai không chứa secret. Với vấn đề nhạy c
 The local server validates the canonical target of every file before serving it, preventing symlink escapes from the repository root. It refuses `.env.*`, `.npmrc`, `.pypirc`, `.ssh` and `.aws` paths as well as the previously blocked directories. These protections apply only to the local preview server, not GitHub Pages hosting policy.
 
 - Local preview rejects symlink aliases to sensitive paths *inside* the repository as well as symlinks escaping the repository; it lowercases path segments for Windows-safe matching. The test fixture creates a temporary dummy `.env.*` file and deletes it after testing. Only the loopback preview is affected; this is not a claim of production-server sandboxing.
+
+## Public-tree secret preflight (15/11/2026)
+
+GitHub Pages phục vụ các tệp được commit; integrity check không phát hiện việc xuất bản vô ý credential. `scripts/audit-public-tree.mjs` kiểm tra nội dung Git HEAD bằng Git blob trước khi chạy release. Chặn các tên tệp nhạy cảm, PEM/PGP private key và token độ tin cậy cao mà **không xuất giá trị khóa** ra console. Kiểm thử fixture dùng chuỗi giả trong repo Git tạm, tự dọn sạch. Xem [PUBLIC_TREE_SECURITY.md](PUBLIC_TREE_SECURITY.md). Không bảo đảm phát hiện mọi loại secret và không rà soát các commit lịch sử.

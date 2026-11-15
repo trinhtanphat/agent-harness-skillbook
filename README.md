@@ -136,3 +136,7 @@ Server preview chỉ lắng nghe `127.0.0.1`, chặn thư mục và tệp nhạy
 Chế độ `powershell -NoProfile -File scripts/verify-pages.ps1 -Full` hiện tự động lấy toàn bộ tệp được Git theo dõi (`git ls-files`) thay vì chỉ danh sách cố định. Mọi tệp vừa commit sẽ tự vào phạm vi so sánh byte trên GitHub Pages. Xem manifest không tải mạng: `powershell -NoProfile -File scripts/verify-pages.ps1 -Full -ListOnly`; `node scripts/test-release-gate.mjs` đối chiếu manifest này với toàn bộ Git-tracked paths. Phạm vi này không bao gồm untracked/ignored files; không chứng nhận bảo mật toàn diện.
 
 **Bằng chứng release coverage:** [JSON 9/9 PASS](evidence/2026-11-15-full-coverage/release-gate-public.json) của lần xác minh toàn bộ **154/154 tệp** trên commit `a4d5cba`; SHA-256 được ghi trong [QA_REPORT](QA_REPORT.md). Lưu ý báo cáo cuối được bổ sung qua commit khác nên cần đối chiếu lại Pages sau khi phát hành.
+
+## Ngăn xuất bản nhầm bí mật (Git HEAD)
+
+**Release Gate nay chạy preflight riêng** để phát hiện tệp nhạy cảm hoặc dấu hiệu private key/token trong đúng Git HEAD trước khi tiếp tục kiểm thử website. Chạy `node scripts/audit-public-tree.mjs` và `node scripts/test-public-tree.mjs`; [giải thích giới hạn và mẫu nhận diện](PUBLIC_TREE_SECURITY.md). Kết quả không chứa nội dung khóa. Chế độ QA có **7 cổng Node**, **8 cổng local** và **10 cổng release**; trên production chỉ chốt khi 10/10 PASS. Không thay thế việc bật GitHub secret scanning hay rà soát lịch sử commit.

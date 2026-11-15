@@ -183,3 +183,7 @@ Bản kiểm tra cũ xác minh 133/133 file nằm trong danh sách cố định,
 Đã chạy **9/9 cổng release PASS** trên PHA đối với commit `a4d5cbabb6cc7410fb219e33bd5e038568b2c976`, gồm 24/24 smoke test Chrome local, 24/24 Chrome public và **154/154 tệp Git-tracked** có byte GitHub Pages đúng SHA (`DEPLOY_INTEGRITY_PASS`, exit 0). GitHub `main` được xác minh trực tiếp trước/sau và đều trùng SHA đã chạy.
 
 [JSON kết quả gốc](evidence/2026-11-15-full-coverage/release-gate-public.json) được đọc nguyên vẹn từ PHA, Git blob SHA trên máy nguồn và GitHub cùng là `c3527f8651924320f90cd709dfb869ca8d615bd3`, SHA-256 `c9b8ed48221c69596a1ccd772c194a428f6b31edd223e2558542b9657bda7cbe`. Vì lưu trữ bằng chứng làm thay đổi HEAD và tăng số tệp Git-tracked, **cần chạy lại 9/9 trên commit cuối**; không được xem 154/154 là kết quả của commit mới.
+
+## Bổ sung kiểm tra thông tin nhạy cảm trước phát hành — 15/11/2026
+
+Release Gate trước đây chỉ kiểm tra tính đúng byte của toàn bộ file public. Bản mới thêm `public-tree-secrets` ở cổng đầu tiên: scan chính Git HEAD, chặn đường dẫn credential, PEM/PGP private key và token độ tin cậy cao, không in giá trị. Các fixture giả tạo trong repo Git tạm và được dọn sau khi chạy; kiểm tra nguyên repo ứng viên không phát hiện dấu hiệu trong nhóm được hỗ trợ. [Chính sách và giới hạn](PUBLIC_TREE_SECURITY.md). Đây là **preflight phòng ngừa**, không chứng nhận repository/ lịch sử commit không từng có secret. Chỉ tuyên bố production verified sau khi chạy lại 10/10 trên HEAD đã push.

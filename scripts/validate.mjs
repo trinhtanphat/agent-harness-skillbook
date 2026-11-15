@@ -201,3 +201,9 @@ assert.equal(fullCoverageRelease.remote.sha,'a4d5cbabb6cc7410fb219e33bd5e038568b
 assert.equal(fullCoverageRelease.remote.remoteSha,fullCoverageRelease.remote.sha,'GitHub SHA verified preflight');
 assert.equal(fullCoverageRelease.remoteAfter.remoteSha,fullCoverageRelease.remote.sha,'GitHub SHA verified postflight');
 console.log('PASS: original 9/9 full Git-tracked release evidence, SHA256 and GitHub remote attestation');
+
+assert.ok(existsSync(join(root,'scripts/audit-public-tree.mjs')),'Public Git tree secret preflight exists');
+assert.ok(existsSync(join(root,'scripts/test-public-tree.mjs')),'Secret preflight fixture regressions exist');
+assert.ok(existsSync(join(root,'PUBLIC_TREE_SECURITY.md')),'Secret preflight security policy exists');
+assert.ok(read('scripts/release-gate.mjs').includes("id:'public-tree-secrets'"),'Public tree scan must be included in release gate');
+console.log('PASS: secret publication preflight is registered before local/public release verification');

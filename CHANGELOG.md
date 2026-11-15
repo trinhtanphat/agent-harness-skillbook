@@ -1,3 +1,10 @@
+## 2026-11-15 — Public Git tree security preflight
+
+- Add exact-Git-HEAD, read-only security guard before release and public SHA verification.
+- Deny sensitive credential file paths and high-confidence private-key/token markers; never print key contents.
+- Add isolated temporary Git fixture tests and fail-closed command behavior.
+- Extend release gates to 7 node / 8 local / 10 live release checks, with updated security and contributor guidance.
+
 ## 2026-11-15 — Preserve complete 154-file release acceptance
 
 - Saved the original PHA release gate JSON (9/9 PASS), including before/after GitHub SHA.

@@ -15,6 +15,8 @@ for(const mode of ['node','local','release']){
  assert.equal(x.status,0,mode+' plan must succeed');
  assert.ok(x.text.includes('RELEASE_GATE_PLAN '+mode),'Mode in plan');
  assert.ok(x.text.includes('git fsck')||x.text.includes('git-fsck'),'Node core QA in plan');
+ assert.ok(x.text.includes('public-tree-secrets'),'Every mode must audit committed public Git HEAD');
+ assert.ok(x.text.indexOf('public-tree-secrets')<x.text.indexOf('catalog-and-evidence'),'Secret audit must run before other release checks');
  assert.ok(!x.text.includes('RELEASE_GATE_REPORT '),'Dry-run should not create report');
  if(mode==='node'){
   assert.ok(!x.text.includes('isolated-local-browser')&&!x.text.includes('isolated-public-browser'));

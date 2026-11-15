@@ -20,7 +20,7 @@ const site='https://trinhtanphat.github.io/agent-harness-skillbook/';
 const expectedRemote='https://github.com/trinhtanphat/agent-harness-skillbook.git';
 const help=[
  'Usage: node scripts/release-gate.mjs --mode node|local|release [--plan]',
- '  node:    validate, preview security, installer, MCP, own tests, git fsck',
+ '  node:    public-tree secrets, validate, preview security, installer, MCP, own tests, git fsck',
  '  local:   all node checks and isolated Chrome QA against local preview',
  '  release: all local checks, isolated Chrome QA on public Pages, SHA verifier',
  '  --plan:  print the plan; execute nothing and create no report',
@@ -45,6 +45,7 @@ function args(argv){
 }
 const node=(p)=>[process.execPath,[join(root,p)]];
 const tasks=[
+ {id:'public-tree-secrets',exec:node('scripts/audit-public-tree.mjs'),timeout:90000},
  {id:'catalog-and-evidence',exec:node('scripts/validate.mjs'),timeout:60000},
  {id:'loopback-preview-security',exec:node('scripts/test-preview.mjs'),timeout:70000},
  {id:'offline-skill-installer',exec:node('scripts/test-install-skills.mjs'),timeout:100000},

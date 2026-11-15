@@ -46,3 +46,7 @@ Giới hạn: đây là QA smoke/release integrity theo các cổng đã cấu h
 ## Bảo đảm coverage khi thêm file mới
 
 `--mode release` gọi `scripts/verify-pages.ps1 -Full`, giờ bao phủ **tất cả tệp Git-tracked**, không chỉ file điền tay. Bài `node scripts/test-release-gate.mjs` so sánh manifest Full với `git ls-files` (PowerShell bắt buộc trên Windows; có thể chạy cùng `pwsh` trên Unix). Có thể kiểm tra danh sách mà không mở trình duyệt hoặc truy cập mạng: `powershell -NoProfile -File scripts/verify-pages.ps1 -Full -ListOnly`. Mỗi đường dẫn phải nhận HTTP 200 và Git blob SHA đúng. Các file phục vụ công khai như `.gitignore` và `.nojekyll` cũng được kiểm tra; không commit bí mật vào repository công khai.
+
+## Cổng an toàn công khai mới
+
+**Thêm `public-tree-secrets` đứng đầu chuỗi QA**: kiểm tra `git ls-tree -r -l -z HEAD` và nội dung Git blob để chặn đường dẫn tệp credential, PEM/PGP private key và token độ tin cậy cao trước khi xác minh SHA các tệp public. Chạy độc lập bằng `node scripts/audit-public-tree.mjs`; mô phỏng hồi quy (không có khóa thật) bằng `node scripts/test-public-tree.mjs`. Tổng số cổng là Node **7**, local **8**, release **10**. Nếu preflight không PASS thì release FAIL, không deploy và không in token. [Chi tiết](PUBLIC_TREE_SECURITY.md).
